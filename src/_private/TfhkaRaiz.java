@@ -1,0 +1,828 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package _private;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import gnu.io.*;
+import tfhka.*;
+
+/**
+ *
+ * @author Pablo Moya
+ */
+public abstract class TfhkaRaiz implements SerialPortEventListener{
+    
+   // protected enum _SerialPortReceiveStatus { Espera, Recibiendo, LRC, Listo};
+    protected _SerialPortReceiveStatus PortReceiveStatus;
+    protected int _SerialPortReceiveTimeout;
+    protected int _SendCmdRetryAttempts;
+    protected int _SendCmdRetryInterval;
+    protected boolean UsandoLineasControl;
+    protected boolean _dataReady;
+    protected int _bytesRecibidos; // Exclusivo para el evento de recepci�n de datos
+    protected int _auxBytesRecibidos;
+    protected byte[] bResp;
+    protected byte[] tempBuffer;
+    protected byte[] _dataBuffer;
+    protected byte[] _emptyBuffer = new byte[20]; //Debe estar vac�o, por eso su nombre "_emptyBuffer"
+    protected static SerialPort puertoSerie;
+    protected static OutputStream salida;
+    protected static InputStream entrada;
+    public String Estado;
+     // Caracteres de control
+    protected char
+        STX = (char)02,
+        ETX = (char)03,
+        EOT = (char)04,
+        ENQ = (char)05,
+        ACK = (char)06,
+        NAK = (char)21,
+        LRC = ' ',
+        ETB = (char)23;
+    
+    protected String Mensaje, estado, comPort, sDataSubida;;
+    protected String status, error, descripStatus, descripError;
+    protected ArrayList dataLectorFisc = new ArrayList();
+    protected boolean CTS = false, DSR = false, CD = false, ErroValid = false;
+     /**Variable que indica apertura del puerto
+         * Si el puerto esta abierto IndPuerto = true;
+         * Si el puerto esta cerrado IndPuerto = false;
+         */
+    public boolean IndPuerto = false;
+     /**Objeto de tipo ReportData que se carga al subir reporte X ??� Z del PC por medio de los m??�todos getZReport()  y  getXReport()*/
+        public ReportData ReportePC;
+        /**Arreglo de Objetos de tipo ReportData que se cargan al subir lectura de memoria fiscal del PC mediante los m??�todos getZReport(Date fecha1, Date fecha2)
+         * y getZReport(int nroZ1, int nroZ2).
+         */
+        public ReportData[] ReporteArrayPC;
+        /**Objeto de tipo PrinterStatus que se carga al leer Status y Error de la impresora por medio del m??�todo getPrinterStatus()*/
+        public PrinterStatus StatusErrorPrinter;
+         /**Objeto de tipo S1PrinterData que carga informaci??�n cuando se hace una subida de estado S1 por el m??�todo  getS1PrinterData()*/
+        public S1PrinterData S1Estado;
+        /**Objeto de tipo S2PrinterData que carga informaci??�n cuando se hace una subida de estado S2 por el m??�todo  getS2PrinterData()*/
+        public S2PrinterData S2Estado;
+        /**Objeto de tipo S3PrinterData que carga informaci??�n cuando se hace una subida de estado S3 por el m??�todo  getS3PrinterData()*/
+        public S3PrinterData S3Estado;
+        /**Objeto de tipo S4PrinterData que carga informaci??�n cuando se hace una subida de estado S4 por el m??�todo  getS4PrinterData()*/
+        public S4PrinterData S4Estado;
+        /**Objeto de tipo S5PrinterData que carga informaci??�n cuando se hace una subida de estado S5 por el m??�todo  getS5PrinterData()*/
+        public S5PrinterData S5Estado;
+		/**Objeto de tipo S6PrinterData que carga informaci??�n cuando se hace una subida de estado S6 por el m??�todo  getS6PrinterData()*/
+        public S6PrinterData S6Estado;
+        /**Objeto de tipo S7PrinterData que carga informaci??�n cuando se hace una subida de estado S7 por el m??�todo  getS7PrinterData()*/
+        public S7PrinterData S7Estado;
+    
+    protected enum _SerialPortReceiveStatus {
+          Espera(0), Recibiendo(1), LRC(2), Listo(3);
+          
+          private int valor;
+          
+         _SerialPortReceiveStatus(int valor) {
+         this.valor = valor;
+          }
+         public int getValor() {
+           return valor;
+          }
+      }
+      
+     /*Manejadores de Eventos*/
+       /**
+         * Metodos Implemantados
+         * Efectua los eventos en el puerto serial
+         * @param SerialPortEvent e Evento en el  Puerto Serial
+         */
+     
+    @Override
+public void serialEvent(SerialPortEvent e)
+    {
+  // Determine type of event.
+ switch (e.getEventType()) {
+      case SerialPortEvent.BI:
+      case SerialPortEvent.OE:
+      case SerialPortEvent.FE:
+      case SerialPortEvent.PE:
+      case SerialPortEvent.CD:
+      case SerialPortEvent.CTS:
+      case SerialPortEvent.DSR:
+      case SerialPortEvent.RI:
+      case SerialPortEvent.OUTPUT_BUFFER_EMPTY:        
+          break;
+      case SerialPortEvent.DATA_AVAILABLE:
+          try
+          { // Si el puerto est� cerrado, no hace nada
+            if (!IndPuerto) return;
+           
+            byte rcvdByte;
+            
+           while (entrada.available() > 0)
+           {   
+               switch (PortReceiveStatus)
+               {
+                    case Espera:                 
+                         rcvdByte = (byte)entrada.read();
+                           tempBuffer[_auxBytesRecibidos] = rcvdByte;
+                        if (rcvdByte == (byte)STX) // STX
+                        {   
+                            PortReceiveStatus = _SerialPortReceiveStatus.Recibiendo;
+                            _auxBytesRecibidos++;
+                            Thread.sleep(2); // Tiempo suficiente para recibir 6 caracteres
+                        }
+                        else if ((rcvdByte == (byte)ACK) || (rcvdByte == (byte)NAK) || (rcvdByte == (byte)ENQ) || (rcvdByte == (byte)EOT))
+                        {	// ACK NAK ENQ EOT 	
+                            _auxBytesRecibidos++;
+                            PortReceiveStatus = _SerialPortReceiveStatus.Listo;
+                        }
+                        else
+                        {
+                            _auxBytesRecibidos = 0;
+                            PortReceiveStatus = _SerialPortReceiveStatus.Espera;
+                        }
+                        break;
+                    
+                    case Recibiendo:                       
+
+                        // Recibe los bytes que est�n por leerse desde el buffer de entrada
+                        _auxBytesRecibidos += entrada.read(tempBuffer, _auxBytesRecibidos, entrada.available());
+
+                        if (tempBuffer[_auxBytesRecibidos - 1] == (byte)EOT) //EOT, este es un caso especial, por el problema detectado en el firmware de las impresoras
+                        {
+                            if (_auxBytesRecibidos >= 3) // Para evitar errores de acceso fuera de l�mites
+                            {
+                                if (tempBuffer[_auxBytesRecibidos - 3] == (byte)ETX)
+                                {
+                                    _auxBytesRecibidos = 1;
+                                    tempBuffer[0] = (byte)EOT;
+                                }
+                            }
+                            PortReceiveStatus = _SerialPortReceiveStatus.Listo;
+                        }
+                        else if ((tempBuffer[_auxBytesRecibidos - 2] == (byte)ETX) || (tempBuffer[_auxBytesRecibidos - 2] == (byte)ETB)) // ETX y ETB respectivamente
+                        {
+                            PortReceiveStatus = _SerialPortReceiveStatus.Listo;
+                        }
+                        else
+                        {
+                            Thread.sleep(10); // 10ms -> Tiempo suficiente para recibir aprox 30 caracteres
+                        }
+                        break;
+                        
+                     case LRC:
+                          rcvdByte = (byte)entrada.read();
+                        tempBuffer[_auxBytesRecibidos] = rcvdByte;
+                        _auxBytesRecibidos++;
+                        PortReceiveStatus.valor++; // listo
+                        break;
+                         
+                     default:
+                        break;
+               }
+               
+                if (PortReceiveStatus == _SerialPortReceiveStatus.Listo)
+                { 
+                    _dataBuffer = new byte[_auxBytesRecibidos];
+                   // Array.Copy(tempBuffer, 0, _dataBuffer, 0, _auxBytesRecibidos);
+                    _dataBuffer = tempBuffer;
+                    _bytesRecibidos = _auxBytesRecibidos;
+                    _auxBytesRecibidos = 0;
+                    _dataReady = true;
+                }
+           }
+          }catch(IOException ioe)
+           {}
+          catch(InterruptedException ie)
+          {}
+        
+          break;
+        }
+        
+        }
+    
+    /*Metodos privados*/
+    /// <summary>
+        /// Funci�n privada de uso exclusivo de la funci�n "SerialPortWriteAndRead" que lee el buffer de datos 
+        /// recibidos por el metodo SerialPortReceiveEvent y retorna la cantidad de bytes recibidos
+        /// </summary>
+        /// <param name="OutByteBuffer">Buffer donde se colocar� lo recibido de la impresora (Requiere el uso de la palabra clave "out")</param>
+private int getAnswer()
+{
+    //out byte[] OutByteBuffer
+     byte[] OutByteBuffer = null;
+    int LocalBytesRecibidos;
+            boolean timeExpired = false;
+            StopWatch cronometro = new StopWatch();
+
+            cronometro.start();
+            // Espera mientras los datos est�n listos o se acabe el tiempo
+            while ((!_dataReady) && (!timeExpired))
+            {
+
+                if (cronometro.getElapsedTime() > _SerialPortReceiveTimeout * 1000)
+                {
+                    timeExpired = true; // Se venci� el  tiempo
+                }
+
+            }
+
+            if (cronometro.running)
+            {
+                cronometro.stop(); // Detengo cuenta del cronometro
+            }
+
+            if (timeExpired)
+            {
+                OutByteBuffer = _emptyBuffer;
+                bResp = OutByteBuffer;
+                return -1; // -1 significa timeOut
+            }
+            else
+            {
+
+                OutByteBuffer = _dataBuffer;
+                bResp = OutByteBuffer;
+                _dataReady = false;
+
+                LocalBytesRecibidos = _bytesRecibidos;
+                _bytesRecibidos = 0;
+                PortReceiveStatus = _SerialPortReceiveStatus.Espera;
+
+                return LocalBytesRecibidos;
+            }
+} /// <summary>
+/// Funci�n que escribe la trama a la impresora y retorna la cantidad de bytes le�dos y un Array de bytes con la respuesta
+/// (Depende de getAnswer)
+/// </summary>
+/// <param name="bResp">Buffer donde se colocar� lo recibido de la impresora (Requiere el uso de la palabra clave "out")</param>
+protected  int SerialPortWriteAndRead(char[] cTrama) throws IOException
+{
+      int bytesRecibidos = 0;         // Cantidad de bytes recibidos, siempre se debe comparar con la cantidad esperada de bytes
+      byte[] vectorbyte = new byte[cTrama.length]; 
+      // out  byte[] bResp
+       try {
+           // Vac�o los buffers de entrada / salida         
+           if(entrada.available() > 0)
+           { 
+               entrada.reset(); // Port.DiscardInBuffer();      
+           }       
+           
+           salida.flush();//Port.DiscardOutBuffer();
+       
+                        int x = 0;
+			while(x<cTrama.length)
+			{
+				vectorbyte[x] = (byte)cTrama[x];
+				++x;
+			}
+
+            _dataReady = false;
+
+            PortReceiveStatus = _SerialPortReceiveStatus.Espera;
+       
+            salida.write(vectorbyte, 0, cTrama.length);   // Escribimos el comando a la impresora (Aqu� ya tienen STX, CMD, ETX y LRC)
+        } catch (IOException ex) {
+           throw  ex;
+        }
+                                        
+            bytesRecibidos = getAnswer();  // Recibimos la respuesta en bResp, junto con la cantidad de bytes recibidos
+                                                    // Si hubo timeout, bytesRecibidos contiene -1
+            return bytesRecibidos;
+     
+}
+/// <summary>
+///Metodo para reiniciar los elementos de repuesta
+/// </summary>
+protected  void ReiniciarVariables()
+{
+    this.dataLectorFisc = new ArrayList();
+} 
+/// <summary>
+/// M�todo Exclusivo para los m�todos SendCmd y SendCmd_Archivos, calcula el LRC de una trama y lo retorna como un char
+/// </summary>
+/// <param name="cmd">Comando o trama a la cual se le calcular� el LRC</param>
+protected  char Do_XOR(String sCMD)
+{
+    char[] cCMD = sCMD.toCharArray();   // cCMD = Comando en modo char            
+    int LRC_AUX = 0;                // Acumulador para el checksum
+    int CheckSum = 0;                // Checksum/LRC final
+
+    for (int i = 0; i < cCMD.length; i++)
+    {
+        if ((i == 0) && (cCMD[i] == STX))
+        {
+            // no hacer nada, dejar LRC_AUX en cero...
+        }
+        else if (LRC_AUX == 0) // si no se ha inicializado LRC_AUX lo inciamos
+        {
+            LRC_AUX = cCMD[i];
+        }
+        else if (cCMD[i] != ETX) // si LRC_AUX ya fue inicado y no es ETX
+        {
+            LRC_AUX ^= cCMD[i];
+        }
+        else         // En caso de que se env�e el ETX dentro de la trama...
+        {
+            CheckSum = LRC_AUX ^ ETX;    // Se asigna a CheckSum el �ltimo Xor con ETX (03)
+            return (char)CheckSum;      // Salgo de la funci�n retornando el CheckSum
+        }
+    }
+
+    CheckSum = LRC_AUX ^ ETX;    // Finalmente se asigna a CheckSum el �ltimo Xor, con ETX (03)
+    return (char)CheckSum;      // Retorno el checksum por si no lo voy a tomar desde la variable global
+}
+/// <summary>
+/// M�todo Exclusivo para los m�todos UploadStatus y UploadReport
+/// </summary>
+/// <param name="cmd">Comando o trama</param>
+/// <param name="bResp">Respuesta desde la impresora</param>
+protected  int SendCmd_Archivos(String sCMD)
+{
+   //, out byte[] bResp
+    byte[] bResp;
+    Do_XOR(sCMD);
+
+    Mensaje = STX + sCMD + ETX + ' ';
+
+
+    //////
+    char[] cCMD = Mensaje.toCharArray();
+
+    int bytesRecibidos = 0;
+
+    cCMD[cCMD.length - 1] = Do_XOR(sCMD);
+
+    try
+    {
+        // Se env�a el mensaje y recibe respuesta...                     
+        bytesRecibidos = SerialPortWriteAndRead(cCMD);
+
+        //Retorno la cantidad de caracteres recibidos en la trama de repuesta de la impresora
+        return bytesRecibidos;
+    }
+    catch (IOException e)
+    {
+        estado = "Error... " + e.getMessage();
+        bResp = null;
+        return 0;
+    }
+    catch (NullPointerException e1)
+    {
+        estado = "Error... " + e1.getMessage();
+        bResp = null;
+        return 0;
+    }
+
+}
+// / <summary>
+// / Establece el Status y Error en Hexadecimal de la Impresora Reciebiendo
+// dos parametros enteros de los mismos
+// / </summary>
+// / <param name="st">Estado</param>
+// / <param name="er">Error</param>
+protected String DarStatus_Error(int st, int er) {
+
+    int st_aux = st;
+
+    st = st & (~0x04);  
+
+
+    if((st & 0x6A) == 0x6A)// En modo fiscal y carga completa de la memoria fiscal y en emision de documentos NO fiscales    
+    {
+        status = "12";
+        this.descripStatus = "In Fiscal Mode, Memory Full, in Non Fiscal Transaction";
+    }
+    else if ((st & 0x69) == 0x69)// En modo fiscal y carga completa de la memoria
+    // fiscal y en emision de documentos fiscales
+    {
+        status = "11";
+        this.descripStatus = "In Fiscal Mode, Memory Full, in Fiscal Transaction";
+    }
+    else if ((st & 0x68) == 0x68)// En modo fiscal y carga completa de la memoria
+    // fiscal y en espera
+    {
+        status = "10";
+        this.descripStatus = "In Fiscal Mode Memory Full and Wait";
+    }
+    else if ((st & 0x72) == 0x72)// En modo fiscal y cercana carga completa de la
+    // memoria fiscal y en emision de documentos NO
+    // fiscales
+    {
+        status = "09";
+        this.descripStatus = "In Fiscal Mode, Fiscal Memory Near Full, in Non Fiscal Transaction";
+    }
+    else if ((st & 0x71) == 0x71) // En modo fiscal y cercana carga completa de la
+    // memoria fiscal y en emision de documentos
+    // fiscales
+    {
+        status = "08";
+        this.descripStatus = "In Fiscal Mode, Fiscal Memory Near Full, in Fiscal Transaction";
+    }
+    else if ((st & 0x70) == 0x70)// En modo fiscal y cercana carga completa de la
+    // memoria fiscal y en espera
+    {
+        status = "07";
+        this.descripStatus = "In Fiscal Mode, Fiscal Memory Near Full and Wait";
+    }
+    else if ((st & 0x62) == 0x62)// En modo fiscal e imprimiendo documentos No fiscales
+    {
+        status = "06";
+        this.descripStatus = "In Fiscal Mode, in Non Fiscal Transaction";
+    }
+    else if ((st & 0x61) == 0x61) // En modo fiscal e imprimiendo documentos fiscales
+    {
+        status = "05";
+        this.descripStatus = "In Fiscal Mode, in Fiscal Transaction";
+    }
+    else if ((st & 0x60) == 0x60)  // En modo fiscal y en espera.
+    {
+        status = "04";
+        this.descripStatus = "In Fiscal Mode and Wait";
+    }
+    else if ((st & 0x42) == 0x42)// En modo de prueba e imprimiendo documentos No fiscales.
+    {
+        status = "03";
+        this.descripStatus = "In Non Fiscal Mode, in Non Fiscal Transaction";
+    }
+    else if ((st & 0x41) == 0x41)// En modo de prueba e imprimiendo facturas.
+    {
+        status = "02";
+        this.descripStatus = "In Non Fiscal Mode, in Fiscal Transaction";
+    }
+    else if ((st & 0x40) == 0x40)// En modo de prueba y en espera.
+    {
+        status = "01";
+        this.descripStatus = "In Non Fiscal Mode and Wait";
+    }
+    else if ((st & 0x00) == 0x00) // Estatus Desconocido.
+    {
+        status = "00";
+        this.descripStatus = "Unknowed Status";
+    }
+
+
+
+
+    if ((er & 0x6C) == 0x6C)// Memoria Fiscal LLena
+    {
+        error = "108";
+        this.descripError = "Fiscal Memory Full";
+        this.ErroValid = false;
+    }
+    else if ((er & 0x64) == 0x64)// Error de la memoria Fiscal
+    {
+        error = "100";
+        this.descripError = "Memory Fiscal Error";
+        this.ErroValid = false;
+    }
+    else if ((er & 0x60) == 0x60)// Error Fiscal
+    {
+        error = "96";
+        this.descripError = "Fiscal Error";
+        this.ErroValid = false;
+    }
+    else if ((er & 0x5C) == 0x5C)// Comando invalido
+    {
+        error = "92";
+        this.descripError = "Invalid Commando";
+        this.ErroValid = false;
+    }
+    else if ((er & 0x58) == 0x58)// No hay asignadas directivas
+    {
+        error = "88";
+        this.descripError = "No Directives Assigned";
+        this.ErroValid = false;
+    }
+    else if ((er & 0x54) == 0x54)// Tasa invalida
+    {
+        error = "84";
+        this.descripError = "Invalid Tax";
+        this.ErroValid = false;
+    }
+    else if ((er & 0x50) == 0x50)// Comando Invalido valor invalido
+    {
+        error = "80";
+        this.descripError = "Command Invalid / Invalid Value";
+        this.ErroValid = false;
+    }
+    else if ((er & 0x43) == 0x43)// Fin de la entrega de papel y error mecanico
+    {
+        error = "03";
+        this.descripError = "Ends of Paper and Mechanic Error";
+        this.ErroValid = true;
+    }
+    else if ((er & 0x42) == 0x42)// Error de indole mecanico
+    {
+        error = "02";
+        this.descripError = "Mechanic Error with Paper";
+        this.ErroValid = true;
+    }
+    else if ((er & 0x41) == 0x41)// Fin de la Entrega de papel
+    {
+        error = "01";
+        this.descripError = "End of Paper";
+        this.ErroValid = true;
+    }
+    else if ((er & 0x40) == 0x40) // No hay Error
+    {
+        error = "00";
+        this.descripError = "No Error";
+        this.ErroValid = true;
+    }
+
+
+    if ((st_aux & 0x04) == 0x04)// Buffer completo debe enviar el comando de reinicio
+    {
+        error = "112";
+        this.descripError = "Buffer Full";
+        this.ErroValid = false;
+    }
+    else if (er == 128)// Error en la comunicacion
+    {
+        error = "128";
+        this.descripError = "Communication Error";
+        this.ErroValid = false;
+    }
+    else if (er == 137)// No hay respuesta
+    {
+        error = "137";
+        this.descripError = "No Answer";
+        this.ErroValid = false;
+    }
+    else if (er == 144)// Error LRC
+    {
+        error = "144";
+        this.descripError = "LRC Error";
+        this.ErroValid = false;
+    }
+    else if (er == 145)// Error Interno API
+    {
+        error = "145";
+        this.descripError = "Intern API Error";
+        this.ErroValid = false;
+    }
+    else if (er == 153)// Error en la apertura de archivo
+    {
+        error = "153";
+        this.descripError = "Opening File Error";
+        this.ErroValid = false;
+    }
+    else if (er == 71)// No hay rolo de papel para Factura
+    {
+        error = "71";
+        this.descripError = "No roll paper bill";
+        this.ErroValid = false;
+    }
+
+    Estado = "Status: " + status + "  " + "Error: " + error;
+
+        return Estado;
+
+}
+/// <summary>
+/// Consulta y hace el intento de trabajr con las se�ales CTS y RTS antes de ejecutar metodos de escrituras
+/// </summary>
+protected boolean ManipulaCTS_RTS()
+{
+
+    boolean resp;
+    try
+    {
+        resp = Wait_CTS();
+        return resp;
+    }
+    catch (NullPointerException e5)
+    {
+        estado = "Error... " + e5.getMessage();
+        ////Port.RtsEnable = false;
+        return false;
+    }
+}
+/// <summary>
+/// Metodo para esperar que la se�al CTS se ponga en true (Si lo hace en un tiempo determinado, sino, pues no).
+/// </summary>
+private boolean Wait_CTS()
+{
+    if (!IndPuerto) return false;
+
+        puertoSerie.setRTS(true);
+        long tiempoEsperaCTS = 4000; // se esperan 4 segundos para que se coloque en TRUE la se�al CTS antes de decir que no
+        long lastTime = 0;
+        StopWatch crono = new StopWatch();
+        crono.start();
+
+        // Espera mientras se coloca en true el CTS o se acabe el tiempo
+        while (!CTS) 
+        {
+            if (crono.getElapsedTime() > lastTime + 100) // Para que no se tire 3, cuando se monitorea el puerto
+            {
+                lastTime = crono.getElapsedTime();
+                this.CTS = puertoSerie.isCTS(); 
+            }
+
+            if ((crono.getElapsedTime() > tiempoEsperaCTS) && (CTS == false)) // 4 segundos
+            {
+                CTS = false;
+                return false; // Se venci� el  tiempo
+            }
+
+        }
+
+        if (crono.running)
+        {
+            crono.stop(); // Detengo cuenta del cronometro
+        }
+
+        return true;
+
+}
+ /// <summary>
+/// Extae Data de los Reportes de la maquina  al PC y lo copia en el Array "dataLectorFisc"
+/// </summary>
+/// <param name="Cmd">Comando o trama</param>
+protected int SubirDataReport(String sCMD)
+{
+    int lineasProcesadas = 0;
+    int bytesLeidos;
+    byte bitParada;
+    String trama = "";
+    int ascii = 0;
+    int n1 = 0;
+
+    // Envio comando de reporte "U..."
+    bytesLeidos = SendCmd_Archivos(sCMD);
+
+    if ((bytesLeidos > 0) && ( bResp[0] == (byte)ENQ)) // Si llega el ENQ
+    {
+        this.ReiniciarVariables();
+            try {
+                bytesLeidos = SerialPortWriteAndRead(new char[] { ACK }); // --> ACK    
+            } catch (IOException ex) {
+                Logger.getLogger(TfhkaRaiz.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        while ((bytesLeidos > 0) && ( bResp[0] != EOT)) // si es 1, deber�a ser EOT
+        {
+
+            int Pos_ETX = bytesLeidos - 2;
+            int Pos_LRC = bytesLeidos - 1;
+
+            for (n1 = 0; n1 < bytesLeidos; n1++)
+            {
+                ascii =  bResp[n1];
+
+                if (!(n1 == 0 || n1 == Pos_ETX || n1 == Pos_LRC || ascii == 03))
+                {
+                    if (ascii != 10) // != 0A
+                    {
+                        trama += (char)ascii;
+                        
+                    }
+                }
+            }
+
+            this.dataLectorFisc.add(trama);
+            if(lineasProcesadas == 0)
+            { sDataSubida = trama;}
+            trama = "";
+            bitParada =  bResp[Pos_ETX];
+             bResp = null;
+
+            if (bitParada == (byte)ETB || bitParada == (byte)ETX)
+            {
+                    try {
+                        if(!(bitParada == (byte)ETX && lineasProcesadas == 0))
+                        {bytesLeidos = SerialPortWriteAndRead(new char[] { ACK });} // OJO ANTES DE ENVIAR ACK SE DEBER�A CALCULAR EL CHECKSUM DE LA TRAMA RECIBIDA
+                         else
+                        { bytesLeidos = 0;}
+                    } catch (IOException ex) {
+                        Logger.getLogger(TfhkaRaiz.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+            }
+
+            ++lineasProcesadas;
+
+        }
+        
+    }
+
+    return lineasProcesadas;
+}
+
+
+/// <summary>
+/// Extae Data de los Status (S1, S2 ... Sx) de la maquina  al PC y lo copia en una variable string
+/// </summary>
+/// <param name="Cmd">Comando o trama</param>
+protected int SubirDataStatus(String sCMD)
+{    
+   //, out string sDataSubida
+    int bytesLeidos;
+    String trama = "";
+    int ascii = 0;
+    int n1 = 0;
+
+
+    bytesLeidos = SendCmd_Archivos(sCMD);
+
+    if (bytesLeidos > 0)
+    {  
+        this.ReiniciarVariables();
+
+        int Pos_ETX = bytesLeidos - 2;
+        int Pos_LRC = bytesLeidos - 1;
+
+        for (n1 = 0; n1 < bytesLeidos; n1++)
+        { 
+            ascii =  bResp[n1];
+
+            if (!(n1 == 0 || n1 == Pos_ETX || n1 == Pos_LRC || ascii == 03))
+            {
+
+                if (ascii != 10)
+                {
+                    trama += (char)ascii;
+                }
+
+            }
+
+        }
+    }
+
+    sDataSubida = trama;
+
+    return n1;
+
+}
+
+protected  static byte[] String2ByteArray(String str)
+{ 
+ byte[] textBytes = null;
+try {
+    textBytes = str.getBytes("UTF-8");
+} catch (UnsupportedEncodingException ex) {
+    Logger.getLogger(TfhkaRaiz.class.getName()).log(Level.SEVERE, null, ex);
+}
+
+    return textBytes;
+}
+/*
+    Copyright (c) 2005, Corey Goldberg
+
+    StopWatch.java is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+*/
+
+private class StopWatch {
+    
+    private long startTime = 0;
+    private long stopTime = 0;
+    private boolean running = false;
+
+    
+    public void start() {
+        this.startTime = System.currentTimeMillis();
+        this.running = true;
+    }
+
+    
+    public void stop() {
+        this.stopTime = System.currentTimeMillis();
+        this.running = false;
+    }
+
+    
+    //elaspsed time in milliseconds
+    public long getElapsedTime() {
+        long elapsed;
+        if (running) {
+             elapsed = (System.currentTimeMillis() - startTime);
+        }
+        else {
+            elapsed = (stopTime - startTime);
+        }
+        return elapsed;
+    }
+    
+    
+    //elaspsed time in seconds
+    public long getElapsedTimeSecs() {
+        long elapsed;
+        if (running) {
+            elapsed = ((System.currentTimeMillis() - startTime) / 1000);
+        }
+        else {
+            elapsed = ((stopTime - startTime) / 1000);
+        }
+        return elapsed;
+    }
+}   
+     
+}
