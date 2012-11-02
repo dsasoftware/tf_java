@@ -30,13 +30,19 @@ public class S3PrinterData {
         if (trama != null && trama.length()>= 57)
         {
           this.setTypeTax1(Integer.parseInt(trama.substring(2,3)));
-          double valor = Double.parseDouble(trama.substring(3,5)) + Double.parseDouble(trama.substring(5,7))/100;
+          //double valor = Double.parseDouble(trama.substring(3,5)) + Double.parseDouble(trama.substring(5,7))/100;
+          double valor = Double.parseDouble(trama.substring(3,5)); // para evitar errores con numeros negativos...
+              if (valor < 0) valor -= Double.parseDouble(trama.substring(5,7))/100; else valor += Double.parseDouble(trama.substring(5,7))/100;
           this.setTax1(valor);
           this.setTypeTax2(Integer.parseInt(trama.substring(7,8)));
-          valor = Double.parseDouble(trama.substring(8,10)) + Double.parseDouble(trama.substring(10,12))/100;
+          //valor = Double.parseDouble(trama.substring(8,10)) + Double.parseDouble(trama.substring(10,12))/100;
+          valor = Double.parseDouble(trama.substring(8,10)); // para evitar errores con numeros negativos...
+              if (valor < 0) valor -= Double.parseDouble(trama.substring(10,12))/100; else valor += Double.parseDouble(trama.substring(10,12))/100;
           this.setTax2(valor);
           this.setTypeTax3(Integer.parseInt(trama.substring(12,13)));
-          valor = Double.parseDouble(trama.substring(13,15)) + Double.parseDouble(trama.substring(15,17))/100;
+          //valor = Double.parseDouble(trama.substring(13,15)) + Double.parseDouble(trama.substring(15,17))/100;
+          valor = Double.parseDouble(trama.substring(13,15)); // para evitar errores con numeros negativos...
+              if (valor < 0) valor -= Double.parseDouble(trama.substring(15,17))/100; else valor += Double.parseDouble(trama.substring(15,17))/100;
           this.setTax3(valor);
           
           this.systemFlags0to19 = new int[20];

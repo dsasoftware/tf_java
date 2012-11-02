@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+//import javax.comm.*;
 import gnu.io.*;
 import _private.TfhkaRaiz;
 
@@ -31,266 +32,229 @@ public final  class Tfhka extends TfhkaRaiz {
              comPort = puerto;
 
             tempBuffer = new byte[1000];
-            PortReceiveStatus = _SerialPortReceiveStatus.Espera;
+           // PortReceiveStatus = _SerialPortReceiveStatus.Espera;
+             PortReceiveStatus = Espera;
             _dataReady = false;
             _bytesRecibidos = 0;
             _auxBytesRecibidos = 0;
-            setSerialPortReceiveTimeout(20); // El timeout por defecto se aumentÃ³ de 10 a 20
-            setSendCmdRetryAttempts(0);   // Por defecto no se intenta reenviar un comando fallido
-            setSendCmdRetryInterval(1000); // Tiempo en milisegundos a esperan antes de reenviar un comando fallido por NAK
-            UsandoLineasControl = true; // Esto sÃ³lo para iniciar la propiedad, realemnte se sabrÃ¡ si se usan lÃ­neas de control a abrir el puerto
+            setSerialPortReceiveTimeout(20); // El timeout por defecto se aumentó de 10 a 20
+            setSendCmdRetryAttempts(2);   // Por defecto no se intenta reenviar un comando fallido
+            setSendCmdRetryInterval(5000); // Tiempo en milisegundos a esperan antes de reenviar un comando fallido por NAK
+            UsandoLineasControl = false; // Esto sólo para iniciar la propiedad, realemnte se sabrá si se usan líneas de control a abrir el puerto
 	}
         
         public Tfhka()
         {
             tempBuffer = new byte[1000]; 
-            PortReceiveStatus = _SerialPortReceiveStatus.Espera;
+            //PortReceiveStatus = _SerialPortReceiveStatus.Espera;
+             PortReceiveStatus = Espera;
             _dataReady = false;
             _bytesRecibidos = 0;
             _auxBytesRecibidos = 0;
-              setSerialPortReceiveTimeout(20); // El timeout por defecto se aumentÃ³ de 10 a 20
-            setSendCmdRetryAttempts(0);   // Por defecto no se intenta reenviar un comando fallido
-            setSendCmdRetryInterval(1000); // Tiempo en milisegundos a esperan antes de reenviar un comando fallido por NAK
-            UsandoLineasControl = true; // Esto sÃ³lo para iniciar la propiedad, realemnte se sabrÃ¡ si se usan lÃ­neas de control a abrir el puerto
+            setSerialPortReceiveTimeout(20); // El timeout por defecto se aumentó de 10 a 20
+            setSendCmdRetryAttempts(2);   // Por defecto no se intenta reenviar un comando fallido
+            setSendCmdRetryInterval(5000); // Tiempo en milisegundos a esperan antes de reenviar un comando fallido por NAK
+            UsandoLineasControl = false; // Esto sólo para iniciar la propiedad, realemnte se sabrá si se usan líneas de control a abrir el puerto
 
 
         }
         
-         public int getSerialPortReceiveTimeout()
-         {
-             if (UsandoLineasControl)
-                {
-                    return _SerialPortReceiveTimeout;
-                }
-                else
-                {
-                    return 40; // Valor del TimeOut en "Modo emergencia"
-                }
-         }
-         
-        private void setSerialPortReceiveTimeout(int value) 
-        {          
-            if (value >= 5 && value <= 80)  // El tiempo de espera o Timeout configurable estÃ¡ en un rango de 5 - 80 segundos
-            {
-                 _SerialPortReceiveTimeout = value;
-            }           
-        } 
         
-        public int getSendCmdRetryAttempts() 
-        {  
-                if (UsandoLineasControl)
-                {
-                    return _SendCmdRetryAttempts;
-                }
-                else
-                {
-                    return 5;
-                }                   
-        }
-         
-        private void setSendCmdRetryAttempts(int value) 
-        {
-             if (value >= 0 && value <= 5)
-                {
-                    _SendCmdRetryAttempts = value;
-                }
-          
-        }
-
-        public int getSendCmdRetryInterval() 
-        {          
-                if (UsandoLineasControl)
-                {
-                    return _SendCmdRetryInterval;
-                }
-                else
-                {
-                    return 10000;
-                }
-                  
-        }
-        
-        private void setSendCmdRetryInterval(int value) 
-        {           
-                if (value >= 50 && value <= 10000)
-                {
-                    _SendCmdRetryInterval = value;
-                }          
-        }
-        
-        public byte[] getSerialPortInputBuffer()
-        {          
-                _dataReady = false; // Si leemos datos en el buffer serial de forma manual, para casos extremadamente extraÃ±os.
-                return _dataBuffer;
-        }
-        
-        public boolean getSerialPortDataReady()
-        {
-
-                return _dataReady;
-        }
 	/**
          * Metodo para la Configuracion del Puerto.
          * Retorna la indicaci?n de apertura.
 	 *@param IpPortName Nombre del Puerto Serial
          */
-	public boolean OpenFpctrl(String IpPortName) {
-		this.Terminar = IpPortName;
-		boolean puerto = false;
+    public boolean OpenFpctrl(String IpPortName)
+    {
+        this.Terminar = IpPortName;
+        boolean puerto = false;
 
-           try 
-           {
-                
-		listaPuertos = CommPortIdentifier.getPortIdentifiers();
-		while (listaPuertos.hasMoreElements()) {
-			idPuerto = (CommPortIdentifier) listaPuertos.nextElement();
-			if (idPuerto.getPortType() == CommPortIdentifier.PORT_SERIAL) {
-				// idPuerto.getName().equals("/dev/term/a") )
-				// idPuerto.getName().equals("COM1") )
-				if (idPuerto.getName().equals(IpPortName)) {
-					// Si el puerto no esta en uso, se intenta abrir
-						puertoSerie = (SerialPort) idPuerto.open(
-								"AplEscritura", 2000);
-						puerto = true;
-					 
-					// Se obtiene un canal de salida					
-						salida = puertoSerie.getOutputStream();
-						entrada = puertoSerie.getInputStream();
-						puerto = puerto && true;
-					 
+        try
+        {
 
-					// Se fijan los parametros de comunicacion del puerto
-					
-						puertoSerie.setSerialPortParams(9600,
-								SerialPort.DATABITS_8, SerialPort.STOPBITS_1,
-								SerialPort.PARITY_EVEN);
-						//puertoSerie.enableReceiveTimeout(10000);
-						//puertoSerie.notifyOnCTS(true);
-                                               
-						puerto = puerto && true;
-					
-					
-                                            // Se establecen las notificaciones de Eventos
-						 puertoSerie.notifyOnOutputEmpty(true);
-                                                 puertoSerie.addEventListener(this);
-                                                 puertoSerie.notifyOnDataAvailable(true);                                               
-                                                 
-						puerto = puerto && true;
-					
-				}
-
-			}
-
-		}
-		if (puerto == true)
+            listaPuertos = CommPortIdentifier.getPortIdentifiers();
+            while (listaPuertos.hasMoreElements())
+            {
+                idPuerto = (CommPortIdentifier) listaPuertos.nextElement();
+                if (idPuerto.getPortType() == CommPortIdentifier.PORT_SERIAL)
                 {
-                     if (ManipulaCTS_RTS())
+                    // idPuerto.getName().equals("/dev/term/a") )
+                    // idPuerto.getName().equals("COM1") )
+                    if (idPuerto.getName().equals(IpPortName))
                     {
-                        UsandoLineasControl = true;
+                        // Si el puerto no esta en uso, se intenta abrir
+                        puertoSerie = (SerialPort) idPuerto.open(
+                                "AplEscritura", 2000);
+                        puerto = true;
+
+                        // Se obtiene un canal de salida					
+                        salida = puertoSerie.getOutputStream();
+                        entrada = puertoSerie.getInputStream();
+                        puerto = puerto && true;
+
+
+                        // Se fijan los parametros de comunicacion del puerto
+
+                        puertoSerie.setSerialPortParams(9600,
+                                SerialPort.DATABITS_8, SerialPort.STOPBITS_1,
+                                SerialPort.PARITY_EVEN);
+                        //puertoSerie.enableReceiveTimeout(10000);
                         puertoSerie.notifyOnCTS(true);
-                    }else if (CheckFprinter())
-                    {
-                        UsandoLineasControl = false;
-                        puertoSerie.setRTS(false);                       
+
+                        puerto = puerto && true;
+
+
+                        // Se establecen las notificaciones de Eventos
+                        puertoSerie.notifyOnOutputEmpty(true);
+                        puertoSerie.addEventListener(this);
+                        puertoSerie.notifyOnDataAvailable(true);
+
+                        puerto = puerto && true;
+
                     }
-                    Estado = "Puerto Abierto";
+
                 }
-		else
-			Estado = "Error al Abrir puerto";
 
-		this.IndPuerto = puerto;
-                
-		return puerto;
-                
-                }catch (java.util.TooManyListenersException e) 
-                {
-                       Estado = e.getMessage();
-		       return false;
-                }catch (PortInUseException e)
-                {
-			Estado = e.getMessage();
-			return false;
-		}catch (IOException e) 
-                {
-			Estado = e.getMessage();
-			return false;
-		}catch (UnsupportedCommOperationException e) 
-                {
-			Estado = e.getMessage();
-			return false;
-		}catch (Exception ioe) 
-                {
-			Estado = ioe.getMessage();
-			return false;
-		} 
-                                        
-	}
+            }
 
-	/**
-	 * Metodo para Cerrar el Puerto serie
-	 */
-	public void CloseFpctrl() {
-		try {
-			puertoSerie.close();
-			this.IndPuerto = false;
+            this.IndPuerto = puerto;
 
-		} catch (NullPointerException e) {
-		}
-	}
+            if (puerto == true)
+            {
+                if (ManipulaCTS_RTS())
+                {
+                    UsandoLineasControl = true;
+                    puertoSerie.notifyOnCTS(true);
+                }
+                else if (CheckFprinter())
+                {
+                    UsandoLineasControl = false;
+                    puertoSerie.setRTS(false);
+                }
+                Estado = "Puerto Abierto";
+            }
+            else
+            {
+                Estado = "Error al Abrir puerto";
+            }
 
-	/**
-	 *Metodo para Chequear la conexi?n de la Impresora.
-	 */
-	public boolean CheckFprinter(){
-            
-             if (!IndPuerto)   
-                {  
-                    Estado = "Port Closed";
-                     return false;
-                }                  
-			
-		int bytesRecibidos = 0;
-                
-		try {                                    
-                   bytesRecibidos = SerialPortWriteAndRead(new char[] { ENQ });
-             
-                    if (bytesRecibidos >= 5) // por seguridad le dejamos el mayor o igual a 5 ( >=5 ), o se deja en == 5
-                    {
-                        this.ReiniciarVariables();
-                        return true;
-                    }
-                    else
-                    {
-                        this.ReiniciarVariables();
-                        return false;
-                    }
 
-				} catch (IOException e4) {
-					Estado = e4.getMessage();                                  
-                                        this.ReiniciarVariables();
-					
-					return false;
-				} catch (NullPointerException e1) {
-					Estado = e1.getMessage();
-					 this.ReiniciarVariables();
-                                         
-					return false;
-				}					
-	}
+            return puerto;
+
+        }
+        catch (java.util.TooManyListenersException e)
+        {
+            Estado = e.getMessage();
+            return false;
+        }
+        catch (PortInUseException e)
+        {
+            Estado = e.getMessage();
+            return false;
+        }
+        catch (IOException e)
+        {
+            Estado = e.getMessage();
+            return false;
+        }
+        catch (UnsupportedCommOperationException e)
+        {
+            Estado = e.getMessage();
+            return false;
+        }
+        catch (Exception ioe)
+        {
+            Estado = ioe.getMessage();
+            return false;
+        }
+
+    }
+
+    /**
+     * Metodo para Cerrar el Puerto serie
+     */
+    public void CloseFpctrl()
+    {
+        try
+        {
+            puertoSerie.close();
+            this.IndPuerto = false;
+
+        }
+        catch (NullPointerException e)
+        {
+        }
+    }
+
+    /**
+     * Metodo para Chequear la conexi?n de la Impresora.
+     */
+    public boolean CheckFprinter()
+    {
+
+        if (!IndPuerto)
+        {
+            Estado = "Port Closed";
+            return false;
+        }
+
+        int bytesRecibidos = 0;
+        int timeoutActual = _SerialPortReceiveTimeout;
+
+        _SerialPortReceiveTimeout = 2;
+        try
+        {
+            bytesRecibidos = SerialPortWriteAndRead(new char[] { ENQ }, false);
+
+            if (bytesRecibidos < 0)
+            {
+                bytesRecibidos = SerialPortWriteAndRead(new char[] { ENQ }, false);
+            }
+
+            _SerialPortReceiveTimeout = timeoutActual;
+
+            if (bytesRecibidos >= 5) // por seguridad le dejamos el mayor o igual a 5 ( >=5 ), o se deja en == 5
+            {
+                this.ReiniciarVariables();
+                return true;
+            }
+            else
+            {
+                this.ReiniciarVariables();
+                return false;
+            }
+
+        }
+        catch (IOException e4)
+        {
+            Estado = e4.getMessage();
+            this.ReiniciarVariables();
+
+            return false;
+        }
+        catch (NullPointerException e1)
+        {
+            Estado = e1.getMessage();
+            this.ReiniciarVariables();
+
+            return false;
+        }
+    }
          /// <summary>
-        /// MÃ©todo para Chequear la Apertura de Gaveta
+        /// Método para Chequear la Apertura de Gaveta
         /// </summary>
-        public boolean CheckDrawer() // Error ortogrÃ¡fico corregido
+        public boolean CheckDrawer() // Error ortográfico corregido
         {        
  
             int bytesRecibidos = 0;
 
-                if (!IndPuerto)   //  Misma observaciÃ³n de la funcion CheckFprinter()
+                if (!IndPuerto)   //  Misma observación de la funcion CheckFprinter()
                 {
                     return false;
                 }
         try {
-            bytesRecibidos = SerialPortWriteAndRead(new char[] { ENQ }); // ENQ
+            bytesRecibidos = SerialPortWriteAndRead(new char[] { ENQ },false); // ENQ
         } catch (IOException ex) {
             Logger.getLogger(Tfhka.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -320,61 +284,79 @@ public final  class Tfhka extends TfhkaRaiz {
 	 *@param cmd Comando en trama ? cadena de caracteres ASCII
          *@throws PrinterExeption Error de  transacci?n.
          */
-	public boolean SendCmd(String sCMD) throws PrinterExeption {
-             Mensaje = STX + sCMD + ETX + LRC;
-              
-                char[] cCMD = Mensaje.toCharArray();
-                int bytesRecibidos = 0;
-                int Reintentos = 0;
-                cCMD[cCMD.length - 1] = Do_XOR(sCMD); 
-        try {
-            // Se envÃ­a el mensaje                        
-            bytesRecibidos = SerialPortWriteAndRead(cCMD);
-        } catch (IOException ex) {
+public boolean SendCmd(String sCMD) throws PrinterExeption
+    {
+        Mensaje = STX + sCMD + ETX + LRC;
+
+        char[] cCMD = Mensaje.toCharArray();
+        int bytesRecibidos = 0;
+        int Reintentos = 0;
+        cCMD[cCMD.length - 1] = Do_XOR(sCMD);
+        try
+        {
+            // Se envía el mensaje                        
+            bytesRecibidos = SerialPortWriteAndRead(cCMD, true);
+        }
+        catch (IOException ex)
+        {
             Logger.getLogger(Tfhka.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-                if ((bytesRecibidos == 1) && (bResp[0] == (byte)ACK)) // bien, ACK
+        if ((bytesRecibidos == 1) && (bResp[0] == (byte) ACK)) // bien, ACK
+        {
+            // this.envio = "Status: 00  Error: 00";
+            this.ReiniciarVariables();
+            return true;
+        }
+        else
+        {
+
+            while ((bResp[0] == (byte) NAK) && (Reintentos < getSendCmdRetryAttempts()))
+            {
+                try
                 {
-
-                   // this.envio = "Status: 00  Error: 00";
-                    this.ReiniciarVariables();
-
-                    return true;
-                }
-                else
-                {
-
-                    while ( (bResp[0] == (byte)NAK) && (Reintentos < getSendCmdRetryAttempts()) )
-                    {
-                try {
                     Thread.sleep(getSendCmdRetryInterval()); // Esperamos unos pocos milisegundos antes de reintentar enviar el comando por NAK
-                } catch (InterruptedException ex) {
+                }
+                catch (InterruptedException ex)
+                {
                     Logger.getLogger(Tfhka.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                try {
-                    // Se reenvÃ­a el mensaje                        
-                    bytesRecibidos = SerialPortWriteAndRead(cCMD);
-                } catch (IOException ex) {
+                try
+                {
+                    // Se reenvía el mensaje                        
+                    bytesRecibidos = SerialPortWriteAndRead(cCMD, true);
+                }
+                catch (IOException ex)
+                {
                     Logger.getLogger(Tfhka.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                        ++Reintentos;
-                    }
+                ++Reintentos;
+            }
 
-                    this.ReiniciarVariables();
+            this.ReiniciarVariables();
 
-                    if ((bytesRecibidos == 1) && (bResp[0] == (byte)ACK)) // bien, ACK
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        //   this.envio = "Status: 00  Error: 89";
-                        return false;
-                    }
+            if ((bytesRecibidos == 1) && (bResp[0] == (byte) ACK)) // bien, ACK
+            {
+                return true;
+            }
+            else if ((bytesRecibidos == 1) && (bResp[0] == (byte) NAK)) // bien, ACK
+            {
+                //   this.envio = "Status: 00  Error: 89";
+                return false;
+            }
+            else if (bytesRecibidos == -1)
+            {
+                StatusErrorPrinter = new PrinterStatus(0, 89, false, status, error);
 
-                }
-	}	
+                throw new PrinterExeption("Error de Comunicacion.", StatusErrorPrinter);
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+    }
 	/**
 	 *Metodo para el Envio de Comandos por medio de un Archivo.txt o .dat.
          *Retorna el numero de linea procedades del archivo.
@@ -416,163 +398,209 @@ public final  class Tfhka extends TfhkaRaiz {
 	 *@param Cmd Comando o trama 
 	 *@param file Ruta o Nombre del archivo.txt o .dat 
          */
-	public boolean UploadStatusCmd(String Cmd, String file) {
-		
-			int interv = 0;
-			try {
-				FileWriter fw = new FileWriter(file);
-				BufferedWriter bw = new BufferedWriter(fw);
-				PrintWriter salidaf = new PrintWriter(bw);
-                                
-                              interv =  this.SubirDataStatus(Cmd);                                                          
-                               
-				salidaf.println(sDataSubida);
-				salidaf.close();
-				
-                                if (interv != 0)
-                                {
-                                    Estado = " Status: 00  Error: 00";
-                                      this.ReiniciarVariables();
-                                    return true;
-                                }
-                                else
-                                {
-                                Estado = "Sin repuesta";
-                                  this.ReiniciarVariables();
-                                    return false;
-                                }
+    public boolean UploadStatusCmd(String Cmd, String file)
+    {
 
-			} catch (java.io.IOException ioex) {
-				Estado = ioex.getMessage();                         
-                                this.ReiniciarVariables();
-				return false;
-			} catch (NullPointerException e2) {
-                            Estado = e2.getMessage();
-				  this.ReiniciarVariables();
-				return false;
-			}
-	}
+        int interv = 0;
+        try
+        {
+            FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter salidaf = new PrintWriter(bw);
+
+            interv = this.SubirDataStatus(Cmd);
+
+            salidaf.println(sDataSubida);
+            salidaf.close();
+
+            if (interv != 0)
+            {
+                Estado = " Status: 00  Error: 00";
+                this.ReiniciarVariables();
+                return true;
+            }
+            else
+            {
+                Estado = "Sin repuesta";
+                this.ReiniciarVariables();
+                return false;
+            }
+
+        }
+        catch (java.io.IOException ioex)
+        {
+            Estado = ioex.getMessage();
+            this.ReiniciarVariables();
+            return false;
+        }
+        catch (NullPointerException e2)
+        {
+            Estado = e2.getMessage();
+            this.ReiniciarVariables();
+            return false;
+        }
+    }
 
 	/**
 	 *Sube uno ? varios Reportes al PC y lo carga en un archivo.txt
 	 *@param Cmd Comando o trama 
 	 *@param file Ruta o Nombre del archivo.txt o .dat 
          */
-	public boolean UploadReportCmd(String Cmd, String file) {
-				                      
-                        String lineno = "";
-                        int interv = 0;
-			
-			try {
-				FileWriter fw = new FileWriter(file);
-				BufferedWriter bw = new BufferedWriter(fw);
-				PrintWriter salidaf = new PrintWriter(bw);
-                                
-                                if(Cmd.length() == 3)
-                                { interv =  this.SubirDataReport(Cmd);}
-                                else
-                                {interv =  this.SubirDataReport(Cmd);}
-                              
+	public boolean UploadReportCmd(String Cmd, String file)
+    {
 
-                              for(Object contenido : this.dataLectorFisc)
-                              {
-                                  lineno += (String)contenido + "\r\n";
-                              }
-                               
-				salidaf.println(lineno);
-				salidaf.close();
-				
-                                if (interv != 0)
-                                {
-                                    Estado = " Status: 00  Error: 00";
-                                       this.ReiniciarVariables();
-                                    return true;
-                                }
-                                else
-                                {
-                                Estado = "Sin repuesta";
-                                   this.ReiniciarVariables();
-                                    return false;
-                                }
-                               
-                               
-			} catch (java.io.IOException ioex) {
-				Estado = ioex.getMessage();
-                                     this.ReiniciarVariables();
-				return false;
-			} catch (NullPointerException e2) {
-                            Estado = e2.getMessage();
-				   this.ReiniciarVariables();
-				return false;
-			} 		
-	}
+        String lineno = "";
+        int interv = 0;
+
+        try
+        {
+            FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter salidaf = new PrintWriter(bw);
+
+ 
+            interv = this.SubirDataReport(Cmd);
+
+   
+            /*
+             for(Object contenido : this.dataLectorFisc)
+             {
+             lineno += (String)contenido + "\r\n";
+             }
+             */
+            for (int i = 0; i < this.dataLectorFisc.size(); i++)
+            {
+                Object contenido = this.dataLectorFisc.get(i);
+                lineno += (String) contenido + "\r\n";
+            }
+
+            salidaf.println(lineno);
+            salidaf.close();
+
+            if (interv != 0)
+            {
+                Estado = " Status: 00  Error: 00";
+                this.ReiniciarVariables();
+                return true;
+            }
+            else
+            {
+                Estado = "Sin repuesta";
+                this.ReiniciarVariables();
+                return false;
+            }
+
+
+        }
+        catch (java.io.IOException ioex)
+        {
+            Estado = ioex.getMessage();
+            this.ReiniciarVariables();
+            return false;
+        }
+        catch (NullPointerException e2)
+        {
+            Estado = e2.getMessage();
+            this.ReiniciarVariables();
+            return false;
+        }
+    }
        
 	/**
 	 * Lee el Status y Error de la Impresora Fiscal
 	 */
-	public boolean ReadFpStatus() {
-           int bytesRecibidos = 0;
-                try
-                { 
+	   public
+            boolean ReadFpStatus()
+    {
+        int bytesRecibidos = 0;
+        try
+        {
+            int timeoutActual = _SerialPortReceiveTimeout;
 
-                    bytesRecibidos = SerialPortWriteAndRead(new char[] { ENQ }); // solicitamos ENQ
-          
-                    int st = 0, er = 0, lrc = 0;
+            _SerialPortReceiveTimeout = 2;
 
-                    if (bytesRecibidos == 5)
+            bytesRecibidos = SerialPortWriteAndRead(new char[]
                     {
-                        for (int i = 0; i < 5; ++i)
-                        {
-                            if (i == 1)
-                            { st = (int)bResp[i]; }
-                            else if (i == 2)
-                            { er = (int)bResp[i]; }
-                            else if (i == 4)
-                            { lrc = (int)bResp[i]; }
+                        ENQ
+                    }, false); // solicitamos ENQ
 
-                        }
-
-                        if ((st ^ er ^ 0x03) != lrc)
-                            DarStatus_Error(0, 144);
-                        else
-                            DarStatus_Error(st, er);
-
-                        if (status != null && error != null)
+            if (bytesRecibidos < 0)
+            {
+                bytesRecibidos = SerialPortWriteAndRead(new char[]
                         {
-                            this.estado = "OK...";
-                            this.ReiniciarVariables();
-                            return true;
-                        }
-                        else
-                        {
-                            this.estado = "No hay Repuesta";
-                            this.ErroValid = false;
-                            this.descripStatus = "No Answer";
-                            this.descripError = "No Answer";
-                            this.ReiniciarVariables();
-                            return false;
-                        }
-                    }
-                    else
-                    {
-                        DarStatus_Error(0, 137);
-                        this.ReiniciarVariables();
-                        return false;
-                    }
-                }
-                catch (IOException e)
+                            ENQ
+                        }, false);
+            }
+
+            _SerialPortReceiveTimeout = timeoutActual;
+
+
+            int st = 0, er = 0, lrc = 0;
+
+            if (bytesRecibidos == 5)
+            {
+                for (int i = 0; i < 5; ++i)
                 {
-                    Estado = "Error... " + e.getMessage();
+                    if (i == 1)
+                    {
+                        st = (int) bResp[i];
+                    }
+                    else if (i == 2)
+                    {
+                        er = (int) bResp[i];
+                    }
+                    else if (i == 4)
+                    {
+                        lrc = (int) bResp[i];
+                    }
+
+                }
+
+                if ((st ^ er ^ 0x03) != lrc)
+                {
+                    DarStatus_Error(0, 144);
+                }
+                else
+                {
+                    DarStatus_Error(st, er);
+                }
+
+                if (status != null && error != null)
+                {
+                    this.estado = "OK...";
+                    this.ReiniciarVariables();
+                    return true;
+                }
+                else
+                {
+                    this.estado = "No hay Repuesta";
+                    this.ErroValid = false;
+                    this.descripStatus = "No Answer";
+                    this.descripError = "No Answer";
                     this.ReiniciarVariables();
                     return false;
                 }
-                catch (NullPointerException e1)
-                {
-                    Estado = "Error... " + e1.getMessage();
-                    this.ReiniciarVariables();
-                    return false;
-                }
-	}
+            }
+            else
+            {
+                DarStatus_Error(0, 137);
+                this.ReiniciarVariables();
+                return false;
+            }
+        }
+        catch (IOException e)
+        {
+            Estado = "Error... " + e.getMessage();
+            this.ReiniciarVariables();
+            return false;
+        }
+        catch (NullPointerException e1)
+        {
+            Estado = "Error... " + e1.getMessage();
+            this.ReiniciarVariables();
+            return false;
+        }
+    }
         /**
 	 *Retorna un objeto PrinterStatus con  la informacion del status y error  de la impresora
 	 */ 
@@ -591,61 +619,74 @@ public final  class Tfhka extends TfhkaRaiz {
 	 *Retorna un objeto  de tipo ReportData  con todas la informaci?n para la carga de un reporte X actual("U0X").
          *@throws PrinterExeption Error de  transacci?n.
 	 */
-        public ReportData getXReport() throws PrinterExeption
-        {  
-        try {
+    public ReportData getXReport() throws PrinterExeption
+    {
+        try
+        {
 
             int rep = this.SubirDataReport("U0X");
-            if (rep > 0) {
+
+            if (rep > 0)
+            {
                 this.ReportePC = new ReportData(this.sDataSubida);
                 Estado = " Status: 00  Error: 00";
-            } else {
+            }
+            else
+            {
                 this.ReportePC = null;
                 Estado = "Sin repuesta";
                 throw new PrinterExeption(Estado, getPrinterStatus());
             }
 
             return ReportePC;
-            
-        }catch (NullPointerException ex) {
+
+        }
+        catch (NullPointerException ex)
+        {
             Estado = ex.getMessage();
             this.ReportePC = null;
-                throw new PrinterExeption(Estado, getPrinterStatus());
+            throw new PrinterExeption(Estado, getPrinterStatus());
         }
-        
-        }
+
+    }
         /**
 	 *Retorna un objeto  de tipo ReportData  con todas la informaci?n del ?ltimo reporte Z reaizado ("U0Z").
          *@throws PrinterExeption Error de  transacci?n.
 	 */
         public ReportData getZReport() throws PrinterExeption
-        {  
-            try {
+    {
+        try
+        {
 
             int rep = this.SubirDataReport("U0Z");
-            if (rep > 0) {
+            if (rep > 0)
+            {
                 this.ReportePC = new ReportData(this.sDataSubida);
                 Estado = " Status: 00  Error: 00";
-            } else {
+            }
+            else
+            {
                 this.ReportePC = null;
                 Estado = "Sin repuesta";
                 throw new PrinterExeption(Estado, getPrinterStatus());
             }
 
             return ReportePC;
-            
-        }catch (NullPointerException ex) {
+
+        }
+        catch (NullPointerException ex)
+        {
             this.ReportePC = null;
             Estado = ex.getMessage();
-                throw new PrinterExeption(Estado, getPrinterStatus());
+            throw new PrinterExeption(Estado, getPrinterStatus());
         }
-        
-        }
+
+    }
        /**
-	*Retorna un arreglo de objetos  ReportData Z con todos sus atributos por rango de n??Â½meros
-	*@param StarReportNumber N??Â½mero del  Z inicial a subir
-        *@param EndReportNumber N??Â½mero del  Z final a subir
-        *@throws PrinterExeption Error de  transacci??Â½n.
+	*Retorna un arreglo de objetos  ReportData Z con todos sus atributos por rango de n??½meros
+	*@param StarReportNumber N??½mero del  Z inicial a subir
+        *@param EndReportNumber N??½mero del  Z final a subir
+        *@throws PrinterExeption Error de  transacci??½n.
         */
         public ReportData[] getZReport(int StarReportNumber, int EndReportNumber ) throws PrinterExeption
         {  
@@ -668,13 +709,19 @@ public final  class Tfhka extends TfhkaRaiz {
            { int  m=0;
            
             this.ReporteArrayPC = new ReportData[this.dataLectorFisc.size()];
-            
+            /*
              for(Object contenido : this.dataLectorFisc)
               {
                  this.ReporteArrayPC[m] = new ReportData((String)contenido);
                  ++m;
               }
-           
+              */
+            for (int i = 0; i < this.dataLectorFisc.size(); i++) {  
+                                  Object contenido = this.dataLectorFisc.get(i);  
+                                  this.ReporteArrayPC[m] = new ReportData((String)contenido);
+                 ++m;
+                                }  
+            
             Estado = " Status: 00  Error: 00";
            }
            else
@@ -701,7 +748,7 @@ public final  class Tfhka extends TfhkaRaiz {
 	  *Retorna un arreglo de objetos de ReportData Z con todos sus atributos por rango de fechas
           *@param StarDate Fecha inicial del  Z a subir
           *@param EndDate Fecha final del  Z a subir
-          *@throws PrinterExeption Error de  transacci??Â½n.
+          *@throws PrinterExeption Error de  transacci??½n.
           */
         public ReportData[] getZReport(Date StarDate, Date EndDate)throws PrinterExeption
         {  
@@ -755,12 +802,19 @@ public final  class Tfhka extends TfhkaRaiz {
                int  h=0;
            
             this.ReporteArrayPC = new ReportData[this.dataLectorFisc.size()];
-            
+            /*
              for(Object contenido : this.dataLectorFisc)
               {
                  this.ReporteArrayPC[h] = new ReportData((String)contenido);
                  ++h;
               }
+              */
+              for (int i = 0; i < this.dataLectorFisc.size(); i++) {  
+                                  Object contenido = this.dataLectorFisc.get(i);  
+                                 this.ReporteArrayPC[h] = new ReportData((String)contenido);
+                 ++h;
+                                }  
+             
                 Estado = " Status: 00  Error: 00";
             }
            else

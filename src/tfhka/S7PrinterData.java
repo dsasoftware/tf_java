@@ -32,7 +32,7 @@ public class S7PrinterData {
        /// </summary>
        public S7PrinterData(String trama)
        {
-           if (trama != null)
+           if (trama != null && trama.length() >=41 )
            {
                this.getMICR(trama.substring(2, 41));
                

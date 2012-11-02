@@ -27,12 +27,18 @@ public class S2PrinterData {
     {
         if (trama != null && trama.length() == 69)
         {   
-            double valor =  Double.parseDouble(trama.substring(3,14)) +  Double.parseDouble(trama.substring(14,16))/100;
+            //double valor =  Double.parseDouble(trama.substring(3,14)) +  Double.parseDouble(trama.substring(14,16))/100;
+             double valor = Double.parseDouble(trama.substring(3,14)); // para evitar errores con numeros negativos...
+             if (valor < 0) valor -= Double.parseDouble(trama.substring(14,16))/100; else valor += Double.parseDouble(trama.substring(14,16))/100;
             this.setSubTotalBases(valor);
-            valor = Double.parseDouble(trama.substring(17,28)) +  Double.parseDouble(trama.substring(28,30))/100;
+            //valor = Double.parseDouble(trama.substring(17,28)) +  Double.parseDouble(trama.substring(28,30))/100;
+            valor = Double.parseDouble(trama.substring(17,28)); // para evitar errores con numeros negativos...
+            if (valor < 0) valor -= Double.parseDouble(trama.substring(28,30))/100; else valor += Double.parseDouble(trama.substring(28,30))/100;
             this.setSudTotalTax(valor);
             this.setDataDummy(trama.substring(31,50));
-            valor = Double.parseDouble(trama.substring(51,62)) +  Double.parseDouble(trama.substring(62,64))/100;
+            //valor = Double.parseDouble(trama.substring(51,62)) +  Double.parseDouble(trama.substring(62,64))/100;
+            valor = Double.parseDouble(trama.substring(51,62)); // para evitar errores con numeros negativos...
+               if (valor < 0) valor -= Double.parseDouble(trama.substring(62,64))/100; else valor += Double.parseDouble(trama.substring(62,64))/100;
             this.setAmountPayable(valor);
             this.setNumberPaymentsMade(Integer.parseInt(trama.substring(64,68)));
             this.setCondition(Integer.parseInt(trama.substring(68,69)));

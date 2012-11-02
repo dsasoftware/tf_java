@@ -20,7 +20,7 @@ public class S4PrinterData {
      */
     public S4PrinterData(String trama)
     {
-       if (trama != null && trama.length() >=162)
+       if (trama != null && trama.length() ==162)
        {
            this.listCumulaMountsMeansPayments = new double[16];
            int ite = 0;
@@ -28,7 +28,9 @@ public class S4PrinterData {
            double valor = 0.00;
            while (ite <16)
            {
-              valor = Double.parseDouble(trama.substring(i,j)) + Double.parseDouble(trama.substring(j,k))/100;
+              //valor = Double.parseDouble(trama.substring(i,j)) + Double.parseDouble(trama.substring(j,k))/100;
+               valor = Double.parseDouble(trama.substring(i,j)); // para evitar errores con numeros negativos...
+              if (valor < 0) valor -= Double.parseDouble(trama.substring(j,k))/100; else valor += Double.parseDouble(trama.substring(j,k))/100;
               this.listCumulaMountsMeansPayments[ite] = valor;
               i = k;
               j = i + 8;

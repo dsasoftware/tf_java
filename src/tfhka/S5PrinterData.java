@@ -15,7 +15,6 @@ package tfhka;
  */
 public class S5PrinterData {
     private String RIF;
-    private String DV;
     private String registeredMachineNumber;
     private int numberMemoryAudit;
     private double capacityTotalMemoryAudit;
@@ -27,34 +26,26 @@ public class S5PrinterData {
      */
     public S5PrinterData(String trama)
     {
-        if (trama != null && trama.length() >= 55)
+        if (trama != null && trama.length() == 41)
         {
-        this.setRIF(trama.substring(2,22));
-        this.setDV(trama.substring(22,24));
-        this.setRegisteredMachineNumber(trama.substring(24,37));
-        this.setNumberMemoryAudit(Integer.parseInt(trama.substring(37,41)));
-        this.setCapacityTotalMemoryAudit(Double.parseDouble(trama.substring(41,45)));
-        this.setDisponyCapacityMemoryAudit(Double.parseDouble(trama.substring(45,49)));
-        this.setNumberDocumentRegisters(Integer.parseInt(trama.substring(49,55)));
+        this.setRIF(trama.substring(2,13));
+        this.setRegisteredMachineNumber(trama.substring(13,23));
+        this.setNumberMemoryAudit(Integer.parseInt(trama.substring(23,27)));
+        this.setCapacityTotalMemoryAudit(Double.parseDouble(trama.substring(27,31)));
+        this.setDisponyCapacityMemoryAudit(Double.parseDouble(trama.substring(31,35)));
+        this.setNumberDocumentRegisters(Integer.parseInt(trama.substring(35,41)));
         }
         
     }
-     /** Retorna el RIF de fiscalizaciï¿½n de la impresora fiscal*/
-    public String getRUC() {
+     /** Retorna el RIF de fiscalización de la impresora fiscal*/
+    public String getRIF() {
         return RIF;
     }
-    /**
-     * Retorna el DV de la razÃ³n social de fiscalizaciÃ³n de la impresora fiscal
-    **/
-       public String getDV()
-       {
-           return DV;
-       }
     /** Retorna el numero de registro o serial  de la impresora fiscal*/
     public String getRegisteredMachineNumber() {
         return registeredMachineNumber;
     }
-    /** Retorna el numero correspondiente a la memoria de auditorï¿½a en la impresora fiscal*/
+    /** Retorna el numero correspondiente a la memoria de auditoría en la impresora fiscal*/
     public int getNumberMemoryAudit() {
         return numberMemoryAudit;
     }
@@ -73,10 +64,6 @@ public class S5PrinterData {
 
     private void setRIF(String RIF) {
         this.RIF = RIF;
-    }
-
-      private void setDV(String dv) {
-        this.DV = dv;
     }
 
     private void setRegisteredMachineNumber(String registeredMachineNumber) {
