@@ -30,7 +30,10 @@ public class S4PrinterData {
            {
               //valor = Double.parseDouble(trama.substring(i,j)) + Double.parseDouble(trama.substring(j,k))/100;
                valor = Double.parseDouble(trama.substring(i,j)); // para evitar errores con numeros negativos...
-              if (valor < 0) valor -= Double.parseDouble(trama.substring(j,k))/100; else valor += Double.parseDouble(trama.substring(j,k))/100;
+              if (valor < 0)
+                  valor -= Double.parseDouble(trama.substring(j,k))/100;
+              else
+                  valor += Double.parseDouble(trama.substring(j,k))/100;
               this.listCumulaMountsMeansPayments[ite] = valor;
               i = k;
               j = i + 8;
@@ -39,6 +42,34 @@ public class S4PrinterData {
            }
            
            this.setListCumulaMountsMeansPayments(listCumulaMountsMeansPayments);
+           
+       } else if (trama != null && trama.length() == 314) // DT230
+           {
+             this.listCumulaMountsMeansPayments = new double[24];
+             int ite = 0;
+             int i = 2, j = 10,  k = 12;
+             double valor = 0.00;
+             while (ite < 24)
+             {
+               valor = Double.parseDouble(trama.substring(i, j)); // para ver la operación en dos pasos...
+
+               if (valor < 0)
+               {
+                 valor -= Double.parseDouble(trama.substring(j, k)) / 100;
+               }
+               else
+               {
+                 valor += Double.parseDouble(trama.substring(j, k)) / 100;
+               }
+
+               this.listCumulaMountsMeansPayments[ite] = valor;
+                 i = k;
+                 j = i + 8;
+                 k = j + 2;
+
+               ++ite;
+             }
+               this.setListCumulaMountsMeansPayments(listCumulaMountsMeansPayments);
        }
     }
      /**Retorna una lista de los montos acumulados de los 16 medios de pagos*/

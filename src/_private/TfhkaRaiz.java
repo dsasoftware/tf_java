@@ -65,11 +65,13 @@ public abstract class TfhkaRaiz implements SerialPortEventListener{
     public boolean IndPuerto = false;
      /**Objeto de tipo ReportData que se carga al subir reporte X ??½ Z del PC por medio de los m??½todos getZReport()  y  getXReport()*/
         public ReportData ReportePC;
+         /**Objeto de tipo AcumuladosX que se carga al subir reporte X4, X5 y X7 del PC por medio de los metodos getX4Report(), getX5Report()  y  getX7Report()*/
+        public AcumuladosX ReporteAcumX;
         /**Arreglo de Objetos de tipo ReportData que se cargan al subir lectura de memoria fiscal del PC mediante los m??½todos getZReport(Date fecha1, Date fecha2)
          * y getZReport(int nroZ1, int nroZ2).
          */
         public ReportData[] ReporteArrayPC;
-        /**Objeto de tipo PrinterStatus que se carga al leer Status y Error de la impresora por medio del m??½todo getPrinterStatus()*/
+        /**Objeto de tipo PrinterStatus que se carga al leer Status y Error de la impresora por medio del m??½todo getPrinterStatus()*/       
         public PrinterStatus StatusErrorPrinter;
          /**Objeto de tipo S1PrinterData que carga informaci??½n cuando se hace una subida de estado S1 por el m??½todo  getS1PrinterData()*/
         public S1PrinterData S1Estado;
@@ -323,11 +325,12 @@ private int getAnswer()
     StopWatch cronometro = new StopWatch();
 
     cronometro.start();
+   
     // Espera mientras los datos están listos o se acabe el tiempo
     while ((!_dataReady) && (!timeExpired))
     {
 
-        if (cronometro.getElapsedTime() > getSerialPortReceiveTimeout() * 1000)
+        if (cronometro.getElapsedTime() > _SerialPortReceiveTimeout * 1000)
         {
             timeExpired = true; // Se venció el  tiempo
         }

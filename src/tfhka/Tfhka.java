@@ -12,7 +12,7 @@ import _private.TfhkaRaiz;
 
 /** 
 * Representa una Libreria de Clase para Protocolo de Comunicacion Directo
-* de la impresora fiscal con apliciones java, empleando la API de comunicacion comm.jar.
+* de la impresora fiscal con apliciones java, empleando la API de comunicacion RXTXcomm.jar.
 */ 
 public final  class Tfhka extends TfhkaRaiz {
 
@@ -27,21 +27,25 @@ public final  class Tfhka extends TfhkaRaiz {
 	*puerto a manejar en la clase
 	*@param puerto Nombre del Puerto Serial 
         */
-	public Tfhka(String puerto) {
-		OpenFpctrl(puerto);
-             comPort = puerto;
+	   public Tfhka(String puerto)
+    {
 
-            tempBuffer = new byte[1000];
-           // PortReceiveStatus = _SerialPortReceiveStatus.Espera;
-             PortReceiveStatus = Espera;
-            _dataReady = false;
-            _bytesRecibidos = 0;
-            _auxBytesRecibidos = 0;
-            setSerialPortReceiveTimeout(20); // El timeout por defecto se aumentó de 10 a 20
-            setSendCmdRetryAttempts(2);   // Por defecto no se intenta reenviar un comando fallido
-            setSendCmdRetryInterval(5000); // Tiempo en milisegundos a esperan antes de reenviar un comando fallido por NAK
-            UsandoLineasControl = false; // Esto sólo para iniciar la propiedad, realemnte se sabrá si se usan líneas de control a abrir el puerto
-	}
+        tempBuffer = new byte[1000];
+
+        OpenFpctrl(puerto);
+        comPort = puerto;
+
+
+        // PortReceiveStatus = _SerialPortReceiveStatus.Espera;
+        PortReceiveStatus = Espera;
+        _dataReady = false;
+        _bytesRecibidos = 0;
+        _auxBytesRecibidos = 0;
+        setSerialPortReceiveTimeout(20); // El timeout por defecto se aumentó de 10 a 20
+        setSendCmdRetryAttempts(2);   // Por defecto no se intenta reenviar un comando fallido
+        setSendCmdRetryInterval(5000); // Tiempo en milisegundos a esperan antes de reenviar un comando fallido por NAK
+        UsandoLineasControl = false; // Esto sólo para iniciar la propiedad, realemnte se sabrá si se usan líneas de control a abrir el puerto
+    }
         
         public Tfhka()
         {
@@ -126,13 +130,20 @@ public final  class Tfhka extends TfhkaRaiz {
                 {
                     UsandoLineasControl = true;
                     puertoSerie.notifyOnCTS(true);
+                    Estado = "Puerto Abierto";
                 }
                 else if (CheckFprinter())
                 {
                     UsandoLineasControl = false;
                     puertoSerie.setRTS(false);
+                    Estado = "Puerto Abierto";
+                }else
+                {
+                   Estado = "Impresora no detectada";
+                    this.IndPuerto = false;
+                    puerto = this.IndPuerto;
                 }
-                Estado = "Puerto Abierto";
+                
             }
             else
             {
@@ -649,6 +660,142 @@ public boolean SendCmd(String sCMD) throws PrinterExeption
         }
 
     }
+     /**
+	 *Retorna un objeto  de tipo ReportData  con todas la informaci?n para la carga de un reporte X2 actual("U1X").
+         *@throws PrinterExeption Error de  transacci?n.
+	 */
+    public ReportData getX2Report() throws PrinterExeption
+    {
+        try
+        {
+
+            int rep = this.SubirDataReport("U1X");
+
+            if (rep > 0)
+            {
+                this.ReportePC = new ReportData(this.sDataSubida);
+                Estado = " Status: 00  Error: 00";
+            }
+            else
+            {
+                this.ReportePC = null;
+                Estado = "Sin repuesta";
+                throw new PrinterExeption(Estado, getPrinterStatus());
+            }
+
+            return ReportePC;
+
+        }
+        catch (NullPointerException ex)
+        {
+            Estado = ex.getMessage();
+            this.ReportePC = null;
+            throw new PrinterExeption(Estado, getPrinterStatus());
+        }
+
+    }
+     /**
+	 *Retorna un objeto  de tipo AcumuladosX  con todas la informaci?n para la carga de un reporte X4 actual (U0X4).
+         *@throws PrinterExeption Error de  transaccion.
+	 */
+    public AcumuladosX getX4Report() throws PrinterExeption
+    {
+        try
+        {
+
+            int rep = this.SubirDataReport("U0X4");
+
+            if (rep > 0)
+            {
+                this.ReporteAcumX = new AcumuladosX(this.sDataSubida);
+                Estado = " Status: 00  Error: 00";
+            }
+            else
+            {
+                this.ReporteAcumX  = null;
+                Estado = "Sin repuesta";
+                throw new PrinterExeption(Estado, getPrinterStatus());
+            }
+
+            return ReporteAcumX;
+
+        }
+        catch (NullPointerException ex)
+        {
+            Estado = ex.getMessage();
+            this.ReporteAcumX  = null;
+            throw new PrinterExeption(Estado, getPrinterStatus());
+        }
+
+    }
+     /**
+	 *Retorna un objeto  de tipo AcumuladosX  con todas la informaci?n para la carga de un reporte X5 actual (U0X5).
+         *@throws PrinterExeption Error de  transaccion.
+	 */
+    public AcumuladosX getX5Report() throws PrinterExeption
+    {
+        try
+        {
+
+            int rep = this.SubirDataReport("U0X5");
+
+            if (rep > 0)
+            {
+                this.ReporteAcumX = new AcumuladosX(this.sDataSubida);
+                Estado = " Status: 00  Error: 00";
+            }
+            else
+            {
+                this.ReporteAcumX  = null;
+                Estado = "Sin repuesta";
+                throw new PrinterExeption(Estado, getPrinterStatus());
+            }
+
+            return ReporteAcumX;
+
+        }
+        catch (NullPointerException ex)
+        {
+            Estado = ex.getMessage();
+            this.ReporteAcumX  = null;
+            throw new PrinterExeption(Estado, getPrinterStatus());
+        }
+
+    }
+     /**
+	 *Retorna un objeto  de tipo AcumuladosX  con todas la informaci?n para la carga de un reporte X7 actual (U0X7).
+         *@throws PrinterExeption Error de  transaccion.
+	 */
+    public AcumuladosX getX7Report() throws PrinterExeption
+    {
+        try
+        {
+
+            int rep = this.SubirDataReport("U0X7");
+
+            if (rep > 0)
+            {
+                this.ReporteAcumX = new AcumuladosX(this.sDataSubida);
+                Estado = " Status: 00  Error: 00";
+            }
+            else
+            {
+                this.ReporteAcumX  = null;
+                Estado = "Sin repuesta";
+                throw new PrinterExeption(Estado, getPrinterStatus());
+            }
+
+            return ReporteAcumX;
+
+        }
+        catch (NullPointerException ex)
+        {
+            Estado = ex.getMessage();
+            this.ReporteAcumX  = null;
+            throw new PrinterExeption(Estado, getPrinterStatus());
+        }
+
+    }
         /**
 	 *Retorna un objeto  de tipo ReportData  con todas la informaci?n del ?ltimo reporte Z reaizado ("U0Z").
          *@throws PrinterExeption Error de  transacci?n.
@@ -659,6 +806,39 @@ public boolean SendCmd(String sCMD) throws PrinterExeption
         {
 
             int rep = this.SubirDataReport("U0Z");
+            if (rep > 0)
+            {
+                this.ReportePC = new ReportData(this.sDataSubida);
+                Estado = " Status: 00  Error: 00";
+            }
+            else
+            {
+                this.ReportePC = null;
+                Estado = "Sin repuesta";
+                throw new PrinterExeption(Estado, getPrinterStatus());
+            }
+
+            return ReportePC;
+
+        }
+        catch (NullPointerException ex)
+        {
+            this.ReportePC = null;
+            Estado = ex.getMessage();
+            throw new PrinterExeption(Estado, getPrinterStatus());
+        }
+
+    }
+        /**
+	 *Retorna un objeto  de tipo ReportData  con todas la informaci?n del ?ltimo reporte Z2 reaizado ("U1Z").
+         *@throws PrinterExeption Error de  transacci?n.
+	 */
+        public ReportData getZ2Report() throws PrinterExeption
+    {
+        try
+        {
+
+            int rep = this.SubirDataReport("U1Z");
             if (rep > 0)
             {
                 this.ReportePC = new ReportData(this.sDataSubida);
@@ -986,6 +1166,126 @@ public boolean SendCmd(String sCMD) throws PrinterExeption
         try
 	  {
         int rep = this.SubirDataStatus("S2");
+		
+        if(rep>0)
+        {
+           this.S2Estado = new S2PrinterData(this.sDataSubida);
+           Estado = " Status: 00  Error: 00";
+        }
+        else
+        {
+             this.S2Estado = null;
+             Estado = "Sin repuesta";
+            throw new PrinterExeption(Estado, getPrinterStatus());
+        }
+        
+        return S2Estado;
+		
+		}catch (NullPointerException ex) {
+            this.S2Estado = null;
+            Estado = ex.getMessage();
+                throw new PrinterExeption(Estado, getPrinterStatus());
+        }
+      }
+      /**
+     *Sube el estado S2E de la Impresora fiscal y retorna un objeto de tipo S2PrinterData con el subtotal Exento.
+     *@throws PrinterExeption Error de  transacci?n.
+     */
+      public S2PrinterData getS2EPrinterData() throws PrinterExeption
+      {
+        try
+	  {
+        int rep = this.SubirDataStatus("S2E");
+		
+        if(rep>0)
+        {
+           this.S2Estado = new S2PrinterData(this.sDataSubida);
+           Estado = " Status: 00  Error: 00";
+        }
+        else
+        {
+             this.S2Estado = null;
+             Estado = "Sin repuesta";
+            throw new PrinterExeption(Estado, getPrinterStatus());
+        }
+        
+        return S2Estado;
+		
+		}catch (NullPointerException ex) {
+            this.S2Estado = null;
+            Estado = ex.getMessage();
+                throw new PrinterExeption(Estado, getPrinterStatus());
+        }
+      }
+      /**
+     *Sube el estado S21 de la Impresora fiscal y retorna un objeto de tipo S2PrinterData con el Base imponible tasa 1.
+     *@throws PrinterExeption Error de  transacci?n.
+     */
+      public S2PrinterData getS21PrinterData() throws PrinterExeption
+      {
+        try
+	  {
+        int rep = this.SubirDataStatus("S21");
+		
+        if(rep>0)
+        {
+           this.S2Estado = new S2PrinterData(this.sDataSubida);
+           Estado = " Status: 00  Error: 00";
+        }
+        else
+        {
+             this.S2Estado = null;
+             Estado = "Sin repuesta";
+            throw new PrinterExeption(Estado, getPrinterStatus());
+        }
+        
+        return S2Estado;
+		
+		}catch (NullPointerException ex) {
+            this.S2Estado = null;
+            Estado = ex.getMessage();
+                throw new PrinterExeption(Estado, getPrinterStatus());
+        }
+      }
+       /**
+     *Sube el estado S22 de la Impresora fiscal y retorna un objeto de tipo S2PrinterData con el Base imponible tasa 2.
+     *@throws PrinterExeption Error de  transacci?n.
+     */
+      public S2PrinterData getS22PrinterData() throws PrinterExeption
+      {
+        try
+	  {
+        int rep = this.SubirDataStatus("S22");
+		
+        if(rep>0)
+        {
+           this.S2Estado = new S2PrinterData(this.sDataSubida);
+           Estado = " Status: 00  Error: 00";
+        }
+        else
+        {
+             this.S2Estado = null;
+             Estado = "Sin repuesta";
+            throw new PrinterExeption(Estado, getPrinterStatus());
+        }
+        
+        return S2Estado;
+		
+		}catch (NullPointerException ex) {
+            this.S2Estado = null;
+            Estado = ex.getMessage();
+                throw new PrinterExeption(Estado, getPrinterStatus());
+        }
+      }
+       /**
+     *Sube el estado S23 de la Impresora fiscal y retorna un objeto de tipo S2PrinterData con el Base imponible tasa 3.
+     *@throws PrinterExeption Error de  transacci?n.
+     */
+      public S2PrinterData getS23PrinterData() throws PrinterExeption
+      {
+        try
+	  {
+        int rep = this.SubirDataStatus("S23");
 		
         if(rep>0)
         {

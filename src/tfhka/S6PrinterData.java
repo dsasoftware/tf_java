@@ -62,11 +62,13 @@ public class S6PrinterData {
        { 
            if (trama != null)
            {
+               if(trama.length() > 0)
+               {
                this.getBit_Facturacion(trama.substring(2, 3));
                this.getBit_Slip(trama.substring(3, 4));
                this.getBit_Validacion(trama.substring(4, 5));
+               }
                
-
            }
        }
 
