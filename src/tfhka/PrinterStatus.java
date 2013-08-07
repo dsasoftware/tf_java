@@ -1,4 +1,3 @@
-
 package tfhka;
 /** 
  * Representa una estructura para almacenar la información del Status y Error de la impreosora fiscal.
