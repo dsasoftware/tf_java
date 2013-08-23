@@ -1332,6 +1332,66 @@ public boolean SendCmd(String sCMD) throws PrinterException
         }
       }
       /**
+     *Sube el estado S24 de la Impresora fiscal y retorna un objeto de tipo S2PrinterData con el Base imponible tasa 3.
+     *@throws PrinterException Error de  transacci?n.
+     */
+      public S2PrinterData getS24PrinterData() throws PrinterException
+      {
+        try
+	  {
+        int rep = this.SubirDataStatus("S24");
+		
+        if(rep>0)
+        {
+           this.S2Estado = new S2PrinterData(this.sDataSubida);
+           Estado = " Status: 00  Error: 00";
+        }
+        else
+        {
+             this.S2Estado = null;
+             Estado = "Sin repuesta";
+            throw new PrinterException(Estado, getPrinterStatus());
+        }
+        
+        return S2Estado;
+		
+		}catch (NullPointerException ex) {
+            this.S2Estado = null;
+            Estado = ex.getMessage();
+                throw new PrinterException(Estado, getPrinterStatus());
+        }
+      }
+      /**
+     *Sube el estado S25 de la Impresora fiscal y retorna un objeto de tipo S2PrinterData con el Base imponible tasa 3.
+     *@throws PrinterException Error de  transacci?n.
+     */
+      public S2PrinterData getS25PrinterData() throws PrinterException
+      {
+        try
+	  {
+        int rep = this.SubirDataStatus("S25");
+		
+        if(rep>0)
+        {
+           this.S2Estado = new S2PrinterData(this.sDataSubida);
+           Estado = " Status: 00  Error: 00";
+        }
+        else
+        {
+             this.S2Estado = null;
+             Estado = "Sin repuesta";
+            throw new PrinterException(Estado, getPrinterStatus());
+        }
+        
+        return S2Estado;
+		
+		}catch (NullPointerException ex) {
+            this.S2Estado = null;
+            Estado = ex.getMessage();
+                throw new PrinterException(Estado, getPrinterStatus());
+        }
+      }
+      /**
      *Sube el estado S3 de la Impresora fiscal y retorna un objeto de tipo S3PrinterData con los par$)G"gmetros de informaci?n.
      *@throws PrinterException Error de  transacci?n.
      */
