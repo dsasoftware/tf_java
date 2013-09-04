@@ -13,14 +13,30 @@ public class AcumuladosX {
      * Variables Globales
      */
 
-    private double freeTax; 
-    private double generalRate1;
-    private double generalRate1Tax;
-    private double reducedRate2;
-    private double reducedRate2Tax;
-    private double additionalRate3;
-    private double additionalRate3Tax;
-  
+   private double _cumulativeExcConsF;
+   private double _rateTaxBaseConsF1;
+   private double _rateTaxBaseConsF2;
+   private double _rateTaxBaseConsF3;
+   private double _rateTaxBaseConsF4;
+   private double _rateTaxBaseConsF5;
+   private double _taxRateConsF1;
+   private double _taxRateConsF2;
+   private double _taxRateConsF3;
+   private double _taxRateConsF4;
+   private double _taxRateConsF5;
+   
+   private double _cumulativeNcExcConsF;
+   private double _rateTaxBaseNcConsF1;
+   private double _rateTaxBaseNcConsF2;
+   private double _rateTaxBaseNcConsF3;
+   private double _rateTaxBaseNcConsF4;
+   private double _rateTaxBaseNcConsF5;
+   private double _taxRateNcConsF1;
+   private double _taxRateNcConsF2;
+   private double _taxRateNcConsF3;
+   private double _taxRateNcConsF4;
+   private double _taxRateNcConsF5;
+   
    /*
     *Constructor
     */
@@ -28,57 +44,44 @@ public class AcumuladosX {
     {
       if (trama != null)
       {
-        if (trama.length() == 119) // DT230
+        if (trama.length() >  0) // DT230
         {
 
-          double valor = Double.parseDouble(trama.substring(1, 15)); // para evitar errores con numeros negativos...
-          if (valor < 0)
-            valor -= Double.parseDouble(trama.substring(15, 17)) / 100;
-          else
-            valor += Double.parseDouble(trama.substring(15, 17)) / 100;
-          this.freeTax = valor;
-
-          valor = Double.parseDouble(trama.substring(18, 32)); // para evitar errores con numeros negativos...
-          if (valor < 0)
-            valor -= Double.parseDouble(trama.substring(32, 34)) / 100;
-          else
-            valor += Double.parseDouble(trama.substring(32, 34)) / 100;
-          this.generalRate1 = valor;
-
-          valor = Double.parseDouble(trama.substring(35, 49)); // para evitar errores con numeros negativos...
-          if (valor < 0)
-            valor -= Double.parseDouble(trama.substring(49, 51)) / 100;
-          else
-            valor += Double.parseDouble(trama.substring(49, 51)) / 100;
-          this.reducedRate2 = valor;
-
-          valor = Double.parseDouble(trama.substring(52, 66)); // para evitar errores con numeros negativos...
-          if (valor < 0)
-            valor -= Double.parseDouble(trama.substring(66, 68)) / 100;
-          else
-            valor += Double.parseDouble(trama.substring(66,68)) / 100;
-          this.additionalRate3 = valor;
-
-          valor = Double.parseDouble(trama.substring(69, 83)); // para evitar errores con numeros negativos...
-          if (valor < 0)
-            valor -= Double.parseDouble(trama.substring(83, 85)) / 100;
-          else
-            valor += Double.parseDouble(trama.substring(83, 85)) / 100;
-          this.generalRate1Tax = valor;
-
-          valor = Double.parseDouble(trama.substring(86, 100)); // para evitar errores con numeros negativos...
-          if (valor < 0)
-            valor -= Double.parseDouble(trama.substring(100, 102)) / 100;
-          else
-            valor += Double.parseDouble(trama.substring(100, 102)) / 100;
-          this.reducedRate2Tax = valor;
-
-          valor = Double.parseDouble(trama.substring(103, 117)); // para evitar errores con numeros negativos...
-          if (valor < 0)
-            valor -= Double.parseDouble(trama.substring(117, 119)) / 100;
-          else
-            valor += Double.parseDouble(trama.substring(117, 119)) / 100;
-          this.additionalRate3Tax = valor;
+        try{
+        	
+        	String[] arrayParameter = trama.split(String.valueOf((char)0X0A));
+        	this._cumulativeExcConsF = this.doValueDecimal(arrayParameter[1]);
+        	this._rateTaxBaseConsF1 = this.doValueDecimal(arrayParameter[2]);
+        	this._rateTaxBaseConsF2 = this.doValueDecimal(arrayParameter[3]);
+        	this._rateTaxBaseConsF3 = this.doValueDecimal(arrayParameter[4]);
+        	this._rateTaxBaseConsF4 = this.doValueDecimal(arrayParameter[5]);
+        	this._rateTaxBaseConsF5 = this.doValueDecimal(arrayParameter[6]);
+        	this._taxRateConsF1 = this.doValueDecimal(arrayParameter[7]);
+        	this._taxRateConsF2 = this.doValueDecimal(arrayParameter[8]);
+        	this._taxRateConsF3 = this.doValueDecimal(arrayParameter[9]);
+        	this._taxRateConsF4 = this.doValueDecimal(arrayParameter[10]);
+        	this._taxRateConsF5 = this.doValueDecimal(arrayParameter[11]);
+        	this._cumulativeNcExcConsF = this.doValueDecimal(arrayParameter[12]);
+        	this._rateTaxBaseNcConsF1 = this.doValueDecimal(arrayParameter[13]);
+        	this._rateTaxBaseNcConsF2 = this.doValueDecimal(arrayParameter[14]);
+        	this._rateTaxBaseNcConsF3 = this.doValueDecimal(arrayParameter[15]);
+        	this._rateTaxBaseNcConsF4 = this.doValueDecimal(arrayParameter[16]);
+        	this._rateTaxBaseNcConsF5 = this.doValueDecimal(arrayParameter[17]);
+        	this._taxRateNcConsF1 = this.doValueDecimal(arrayParameter[18]);
+        	this._taxRateNcConsF2 = this.doValueDecimal(arrayParameter[19]);
+        	this._taxRateNcConsF3 = this.doValueDecimal(arrayParameter[20]);
+        	this._taxRateNcConsF4 = this.doValueDecimal(arrayParameter[21]);
+        	this._taxRateNcConsF5 = this.doValueDecimal(arrayParameter[22]);
+        	
+        }
+        catch (ArrayIndexOutOfBoundsException aexp)
+        {
+            return;
+        }
+        catch (NumberFormatException nfexp)
+        {
+            return;
+        }
         }
       }
 
@@ -90,51 +93,117 @@ public class AcumuladosX {
     /*
     * Retorna el monto total Exento almacenado.
     */
-    public double getFreeTax()
-    {
-        return freeTax;
-    }
-    /*
-    * Retorna el monto total de Base Imponible General almacenado.
-    */
-    public double getGeneralRate1()
-    {
-        return generalRate1;
-    }
-    /*
-    * Retorna el monto total de IVA General ó Tasa(1) almacenado.
-    */
-    public double getGeneralRate1Tax()
-    {
-        return generalRate1Tax;
+  
+    
+  //region Metodos Privados
 
-    }
-    /*
-    * Retorna el monto total de Base Imponible Reducida almacenado.
-    */
-    public double getReducedRate2()
+    private double doValueDecimal(String tramaString)
     {
-        return reducedRate2;
+        //////////////////////////////
+        int size = tramaString.length();
+        int dif = size - 2;
+
+        double valor = Double.parseDouble(tramaString.substring(0, dif));
+        // para evitar errores con numeros negativos...
+        if (valor < 0)
+            valor -= Double.parseDouble(tramaString.substring(dif)) / 100;
+        else
+            valor += Double.parseDouble(tramaString.substring(dif)) / 100;
+
+        return valor;
     }
-    /*
-    * Retorna el monto total de IVA Reducido ó Tasa(2) almacenado.
-    */
-    public double getReducedRate2Tax()
-    {
-        return reducedRate2Tax;
-    }
-    /*
-    * Retorna el monto total de Base Imponible Adicional almacenado.
-    */
-    public double getAdditionalRate3()
-    {     
-        return additionalRate3;
-    }
-    /*
-    * Retorna el monto total de IVA Adicional ó Tasa(3) almacenado.
-    */
-    public double getAdditionalRate3Tax()
-    {
-        return additionalRate3Tax;
-    }
+
+	public double get_cumulativeExcConsF() {
+		return _cumulativeExcConsF;
+	}
+
+	public double get_rateTaxBaseConsF1() {
+		return _rateTaxBaseConsF1;
+	}
+
+	public double get_rateTaxBaseConsF2() {
+		return _rateTaxBaseConsF2;
+	}
+
+	public double get_rateTaxBaseConsF3() {
+		return _rateTaxBaseConsF3;
+	}
+
+	public double get_rateTaxBaseConsF4() {
+		return _rateTaxBaseConsF4;
+	}
+
+	public double get_rateTaxBaseConsF5() {
+		return _rateTaxBaseConsF5;
+	}
+
+	public double get_taxRateConsF1() {
+		return _taxRateConsF1;
+	}
+
+	public double get_taxRateConsF2() {
+		return _taxRateConsF2;
+	}
+
+	public double get_taxRateConsF3() {
+		return _taxRateConsF3;
+	}
+
+	public double get_taxRateConsF4() {
+		return _taxRateConsF4;
+	}
+
+	public double get_taxRateConsF5() {
+		return _taxRateConsF5;
+	}
+
+	public double get_cumulativeNcExcConsF() {
+		return _cumulativeNcExcConsF;
+	}
+
+	public double get_rateTaxBaseNcConsF1() {
+		return _rateTaxBaseNcConsF1;
+	}
+
+	public double get_rateTaxBaseNcConsF2() {
+		return _rateTaxBaseNcConsF2;
+	}
+
+	public double get_rateTaxBaseNcConsF3() {
+		return _rateTaxBaseNcConsF3;
+	}
+
+	public double get_rateTaxBaseNcConsF4() {
+		return _rateTaxBaseNcConsF4;
+	}
+
+	public double get_rateTaxBaseNcConsF5() {
+		return _rateTaxBaseNcConsF5;
+	}
+
+	public double get_taxRateNcConsF1() {
+		return _taxRateNcConsF1;
+	}
+
+	public double get_taxRateNcConsF2() {
+		return _taxRateNcConsF2;
+	}
+
+	public double get_taxRateNcConsF3() {
+		return _taxRateNcConsF3;
+	}
+
+	public double get_taxRateNcConsF4() {
+		return _taxRateNcConsF4;
+	}
+
+	public double get_taxRateNcConsF5() {
+		return _taxRateNcConsF5;
+	}
+    
+	//u0x3
+	
+    
+    
+    
 }

@@ -52,7 +52,7 @@ public class S4PrinterData {
                    String[] arrayParameter = trama.split(String.valueOf((char)0X0A));
                    if (arrayParameter.length > 1)
                     {
-                        int limit = arrayParameter.length - 1;
+                        int limit = arrayParameter.length;
                         this.listCumulaMountsMeansPayments = new double[limit];
 
                             int ite = 0;

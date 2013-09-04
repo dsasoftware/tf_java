@@ -21,10 +21,10 @@ public class S1PrinterData {
  //region Variables Globales
 
         private int cashierNumber;
-        private double subTotalSalesClientFinal;
+        private double subTotalSalesFinalClient;
         private double subTotalSalesCreditFiscal;      
-        private double subTotalNoteCreditClientFinal;     
-        private double subTotalNoteCreditCreditFiscal;     
+        private double subTotalCreditNoteFinalClient;     
+        private double subTotalCreditNoteCreditFiscal;     
         private int lastNumberTransactionFiscal;     
         private int quantityTransactionToday;
         private int numberNonFiscalDocuments;
@@ -97,9 +97,9 @@ public class S1PrinterData {
         /// <summary>
         /// Retorna el sub total de las ventas de consumidor final
         /// </summary>
-        public double getSubTotalSalesClientFinal()
+        public double getSubTotalSalesFinalClient()
         {
-            return this.subTotalSalesClientFinal; 
+            return this.subTotalSalesFinalClient; 
         }
         /// <summary>
         /// Retorna el sub total de las ventas de credito fiscal
@@ -111,16 +111,16 @@ public class S1PrinterData {
         /// <summary>
         /// Retorna el sub total de las notas de credito de consumidor final
         /// </summary>
-        public double getSubTotalNoteCreditClientFinal()
+        public double getSubTotalCreditNoteFinalClient()
         {
-            return this.subTotalNoteCreditClientFinal;
+            return this.subTotalCreditNoteFinalClient;
         }
         /// <summary>
         /// Retorna el sub total de las notas de credito de credito fiscal
         /// </summary>
-        public double getSubTotalNoteCreditCreditFiscal()
+        public double getSubTotalCreditNoteCreditFiscal()
         {
-            return this.subTotalNoteCreditCreditFiscal;
+            return this.subTotalCreditNoteCreditFiscal;
         }
         /// <summary>
         /// Retorna el numero de la ultima transaccion fiscal
@@ -146,14 +146,14 @@ public class S1PrinterData {
         {
             this.lastNumberTransactionFiscal = value;
         }
-        private void setSubTotalNoteCreditCreditFiscal(double value)
+        private void setSubTotalCreditNoteCreditFiscal(double value)
         {
-            this.subTotalNoteCreditCreditFiscal = value;
+            this.subTotalCreditNoteCreditFiscal = value;
         }
 
-        private void setSubTotalNoteCreditClientFinal(double value)
+        private void setSubTotalCreditNoteFinalClient(double value)
         {
-            this.subTotalNoteCreditClientFinal = value;
+            this.subTotalCreditNoteFinalClient = value;
         }
 
         private void setSubTotalSalesCreditFiscal(double value)
@@ -161,9 +161,9 @@ public class S1PrinterData {
             this.subTotalSalesCreditFiscal = value;
         }
 
-        private void setSubTotalSalesClientFinal(double value)
+        private void setSubTotalSalesFinalClient(double value)
         {
-            this.subTotalSalesClientFinal = value;
+            this.subTotalSalesFinalClient = value;
         }
 
         private void setCashierNumber(int cashierNumber)
@@ -225,10 +225,10 @@ public class S1PrinterData {
                     if (arrayParameter.length > 1)
                     {  
                         this.setCashierNumber(Integer.parseInt(arrayParameter[0].substring(2)));
-                        this.setSubTotalSalesClientFinal(this.doValueDecimal(arrayParameter[1]));
+                        this.setSubTotalSalesFinalClient(this.doValueDecimal(arrayParameter[1]));
                         this.setSubTotalSalesCreditFiscal(this.doValueDecimal(arrayParameter[2]));
-                        this.setSubTotalNoteCreditClientFinal(this.doValueDecimal(arrayParameter[3]));
-                        this.setSubTotalNoteCreditCreditFiscal(this.doValueDecimal(arrayParameter[4]));
+                        this.setSubTotalCreditNoteFinalClient(this.doValueDecimal(arrayParameter[3]));
+                        this.setSubTotalCreditNoteCreditFiscal(this.doValueDecimal(arrayParameter[4]));
                         this.setLastNumberTransactionFiscal(Integer.parseInt(arrayParameter[5]));
                         this.setQuantityTransactionToday(Integer.parseInt(arrayParameter[6]));
                         this.setNumberNonFiscalDocuments(Integer.parseInt(arrayParameter[7]));

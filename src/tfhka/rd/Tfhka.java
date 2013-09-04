@@ -718,11 +718,80 @@ public boolean SendCmd(String sCMD) throws PrinterException
         }
 
     }
+    /**
+   	 *Retorna un objeto  de tipo AcumuladosX  con todas la informaci?n para la carga de un reporte X4 actual (U0X4).
+            *@throws PrinterException Error de  transaccion.
+   	 */
+       public AcumuladosX getX02Report() throws PrinterException
+       {
+           try
+           {
+
+               int rep = this.SubirDataReport("U0X2");
+
+               if (rep > 0)
+               {
+                   this.ReporteAcumX = new AcumuladosX(this.sDataSubida);
+                   Estado = " Status: 00  Error: 00";
+               }
+               else
+               {
+                   this.ReporteAcumX  = null;
+                   Estado = "Sin repuesta";
+                   throw new PrinterException(Estado, getPrinterStatus());
+               }
+
+               return ReporteAcumX;
+
+           }
+           catch (NullPointerException ex)
+           {
+               Estado = ex.getMessage();
+               this.ReporteAcumX  = null;
+               throw new PrinterException(Estado, getPrinterStatus());
+           }
+
+       }
+       /**
+   	 *Retorna un objeto  de tipo AcumuladosX  con todas la informaci?n para la carga de un reporte X4 actual (U0X4).
+            *@throws PrinterException Error de  transaccion.
+   	 */
+       public AcumuladosX getX03Report() throws PrinterException
+       {
+           try
+           {
+
+               int rep = this.SubirDataReport("U0X3");
+
+               if (rep > 0)
+               {
+                   this.ReporteAcumX = new AcumuladosX(this.sDataSubida);
+                   Estado = " Status: 00  Error: 00";
+               }
+               else
+               {
+                   this.ReporteAcumX  = null;
+                   Estado = "Sin repuesta";
+                   throw new PrinterException(Estado, getPrinterStatus());
+               }
+
+               return ReporteAcumX;
+
+           }
+           catch (NullPointerException ex)
+           {
+               Estado = ex.getMessage();
+               this.ReporteAcumX  = null;
+               throw new PrinterException(Estado, getPrinterStatus());
+           }
+
+       }
+       
      /**
 	 *Retorna un objeto  de tipo AcumuladosX  con todas la informaci?n para la carga de un reporte X4 actual (U0X4).
          *@throws PrinterException Error de  transaccion.
 	 */
-    public AcumuladosX getX4Report() throws PrinterException
+    public AcumuladosX getX04Report() throws PrinterException
     {
         try
         {
@@ -756,7 +825,7 @@ public boolean SendCmd(String sCMD) throws PrinterException
 	 *Retorna un objeto  de tipo AcumuladosX  con todas la informaci?n para la carga de un reporte X5 actual (U0X5).
          *@throws PrinterException Error de  transaccion.
 	 */
-    public AcumuladosX getX5Report() throws PrinterException
+    public AcumuladosX getX05Report() throws PrinterException
     {
         try
         {

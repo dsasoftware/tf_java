@@ -16,7 +16,7 @@ package tfhka.rd;
 public class S2PrinterData {
    //region Variables Globales
 
-        private double subTotalBases;
+        private double subTotalMax;
         private double sudTotalTax;
         private String dataDummy;
         private double amountPayable;
@@ -30,9 +30,9 @@ public class S2PrinterData {
         /// <summary>
         /// Retorna el monto subtotal de las bases imponibles y exento de una transacción activa
         /// </summary>
-        public double getSubTotalBases()
+        public double getSubTotalMax()
         {
-            return subTotalBases;
+            return subTotalMax;
         }
         /// <summary>
         /// Retorna el monto total de los IVA(s) de una transacción activa
@@ -82,9 +82,9 @@ public class S2PrinterData {
             this.quantityArticles = value;
         }
 
-        private void setSubTotalBases(double subTotalBases)
+        private void setSubTotalMax(double subTotalMax)
         {
-            this.subTotalBases = subTotalBases;
+            this.subTotalMax = subTotalMax;
         }
 
         private void setSudTotalTax(double sudTotalTax)
@@ -130,7 +130,7 @@ public class S2PrinterData {
                         String[] arrayParameter = trama.split(String.valueOf((char)0X0A));
                         if (arrayParameter.length > 1)
                         {
-                            this.setSubTotalBases(this.doValueDecimal(arrayParameter[0].substring(2)));
+                            this.setSubTotalMax(this.doValueDecimal(arrayParameter[0].substring(2)));
                             this.setSudTotalTax(this.doValueDecimal(arrayParameter[1]));
                             this.setDataDummy(arrayParameter[2]);
                             this.setQuantityArticles(Integer.parseInt(arrayParameter[3]));

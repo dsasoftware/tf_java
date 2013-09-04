@@ -15,33 +15,33 @@ public class ReportData {
         private Date lastTransactionDate; //(includes the hour)
         private int numberOfLastNonFiscal;
 
-        private double totalInoviceClientFinal; // Facturas para Consumidor Final
-        private double tax4InoviceClientFinal;
-        private double tax1InoviceClientFinal;
-        private double tax5InoviceClientFinal;
-        private double tax2InoviceClientFinal;       
-        private double tax3InoviceClientFinal;
+        private double totalInvoiceFinalClient; // Facturas para Consumidor Final
+        private double tax4InvoiceFinalClient;
+        private double tax1InvoiceFinalClient;
+        private double tax5InvoiceFinalClient;
+        private double tax2InvoiceFinalClient;       
+        private double tax3InvoiceFinalClient;
 
-        private double totalInoviceCreditFiscal; // Factura con Credito Fiscal
-        private double tax4InoviceCreditFiscal;
-        private double tax1InoviceCreditFiscal;
-        private double tax5InoviceCreditFiscal;
-        private double tax2InoviceCreditFiscal;       
-        private double tax3InoviceCreditFiscal;
+        private double totalInvoiceCreditFiscal; // Factura con Credito Fiscal
+        private double tax4InvoiceCreditFiscal;
+        private double tax1InvoiceCreditFiscal;
+        private double tax5InvoiceCreditFiscal;
+        private double tax2InvoiceCreditFiscal;       
+        private double tax3InvoiceCreditFiscal;
 
-        private double totalNoteCreditClientFinal; // Notas de Credito para Consumidor Final
-        private double tax4NoteCreditClientFinal;
-        private double tax1NoteCreditClientFinal;
-        private double tax5NoteCreditClientFinal;
-        private double tax2NoteCreditClientFinal;
-        private double tax3NoteCreditClientFinal;
+        private double totalCreditNoteFinalClient; // Notas de Credito para Consumidor Final
+        private double tax4CreditNoteFinalClient;
+        private double tax1CreditNoteFinalClient;
+        private double tax5CreditNoteFinalClient;
+        private double tax2CreditNoteFinalClient;
+        private double tax3CreditNoteFinalClient;
 
-        private double totalNoteCreditCreditFiscal; //Notas de Credito con credito Fiscal
-        private double tax1NoteCreditCreditFiscal;
-        private double tax2NoteCreditCreditFiscal;
-        private double tax3NoteCreditCreditFiscal;
-        private double tax4NoteCreditCreditFiscal;
-        private double tax5NoteCreditCreditFiscal;
+        private double totalCreditNoteCreditFiscal; //Notas de Credito con credito Fiscal
+        private double tax1CreditNoteCreditFiscal;
+        private double tax2CreditNoteCreditFiscal;
+        private double tax3CreditNoteCreditFiscal;
+        private double tax4CreditNoteCreditFiscal;
+        private double tax5CreditNoteCreditFiscal;
 
         //endregion
 
@@ -79,77 +79,77 @@ public class ReportData {
         /// <summary>
         /// Retorna el monto total de Factura para Consumidor Final almacenado.
         /// </summary>
-        public double getTotalInoviceClientFinal()
+        public double getTotalInvoiceFinalClient()
         {
-           return totalInoviceClientFinal; 
+           return totalInvoiceFinalClient; 
 
         }
         /// <summary>
         /// Retorna el monto total de impuesto 4 de Factura para Consumidor Final almacenado.
         /// </summary>
-        public double getTax4InoviceClientFinal()
+        public double getTax4InvoiceFinalClient()
         {
-           return tax4InoviceClientFinal; 
+           return tax4InvoiceFinalClient; 
 
         }
         /// <summary>
         /// Retorna el monto total de impuesto 1 de Factura para Consumidor Final almacenado.
         /// </summary>
-        public double getTax1InoviceClientFinal()
+        public double getTax1InvoiceFinalClient()
         {
-            return tax1InoviceClientFinal; 
+            return tax1InvoiceFinalClient; 
 
         }
         /// <summary>
         /// Retorna el monto total de impuesto 5 de Factura para Consumidor Final almacenado.
         /// </summary>
-        public double getTax5InoviceClientFinal()
+        public double getTax5InoviceFinalClient()
         {
-             return tax5InoviceClientFinal; 
+             return tax5InvoiceFinalClient; 
         }
         /// <summary>
         /// Retorna el monto total de impuesto 2 de Factura para Consumidor Final almacenado.
         /// </summary>
-        public double getTax2InoviceClientFinal()
+        public double getTax2InvoiceFinalClient()
         {
-              return tax2InoviceClientFinal; 
+              return tax2InvoiceFinalClient; 
 
         }    
         /// <summary>
         /// Retorna el monto total de impuesto 3 de Factura para Consumidor Final almacenado.
         /// </summary>
-        public double getTax3InoviceClientFinal()
+        public double getTax3InvoiceFinalClient()
         {
-              return tax3InoviceClientFinal; 
+              return tax3InvoiceFinalClient; 
 
         }
         /// <summary>
         /// Retorna el monto total de Factura con Credito Fiscal almacenado.
         /// </summary>
-        public double getTotalInoviceCreditFiscal()
+        public double getTotalInvoiceCreditFiscal()
         {
-              return totalInoviceCreditFiscal; 
+              return totalInvoiceCreditFiscal; 
         }
         /// <summary>
         /// Retorna el monto total de impuesto 4 de Factura con credito Fiscal almacenado.
         /// </summary>
-        public double getTax4InoviceCreditFiscal()
+        public double getTax4InvoiceCreditFiscal()
         {
-             return tax4InoviceCreditFiscal; 
+             return tax4InvoiceCreditFiscal; 
         }
         /// <summary>
         /// Retorna el monto total de impuesto 1 de Factura con credito Fiscal almacenado.
         /// </summary>
-        public double getTax1InoviceCreditFiscal()
+        public double getTax1InvoiceCreditFiscal()
         {
-             return tax1InoviceCreditFiscal; 
+             return tax1InvoiceCreditFiscal; 
         }
         /// <summary>
         /// Retorna el monto total de impuesto 5 de Factura con credito Fiscal almacenado.
         /// </summary>
-        public double getTax5InoviceCreditFiscal()
+        public double getTax5InvoiceCreditFiscal()
         {
-            return tax5InoviceCreditFiscal; 
+            return tax5InvoiceCreditFiscal; 
 
         }
         /// <summary>
@@ -157,108 +157,108 @@ public class ReportData {
         /// </summary>
         public double getTax2InoviceCreditFiscal()
         {
-             return tax2InoviceCreditFiscal; 
+             return tax2InvoiceCreditFiscal; 
         }       
         /// <summary>
         /// Retorna el monto total de impuesto 3 de Factura con credito Fiscal almacenado.
         /// </summary>
-        public double getTax3InoviceCreditFiscal()
+        public double getTax3InvoiceCreditFiscal()
         {
-             return tax3InoviceCreditFiscal; 
+             return tax3InvoiceCreditFiscal; 
         }
         /// <summary>
         /// Retorna el monto total de Nota de Credito con credito Fiscal almacenado.
         /// </summary>
-        public double getTotalNoteCreditCreditFiscal()
+        public double getTotalCreditNoteCreditFiscal()
         {
-             return totalNoteCreditCreditFiscal; 
+             return totalCreditNoteCreditFiscal; 
 
         }
         /// <summary>
         /// Retorna el monto total de impuesto 1 de la Nota de Credito con credito Fiscal almacenado.
         /// </summary>
-        public double getTax1NoteCreditCreditFiscal()
+        public double getTax1CreditNoteCreditFiscal()
         {
-            return tax1NoteCreditCreditFiscal; 
+            return tax1CreditNoteCreditFiscal; 
 
         }
         /// <summary>
         /// Retorna el monto total de impuesto 2 de la Nota de Credito con credito Fiscal almacenado.
         /// </summary>
-        public double getTax2NoteCreditCreditFiscal()
+        public double getTax2CreditNoteCreditFiscal()
         {
-            return tax2NoteCreditCreditFiscal; 
+            return tax2CreditNoteCreditFiscal; 
 
         }
         /// <summary>
         /// Retorna el monto total de impuesto 3 de la Nota de Credito con credito Fiscal almacenado.
         /// </summary>
-        public double getTax3NoteCreditCreditFiscal()
+        public double getTax3CreditNoteCreditFiscal()
         {
-            return tax3NoteCreditCreditFiscal; 
+            return tax3CreditNoteCreditFiscal; 
 
         }
         /// <summary>
         /// Retorna el monto total de impuesto 4 de la Nota de Credito con credito Fiscal almacenado.
         /// </summary>
-        public double getTax4NoteCreditCreditFiscal()
+        public double getTax4CreditNoteCreditFiscal()
         {
-             return tax4NoteCreditCreditFiscal; 
+             return tax4CreditNoteCreditFiscal; 
 
         }
         /// <summary>
         /// Retorna el monto total de impuesto 5 de la Nota de Credito con credito Fiscal almacenado.
         /// </summary>
-        public double getTax5NoteCreditCreditFiscal()
+        public double getTax5CreditNoteCreditFiscal()
         {
-             return tax5NoteCreditCreditFiscal; 
+             return tax5CreditNoteCreditFiscal; 
 
         }
         /// <summary>
         /// Retorna el monto total de Nota de Credito para Consumidor Final almacenado.
         /// </summary>
-        public double getTotalNoteCreditClientFinal()
+        public double getTotalCreditNoteFinalClient()
         {
-             return totalNoteCreditClientFinal; 
+             return totalCreditNoteFinalClient; 
 
         }
         /// <summary>
         /// Retorna el monto total de impuesto 1 de la Nota de Credito para Consumidor Final almacenado.
         /// </summary>
-        public double getTax1NoteCreditClientFinal()
+        public double getTax1CreditNoteFinalClient()
         {
-            return tax1NoteCreditClientFinal; 
+            return tax1CreditNoteFinalClient; 
 
         }
         /// <summary>
         /// Retorna el monto total de impuesto 2 de la Nota de Credito para Consumidor Final almacenado.
         /// </summary>
-        public double getTax2NoteCreditClientFinal()
+        public double getTax2CreditNoteFinalClient()
         {
-             return tax2NoteCreditClientFinal; 
+             return tax2CreditNoteFinalClient; 
 
         }
         /// <summary>
         /// Retorna el monto total de impuesto 3 de la Nota de Credito para Consumidor Final almacenado.
         /// </summary>
-        public double getTax3NoteCreditClientFinal()
+        public double getTax3CreditNoteFinalClient()
         {
-            return tax3NoteCreditClientFinal; 
+            return tax3CreditNoteFinalClient; 
         }
         /// <summary>
         /// Retorna el monto total de impuesto 4 de la Nota de Credito para Consumidor Final almacenado.
         /// </summary>
-        public double getTax4NoteCreditClientFinal()
+        public double getTax4CreditNoteFinalClient()
         {
-            return tax4NoteCreditClientFinal; 
+            return tax4CreditNoteFinalClient; 
 
         }
         /// <summary>
         /// Retorna el monto total de impuesto 5 de la Nota de Credito para Consumidor Final almacenado.
         /// </summary>
-        public double getTax5NoteCreditClientFinal()
+        public double getTax5CreditNoteFinalClient()
         {
-            return tax5NoteCreditClientFinal; 
+            return tax5CreditNoteFinalClient; 
 
         }
         /// <summary>
@@ -330,30 +330,30 @@ public class ReportData {
                             this.lastTransactionDate = cal.getTime();
                             this.numberOfLastNonFiscal = Integer.parseInt(arrayParameter[6]);
 
-                            this.totalInoviceClientFinal = this.doValueDecimal(arrayParameter[7]);
-                            this.tax1InoviceClientFinal = this.doValueDecimal(arrayParameter[8]);
-                            this.tax2InoviceClientFinal = this.doValueDecimal(arrayParameter[9]);
-                            this.tax3InoviceClientFinal = this.doValueDecimal(arrayParameter[10]);
-                            this.tax4InoviceClientFinal = this.doValueDecimal(arrayParameter[11]);
-                            this.tax5InoviceClientFinal = this.doValueDecimal(arrayParameter[12]);
-                            this.totalInoviceCreditFiscal = this.doValueDecimal(arrayParameter[13]);
-                            this.tax1InoviceCreditFiscal = this.doValueDecimal(arrayParameter[14]);
-                            this.tax2InoviceCreditFiscal = this.doValueDecimal(arrayParameter[15]);
-                            this.tax3InoviceCreditFiscal = this.doValueDecimal(arrayParameter[16]);
-                            this.tax4InoviceCreditFiscal = this.doValueDecimal(arrayParameter[17]);
-                            this.tax5InoviceCreditFiscal = this.doValueDecimal(arrayParameter[18]);
-                            this.totalNoteCreditClientFinal = this.doValueDecimal(arrayParameter[19]);
-                            this.tax1NoteCreditClientFinal = this.doValueDecimal(arrayParameter[20]);
-                            this.tax2NoteCreditClientFinal = this.doValueDecimal(arrayParameter[21]);
-                            this.tax3NoteCreditClientFinal = this.doValueDecimal(arrayParameter[22]);
-                            this.tax4NoteCreditClientFinal = this.doValueDecimal(arrayParameter[23]);
-                            this.tax5NoteCreditClientFinal = this.doValueDecimal(arrayParameter[24]);
-                            this.totalNoteCreditCreditFiscal = this.doValueDecimal(arrayParameter[25]);
-                            this.tax1NoteCreditCreditFiscal = this.doValueDecimal(arrayParameter[26]);
-                            this.tax2NoteCreditCreditFiscal = this.doValueDecimal(arrayParameter[27]);
-                            this.tax3NoteCreditCreditFiscal = this.doValueDecimal(arrayParameter[28]);
-                            this.tax4NoteCreditCreditFiscal = this.doValueDecimal(arrayParameter[29]);
-                            this.tax5NoteCreditCreditFiscal = this.doValueDecimal(arrayParameter[30]);
+                            this.totalInvoiceFinalClient = this.doValueDecimal(arrayParameter[7]);
+                            this.tax1InvoiceFinalClient = this.doValueDecimal(arrayParameter[8]);
+                            this.tax2InvoiceFinalClient = this.doValueDecimal(arrayParameter[9]);
+                            this.tax3InvoiceFinalClient = this.doValueDecimal(arrayParameter[10]);
+                            this.tax4InvoiceFinalClient = this.doValueDecimal(arrayParameter[11]);
+                            this.tax5InvoiceFinalClient = this.doValueDecimal(arrayParameter[12]);
+                            this.totalInvoiceCreditFiscal = this.doValueDecimal(arrayParameter[13]);
+                            this.tax1InvoiceCreditFiscal = this.doValueDecimal(arrayParameter[14]);
+                            this.tax2InvoiceCreditFiscal = this.doValueDecimal(arrayParameter[15]);
+                            this.tax3InvoiceCreditFiscal = this.doValueDecimal(arrayParameter[16]);
+                            this.tax4InvoiceCreditFiscal = this.doValueDecimal(arrayParameter[17]);
+                            this.tax5InvoiceCreditFiscal = this.doValueDecimal(arrayParameter[18]);
+                            this.totalCreditNoteFinalClient = this.doValueDecimal(arrayParameter[19]);
+                            this.tax1CreditNoteFinalClient = this.doValueDecimal(arrayParameter[20]);
+                            this.tax2CreditNoteFinalClient = this.doValueDecimal(arrayParameter[21]);
+                            this.tax3CreditNoteFinalClient = this.doValueDecimal(arrayParameter[22]);
+                            this.tax4CreditNoteFinalClient = this.doValueDecimal(arrayParameter[23]);
+                            this.tax5CreditNoteFinalClient = this.doValueDecimal(arrayParameter[24]);
+                            this.totalCreditNoteCreditFiscal = this.doValueDecimal(arrayParameter[25]);
+                            this.tax1CreditNoteCreditFiscal = this.doValueDecimal(arrayParameter[26]);
+                            this.tax2CreditNoteCreditFiscal = this.doValueDecimal(arrayParameter[27]);
+                            this.tax3CreditNoteCreditFiscal = this.doValueDecimal(arrayParameter[28]);
+                            this.tax4CreditNoteCreditFiscal = this.doValueDecimal(arrayParameter[29]);
+                            this.tax5CreditNoteCreditFiscal = this.doValueDecimal(arrayParameter[30]);
 
                         }
                     }
