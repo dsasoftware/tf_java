@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import gnu.io.*;
 import tfhka._private.TfhkaRaiz;
 import tfhka.*;
+import tfhka.rd.ReportData;
 
 /** 
 * Representa una Libreria de Clase para Protocolo de Comunicacion Directo
@@ -654,307 +655,603 @@ public boolean SendCmd(String sCMD) throws PrinterException
 	 *Retorna un objeto  de tipo ReportData  con todas la informaci?n para la carga de un reporte X actual("U0X").
          *@throws PrinterException Error de  transacci?n.
 	 */
-    public ReportData getXReport() throws PrinterException
-    {
-        try
-        {
+	public ReportData getXReportU0X01() throws PrinterException {
+		try {
 
-            int rep = this.SubirDataReport("U0X");
+			int rep = this.SubirDataReport("U0X01");
 
-            if (rep > 0)
-            {
-                this.ReportePC = new ReportData(this.sDataSubida);
-                Estado = " Status: 00  Error: 00";
-            }
-            else
-            {
-                this.ReportePC = null;
-                Estado = "Sin repuesta";
-                throw new PrinterException(Estado, getPrinterStatus());
-            }
+			if (rep > 0) {
+				ReportData report = new ReportData();
+				report.ReportData01(this.sDataSubida);
+				this.ReportePC = report;
+				// this.ReportePC = new ReportData(this.sDataSubida);
+				Estado = " Status: 00  Error: 00";
+			} else {
+				this.ReportePC = null;
+				Estado = "Sin repuesta";
+				throw new PrinterException(Estado, getPrinterStatus());
+			}
 
-            return ReportePC;
+			return ReportePC;
 
-        }
-        catch (NullPointerException ex)
-        {
-            Estado = ex.getMessage();
-            this.ReportePC = null;
-            throw new PrinterException(Estado, getPrinterStatus());
-        }
+		} catch (NullPointerException ex) {
+			Estado = ex.getMessage();
+			this.ReportePC = null;
+			throw new PrinterException(Estado, getPrinterStatus());
+		}
 
-    }
-     /**
-	 *Retorna un objeto  de tipo ReportData  con todas la informaci?n para la carga de un reporte X2 actual("U1X").
-         *@throws PrinterException Error de  transacci?n.
+	}
+
+	public ReportData getXReportU0X02() throws PrinterException {
+		try {
+
+			int rep = this.SubirDataReport("U0X02");
+
+			if (rep > 0) {
+				ReportData report = new ReportData();
+				report.ReportData02(this.sDataSubida);
+				this.ReportePC = report;
+				// this.ReportePC = new ReportData(this.sDataSubida);
+				Estado = " Status: 00  Error: 00";
+			} else {
+				this.ReportePC = null;
+				Estado = "Sin repuesta";
+				throw new PrinterException(Estado, getPrinterStatus());
+			}
+
+			return ReportePC;
+
+		} catch (NullPointerException ex) {
+			Estado = ex.getMessage();
+			this.ReportePC = null;
+			throw new PrinterException(Estado, getPrinterStatus());
+		}
+
+	}
+
+	public ReportData getXReportU0X03() throws PrinterException {
+		try {
+
+			int rep = this.SubirDataReport("U0X03");
+
+			if (rep > 0) {
+				ReportData report = new ReportData();
+				report.ReportData03(this.sDataSubida);
+				this.ReportePC = report;
+				// this.ReportePC = new ReportData(this.sDataSubida);
+				Estado = " Status: 00  Error: 00";
+			} else {
+				this.ReportePC = null;
+				Estado = "Sin repuesta";
+				throw new PrinterException(Estado, getPrinterStatus());
+			}
+
+			return ReportePC;
+
+		} catch (NullPointerException ex) {
+			Estado = ex.getMessage();
+			this.ReportePC = null;
+			throw new PrinterException(Estado, getPrinterStatus());
+		}
+
+	}
+
+	public ReportData getXReportU0X04() throws PrinterException {
+		try {
+
+			int rep = this.SubirDataReport("U0X04");
+
+			if (rep > 0) {
+				ReportData report = new ReportData();
+				report.ReportData04(this.sDataSubida);
+				this.ReportePC = report;
+				// this.ReportePC = new ReportData(this.sDataSubida);
+				Estado = " Status: 00  Error: 00";
+			} else {
+				this.ReportePC = null;
+				Estado = "Sin repuesta";
+				throw new PrinterException(Estado, getPrinterStatus());
+			}
+
+			return ReportePC;
+
+		} catch (NullPointerException ex) {
+			Estado = ex.getMessage();
+			this.ReportePC = null;
+			throw new PrinterException(Estado, getPrinterStatus());
+		}
+
+	}
+
+	/**
+	 * Retorna un objeto de tipo ReportData con todas la informaci?n para la
+	 * carga de un reporte X2 actual("U1X").
+	 * 
+	 * @throws PrinterException
+	 *             Error de transacci?n.
 	 */
-    public ReportData getX2Report() throws PrinterException
-    {
-        try
-        {
+	public ReportData getX2Report01() throws PrinterException {
+		try {
 
-            int rep = this.SubirDataReport("U1X");
+			int rep = this.SubirDataReport("U1X01");
 
-            if (rep > 0)
-            {
-                this.ReportePC = new ReportData(this.sDataSubida);
-                Estado = " Status: 00  Error: 00";
-            }
-            else
-            {
-                this.ReportePC = null;
-                Estado = "Sin repuesta";
-                throw new PrinterException(Estado, getPrinterStatus());
-            }
+			if (rep > 0) {
+				ReportData report = new ReportData();
+				report.ReportData01(this.sDataSubida);
+				this.ReportePC = report;
+				// this.ReportePC = new ReportData(this.sDataSubida);
+				Estado = " Status: 00  Error: 00";
+			} else {
+				this.ReportePC = null;
+				Estado = "Sin repuesta";
+				throw new PrinterException(Estado, getPrinterStatus());
+			}
 
-            return ReportePC;
+			return ReportePC;
 
-        }
-        catch (NullPointerException ex)
-        {
-            Estado = ex.getMessage();
-            this.ReportePC = null;
-            throw new PrinterException(Estado, getPrinterStatus());
-        }
+		} catch (NullPointerException ex) {
+			Estado = ex.getMessage();
+			this.ReportePC = null;
+			throw new PrinterException(Estado, getPrinterStatus());
+		}
 
-    }
-    /**
-   	 *Retorna un objeto  de tipo AcumuladosX  con todas la informaci?n para la carga de un reporte X4 actual (U0X4).
-            *@throws PrinterException Error de  transaccion.
-   	 */
-       public AcumuladosX getX02Report() throws PrinterException
-       {
-           try
-           {
+	}
 
-               int rep = this.SubirDataReport("U0X2");
+	public ReportData getX2Report02() throws PrinterException {
+		try {
 
-               if (rep > 0)
-               {
-                   this.ReporteAcumX = new AcumuladosX(this.sDataSubida);
-                   Estado = " Status: 00  Error: 00";
-               }
-               else
-               {
-                   this.ReporteAcumX  = null;
-                   Estado = "Sin repuesta";
-                   throw new PrinterException(Estado, getPrinterStatus());
-               }
+			int rep = this.SubirDataReport("U1X02");
 
-               return ReporteAcumX;
+			if (rep > 0) {
+				ReportData report = new ReportData();
+				report.ReportData02(this.sDataSubida);
+				this.ReportePC = report;
+				// this.ReportePC = new ReportData(this.sDataSubida);
+				Estado = " Status: 00  Error: 00";
+			} else {
+				this.ReportePC = null;
+				Estado = "Sin repuesta";
+				throw new PrinterException(Estado, getPrinterStatus());
+			}
 
-           }
-           catch (NullPointerException ex)
-           {
-               Estado = ex.getMessage();
-               this.ReporteAcumX  = null;
-               throw new PrinterException(Estado, getPrinterStatus());
-           }
+			return ReportePC;
 
-       }
-       /**
-   	 *Retorna un objeto  de tipo AcumuladosX  con todas la informaci?n para la carga de un reporte X4 actual (U0X4).
-            *@throws PrinterException Error de  transaccion.
-   	 */
-       public AcumuladosX getX03Report() throws PrinterException
-       {
-           try
-           {
+		} catch (NullPointerException ex) {
+			Estado = ex.getMessage();
+			this.ReportePC = null;
+			throw new PrinterException(Estado, getPrinterStatus());
+		}
 
-               int rep = this.SubirDataReport("U0X3");
+	}
 
-               if (rep > 0)
-               {
-                   this.ReporteAcumX = new AcumuladosX(this.sDataSubida);
-                   Estado = " Status: 00  Error: 00";
-               }
-               else
-               {
-                   this.ReporteAcumX  = null;
-                   Estado = "Sin repuesta";
-                   throw new PrinterException(Estado, getPrinterStatus());
-               }
+	public ReportData getX2Report03() throws PrinterException {
+		try {
 
-               return ReporteAcumX;
+			int rep = this.SubirDataReport("U1X03");
 
-           }
-           catch (NullPointerException ex)
-           {
-               Estado = ex.getMessage();
-               this.ReporteAcumX  = null;
-               throw new PrinterException(Estado, getPrinterStatus());
-           }
+			if (rep > 0) {
+				ReportData report = new ReportData();
+				report.ReportData03(this.sDataSubida);
+				this.ReportePC = report;
+				// this.ReportePC = new ReportData(this.sDataSubida);
+				Estado = " Status: 00  Error: 00";
+			} else {
+				this.ReportePC = null;
+				Estado = "Sin repuesta";
+				throw new PrinterException(Estado, getPrinterStatus());
+			}
 
-       }
+			return ReportePC;
+
+		} catch (NullPointerException ex) {
+			Estado = ex.getMessage();
+			this.ReportePC = null;
+			throw new PrinterException(Estado, getPrinterStatus());
+		}
+
+	}
+
+	public ReportData getX2Report04() throws PrinterException {
+		try {
+
+			int rep = this.SubirDataReport("U1X04");
+
+			if (rep > 0) {
+				ReportData report = new ReportData();
+				report.ReportData04(this.sDataSubida);
+				this.ReportePC = report;
+				// this.ReportePC = new ReportData(this.sDataSubida);
+				Estado = " Status: 00  Error: 00";
+			} else {
+				this.ReportePC = null;
+				Estado = "Sin repuesta";
+				throw new PrinterException(Estado, getPrinterStatus());
+			}
+
+			return ReportePC;
+
+		} catch (NullPointerException ex) {
+			Estado = ex.getMessage();
+			this.ReportePC = null;
+			throw new PrinterException(Estado, getPrinterStatus());
+		}
+
+	}
+
+	/**
+	 * Retorna un objeto de tipo AcumuladosX con todas la informaci?n para la
+	 * carga de un reporte X2 actual (U0X4).
+	 * 
+	 * @throws PrinterException
+	 *             Error de transaccion.
+	 */
+	public AcumuladosX getX02Report() throws PrinterException {
+		try {
+
+			int rep = this.SubirDataReport("U0X2");
+
+			if (rep > 0) {
+				this.ReporteAcumX = new AcumuladosX(this.sDataSubida);
+				Estado = " Status: 00  Error: 00";
+			} else {
+				this.ReporteAcumX = null;
+				Estado = "Sin repuesta";
+				throw new PrinterException(Estado, getPrinterStatus());
+			}
+
+			return ReporteAcumX;
+
+		} catch (NullPointerException ex) {
+			Estado = ex.getMessage();
+			this.ReporteAcumX = null;
+			throw new PrinterException(Estado, getPrinterStatus());
+		}
+
+	}
+
+	/**
+	 * Retorna un objeto de tipo AcumuladosX con todas la informaci?n para la
+	 * carga de un reporte X3 actual (U0X4).
+	 * 
+	 * @throws PrinterException
+	 *             Error de transaccion.
+	 */
+	public AcumuladosX getX03Report() throws PrinterException {
+		try {
+
+			int rep = this.SubirDataReport("U0X3");
+
+			if (rep > 0) {
+				this.ReporteAcumX = new AcumuladosX(this.sDataSubida);
+				Estado = " Status: 00  Error: 00";
+			} else {
+				this.ReporteAcumX = null;
+				Estado = "Sin repuesta";
+				throw new PrinterException(Estado, getPrinterStatus());
+			}
+
+			return ReporteAcumX;
+
+		} catch (NullPointerException ex) {
+			Estado = ex.getMessage();
+			this.ReporteAcumX = null;
+			throw new PrinterException(Estado, getPrinterStatus());
+		}
+
+	}
+
+	/**
+	 * Retorna un objeto de tipo AcumuladosX con todas la informaci?n para la
+	 * carga de un reporte X4 actual (U0X4).
+	 * 
+	 * @throws PrinterException
+	 *             Error de transaccion.
+	 */
+	public AcumuladosX getX04Report() throws PrinterException {
+		try {
+
+			int rep = this.SubirDataReport("U0X4");
+
+			if (rep > 0) {
+				this.ReporteAcumX = new AcumuladosX(this.sDataSubida);
+				Estado = " Status: 00  Error: 00";
+			} else {
+				this.ReporteAcumX = null;
+				Estado = "Sin repuesta";
+				throw new PrinterException(Estado, getPrinterStatus());
+			}
+
+			return ReporteAcumX;
+
+		} catch (NullPointerException ex) {
+			Estado = ex.getMessage();
+			this.ReporteAcumX = null;
+			throw new PrinterException(Estado, getPrinterStatus());
+		}
+
+	}
+
+	/**
+	 * Retorna un objeto de tipo AcumuladosX con todas la informaci?n para la
+	 * carga de un reporte X5 actual (U0X5).
+	 * 
+	 * @throws PrinterException
+	 *             Error de transaccion.
+	 */
+	public AcumuladosX getX05Report() throws PrinterException {
+		try {
+
+			int rep = this.SubirDataReport("U0X5");
+
+			if (rep > 0) {
+				this.ReporteAcumX = new AcumuladosX(this.sDataSubida);
+				Estado = " Status: 00  Error: 00";
+			} else {
+				this.ReporteAcumX = null;
+				Estado = "Sin repuesta";
+				throw new PrinterException(Estado, getPrinterStatus());
+			}
+
+			return ReporteAcumX;
+
+		} catch (NullPointerException ex) {
+			Estado = ex.getMessage();
+			this.ReporteAcumX = null;
+			throw new PrinterException(Estado, getPrinterStatus());
+		}
+
+	}
+
+	/**
+	 * Retorna un objeto de tipo AcumuladosX con todas la informaci?n para la
+	 * carga de un reporte X7 actual (U0X7).
+	 * 
+	 * @throws PrinterException
+	 *             Error de transaccion.
+	 */
+	public AcumuladosX getX7Report() throws PrinterException {
+		try {
+
+			int rep = this.SubirDataReport("U0X7");
+
+			if (rep > 0) {
+				this.ReporteAcumX = new AcumuladosX(this.sDataSubida);
+				Estado = " Status: 00  Error: 00";
+			} else {
+				this.ReporteAcumX = null;
+				Estado = "Sin repuesta";
+				throw new PrinterException(Estado, getPrinterStatus());
+			}
+
+			return ReporteAcumX;
+
+		} catch (NullPointerException ex) {
+			Estado = ex.getMessage();
+			this.ReporteAcumX = null;
+			throw new PrinterException(Estado, getPrinterStatus());
+		}
+
+	}
+
+	/**
+	 * Retorna un objeto de tipo ReportData con todas la informaci?n del ?ltimo
+	 * reporte Z reaizado ("U0Z").
+	 * 
+	 * @throws PrinterException
+	 *             Error de transacci?n.
+	 */
+	public ReportData getZReportU0Z01() throws PrinterException {
+		try {
+
+			int rep = this.SubirDataReport("U0Z01");
+			if (rep > 0) {
+				ReportData report = new ReportData();
+				report.ReportData01(this.sDataSubida);
+				this.ReportePC = report;
+				// this.ReportePC = new ReportData(this.sDataSubida);
+				Estado = " Status: 00  Error: 00";
+			} else {
+				this.ReportePC = null;
+				Estado = "Sin repuesta";
+				throw new PrinterException(Estado, getPrinterStatus());
+			}
+
+			return ReportePC;
+
+		} catch (NullPointerException ex) {
+			this.ReportePC = null;
+			Estado = ex.getMessage();
+			throw new PrinterException(Estado, getPrinterStatus());
+		}
+
+	}
+
+	public ReportData getZReportU0Z02() throws PrinterException {
+		try {
+
+			int rep = this.SubirDataReport("U0Z02");
+			if (rep > 0) {
+				ReportData report = new ReportData();
+				report.ReportData02(this.sDataSubida);
+				this.ReportePC = report;
+				// this.ReportePC = new ReportData(this.sDataSubida);
+				Estado = " Status: 00  Error: 00";
+			} else {
+				this.ReportePC = null;
+				Estado = "Sin repuesta";
+				throw new PrinterException(Estado, getPrinterStatus());
+			}
+
+			return ReportePC;
+
+		} catch (NullPointerException ex) {
+			this.ReportePC = null;
+			Estado = ex.getMessage();
+			throw new PrinterException(Estado, getPrinterStatus());
+		}
+
+	}
+
+	public ReportData getZReportU0Z03() throws PrinterException {
+		try {
+
+			int rep = this.SubirDataReport("U0Z03");
+			if (rep > 0) {
+				ReportData report = new ReportData();
+				report.ReportData03(this.sDataSubida);
+				this.ReportePC = report;
+				// this.ReportePC = new ReportData(this.sDataSubida);
+				Estado = " Status: 00  Error: 00";
+			} else {
+				this.ReportePC = null;
+				Estado = "Sin repuesta";
+				throw new PrinterException(Estado, getPrinterStatus());
+			}
+
+			return ReportePC;
+
+		} catch (NullPointerException ex) {
+			this.ReportePC = null;
+			Estado = ex.getMessage();
+			throw new PrinterException(Estado, getPrinterStatus());
+		}
+
+	}
+
+	public ReportData getZReportU0Z04() throws PrinterException {
+		try {
+
+			int rep = this.SubirDataReport("U0Z04");
+			if (rep > 0) {
+				ReportData report = new ReportData();
+				report.ReportData04(this.sDataSubida);
+				this.ReportePC = report;
+				// this.ReportePC = new ReportData(this.sDataSubida);
+				Estado = " Status: 00  Error: 00";
+			} else {
+				this.ReportePC = null;
+				Estado = "Sin repuesta";
+				throw new PrinterException(Estado, getPrinterStatus());
+			}
+
+			return ReportePC;
+
+		} catch (NullPointerException ex) {
+			this.ReportePC = null;
+			Estado = ex.getMessage();
+			throw new PrinterException(Estado, getPrinterStatus());
+		}
+
+	}
        
-     /**
-	 *Retorna un objeto  de tipo AcumuladosX  con todas la informaci?n para la carga de un reporte X4 actual (U0X4).
-         *@throws PrinterException Error de  transaccion.
-	 */
-    public AcumuladosX getX04Report() throws PrinterException
-    {
-        try
-        {
-
-            int rep = this.SubirDataReport("U0X4");
-
-            if (rep > 0)
-            {
-                this.ReporteAcumX = new AcumuladosX(this.sDataSubida);
-                Estado = " Status: 00  Error: 00";
-            }
-            else
-            {
-                this.ReporteAcumX  = null;
-                Estado = "Sin repuesta";
-                throw new PrinterException(Estado, getPrinterStatus());
-            }
-
-            return ReporteAcumX;
-
-        }
-        catch (NullPointerException ex)
-        {
-            Estado = ex.getMessage();
-            this.ReporteAcumX  = null;
-            throw new PrinterException(Estado, getPrinterStatus());
-        }
-
-    }
-     /**
-	 *Retorna un objeto  de tipo AcumuladosX  con todas la informaci?n para la carga de un reporte X5 actual (U0X5).
-         *@throws PrinterException Error de  transaccion.
-	 */
-    public AcumuladosX getX05Report() throws PrinterException
-    {
-        try
-        {
-
-            int rep = this.SubirDataReport("U0X5");
-
-            if (rep > 0)
-            {
-                this.ReporteAcumX = new AcumuladosX(this.sDataSubida);
-                Estado = " Status: 00  Error: 00";
-            }
-            else
-            {
-                this.ReporteAcumX  = null;
-                Estado = "Sin repuesta";
-                throw new PrinterException(Estado, getPrinterStatus());
-            }
-
-            return ReporteAcumX;
-
-        }
-        catch (NullPointerException ex)
-        {
-            Estado = ex.getMessage();
-            this.ReporteAcumX  = null;
-            throw new PrinterException(Estado, getPrinterStatus());
-        }
-
-    }
-     /**
-	 *Retorna un objeto  de tipo AcumuladosX  con todas la informaci?n para la carga de un reporte X7 actual (U0X7).
-         *@throws PrinterException Error de  transaccion.
-	 */
-    public AcumuladosX getX7Report() throws PrinterException
-    {
-        try
-        {
-
-            int rep = this.SubirDataReport("U0X7");
-
-            if (rep > 0)
-            {
-                this.ReporteAcumX = new AcumuladosX(this.sDataSubida);
-                Estado = " Status: 00  Error: 00";
-            }
-            else
-            {
-                this.ReporteAcumX  = null;
-                Estado = "Sin repuesta";
-                throw new PrinterException(Estado, getPrinterStatus());
-            }
-
-            return ReporteAcumX;
-
-        }
-        catch (NullPointerException ex)
-        {
-            Estado = ex.getMessage();
-            this.ReporteAcumX  = null;
-            throw new PrinterException(Estado, getPrinterStatus());
-        }
-
-    }
-        /**
-	 *Retorna un objeto  de tipo ReportData  con todas la informaci?n del ?ltimo reporte Z reaizado ("U0Z").
-         *@throws PrinterException Error de  transacci?n.
-	 */
-        public ReportData getZReport() throws PrinterException
-    {
-        try
-        {
-
-            int rep = this.SubirDataReport("U0Z");
-            if (rep > 0)
-            {
-                this.ReportePC = new ReportData(this.sDataSubida);
-                Estado = " Status: 00  Error: 00";
-            }
-            else
-            {
-                this.ReportePC = null;
-                Estado = "Sin repuesta";
-                throw new PrinterException(Estado, getPrinterStatus());
-            }
-
-            return ReportePC;
-
-        }
-        catch (NullPointerException ex)
-        {
-            this.ReportePC = null;
-            Estado = ex.getMessage();
-            throw new PrinterException(Estado, getPrinterStatus());
-        }
-
-    }
         /**
 	 *Retorna un objeto  de tipo ReportData  con todas la informaci?n del ?ltimo reporte Z2 reaizado ("U1Z").
          *@throws PrinterException Error de  transacci?n.
 	 */
-        public ReportData getZ2Report() throws PrinterException
-    {
-        try
-        {
+	public ReportData getZ2Report01() throws PrinterException {
+		try {
 
-            int rep = this.SubirDataReport("U1Z");
-            if (rep > 0)
-            {
-                this.ReportePC = new ReportData(this.sDataSubida);
-                Estado = " Status: 00  Error: 00";
-            }
-            else
-            {
-                this.ReportePC = null;
-                Estado = "Sin repuesta";
-                throw new PrinterException(Estado, getPrinterStatus());
-            }
+			int rep = this.SubirDataReport("U1Z01");
+			if (rep > 0) {
+				ReportData report = new ReportData();
+				report.ReportData01(this.sDataSubida);
+				this.ReportePC = report;
+				// this.ReportePC = new ReportData(this.sDataSubida);
+				Estado = " Status: 00  Error: 00";
+			} else {
+				this.ReportePC = null;
+				Estado = "Sin repuesta";
+				throw new PrinterException(Estado, getPrinterStatus());
+			}
 
-            return ReportePC;
+			return ReportePC;
 
-        }
-        catch (NullPointerException ex)
-        {
-            this.ReportePC = null;
-            Estado = ex.getMessage();
-            throw new PrinterException(Estado, getPrinterStatus());
-        }
+		} catch (NullPointerException ex) {
+			this.ReportePC = null;
+			Estado = ex.getMessage();
+			throw new PrinterException(Estado, getPrinterStatus());
+		}
 
-    }
+	}
+
+	public ReportData getZ2Report02() throws PrinterException {
+		try {
+
+			int rep = this.SubirDataReport("U1Z02");
+			if (rep > 0) {
+				ReportData report = new ReportData();
+				report.ReportData02(this.sDataSubida);
+				this.ReportePC = report;
+				// this.ReportePC = new ReportData(this.sDataSubida);
+				Estado = " Status: 00  Error: 00";
+			} else {
+				this.ReportePC = null;
+				Estado = "Sin repuesta";
+				throw new PrinterException(Estado, getPrinterStatus());
+			}
+
+			return ReportePC;
+
+		} catch (NullPointerException ex) {
+			this.ReportePC = null;
+			Estado = ex.getMessage();
+			throw new PrinterException(Estado, getPrinterStatus());
+		}
+
+	}
+
+	public ReportData getZ2Report03() throws PrinterException {
+		try {
+
+			int rep = this.SubirDataReport("U1Z03");
+			if (rep > 0) {
+				ReportData report = new ReportData();
+				report.ReportData03(this.sDataSubida);
+				this.ReportePC = report;
+				// this.ReportePC = new ReportData(this.sDataSubida);
+				Estado = " Status: 00  Error: 00";
+			} else {
+				this.ReportePC = null;
+				Estado = "Sin repuesta";
+				throw new PrinterException(Estado, getPrinterStatus());
+			}
+
+			return ReportePC;
+
+		} catch (NullPointerException ex) {
+			this.ReportePC = null;
+			Estado = ex.getMessage();
+			throw new PrinterException(Estado, getPrinterStatus());
+		}
+
+	}
+
+	public ReportData getZ2Report04() throws PrinterException {
+		try {
+
+			int rep = this.SubirDataReport("U1Z04");
+			if (rep > 0) {
+				ReportData report = new ReportData();
+				report.ReportData04(this.sDataSubida);
+				this.ReportePC = report;
+				// this.ReportePC = new ReportData(this.sDataSubida);
+				Estado = " Status: 00  Error: 00";
+			} else {
+				this.ReportePC = null;
+				Estado = "Sin repuesta";
+				throw new PrinterException(Estado, getPrinterStatus());
+			}
+
+			return ReportePC;
+
+		} catch (NullPointerException ex) {
+			this.ReportePC = null;
+			Estado = ex.getMessage();
+			throw new PrinterException(Estado, getPrinterStatus());
+		}
+
+	}
+       
        /**
 	*Retorna un arreglo de objetos  ReportData Z con todos sus atributos por rango de n??½meros
 	*@param StarReportNumber N??½mero del  Z inicial a subir
@@ -963,60 +1260,56 @@ public boolean SendCmd(String sCMD) throws PrinterException
         */
         public ReportData[] getZReport(int StarReportNumber, int EndReportNumber ) throws PrinterException
         {  
-          String IntervaloNi =  String.valueOf(StarReportNumber);
-          while(IntervaloNi.length()<6)
-          {
-              IntervaloNi = "0" + IntervaloNi;
-          }
-          String IntervaloNf =  String.valueOf(EndReportNumber);
-          while(IntervaloNf.length()<6)
-          {
-              IntervaloNf = "0" + IntervaloNf;
-          }
+		String IntervaloNi = String.valueOf(StarReportNumber);
+		while (IntervaloNi.length() < 6) {
+			IntervaloNi = "0" + IntervaloNi;
+		}
+		String IntervaloNf = String.valueOf(EndReportNumber);
+		while (IntervaloNf.length() < 6) {
+			IntervaloNf = "0" + IntervaloNf;
+		}
 		  
-          try {
-		  
-           int rep =  this.SubirDataReport("U3A" + IntervaloNi + IntervaloNf);
-		   
-           if (rep > 0)
-           { int  m=0;
-           
-            this.ReporteArrayPC = new ReportData[this.dataLectorFisc.size()];
-            /*
-             for(Object contenido : this.dataLectorFisc)
-              {
-                 this.ReporteArrayPC[m] = new ReportData((String)contenido);
-                 ++m;
-              }
-              */
-            for (int i = 0; i < this.dataLectorFisc.size(); i++) {  
-                                  Object contenido = this.dataLectorFisc.get(i);  
-                                  this.ReporteArrayPC[m] = new ReportData((String)contenido);
-                 ++m;
-                                }  
-            
-            Estado = " Status: 00  Error: 00";
-           }
-           else
-           {
-               this.ReporteArrayPC =  null;
-               Estado = "Sin repuesta";
-               
-                if (StarReportNumber > EndReportNumber)
-              this.Estado = "The original number can not be greater than the final number";
-               
-               throw new PrinterException(Estado, getPrinterStatus());
-           }
-           
-            return ReporteArrayPC;
-			
-			}catch (NullPointerException ex) {
-            this.ReporteArrayPC = null;
-            Estado = ex.getMessage();
-                throw new PrinterException(Estado, getPrinterStatus());
-        }
-		
-        }
+          try {  
+            int rep =  this.SubirDataReport("U3A" + IntervaloNi + IntervaloNf);
+		   	if (rep > 0) {
+				int m = 0;
+				this.ReporteArrayPC = new ReportData[this.dataLectorFisc.size()];
+				/*
+				 * for(Object contenido : this.dataLectorFisc) {
+				 * this.ReporteArrayPC[m] = new ReportData((String)contenido);
+				 * ++m; }
+				 */
+				for (int i = 0; i < this.ReporteArrayPC.length; i++) {
+					Object contenido = this.ReporteArrayPC.length;
+					ReportData report = new ReportData();
+					report.ReportDataArray(String.valueOf(contenido));		
+					this.ReporteArrayPC[rep / 4] = report;
+					for (int j = 0; j < 4; ++j) {
+						this.ReporteArrayPC[m].ReportDataArray(String.valueOf(contenido));
+						++m;
+					}
+				}
+
+				Estado = " Status: 00  Error: 00";
+			} else {
+				this.ReporteArrayPC = null;
+				Estado = "Sin repuesta";
+
+				if (StarReportNumber > EndReportNumber)
+					this.Estado = "The original number can not be greater than the final number";
+
+				throw new PrinterException(Estado, getPrinterStatus());
+			}
+
+			return ReporteArrayPC;
+
+		} catch (NullPointerException ex) {
+			this.ReporteArrayPC = null;
+			Estado = ex.getMessage();
+			throw new PrinterException(Estado, getPrinterStatus());
+		}
+
+	}
          /**
 	  *Retorna un arreglo de objetos de ReportData Z con todos sus atributos por rango de fechas
           *@param StarDate Fecha inicial del  Z a subir
@@ -1082,11 +1375,23 @@ public boolean SendCmd(String sCMD) throws PrinterException
                  ++h;
               }
               */
-              for (int i = 0; i < this.dataLectorFisc.size(); i++) {  
-                                  Object contenido = this.dataLectorFisc.get(i);  
-                                 this.ReporteArrayPC[h] = new ReportData((String)contenido);
-                 ++h;
-                                }  
+				for (int i = 0; i < this.dataLectorFisc.size(); i++) {
+					
+					Object contenido = this.dataLectorFisc.get(i);
+					ReportData report = new ReportData();
+					report.ReportDataArray((String)contenido);
+					this.ReporteArrayPC[rep/4] = report;
+					for(int j = 0; j < 4 ; j++){
+					this.ReporteArrayPC[h].ReportDataArray((String)contenido);
+					++h;
+				}
+//					Object contenido = this.dataLectorFisc.get(i);
+//					this.ReporteArrayPC[rep/4] = new ReportData();
+//					for(int j = 0; j < 4 ; j++){
+//						this.ReporteArrayPC[h].ReportDataArray((String)contenido);
+//					}
+					
+				}  
              
                 Estado = " Status: 00  Error: 00";
             }
