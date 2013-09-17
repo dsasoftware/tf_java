@@ -529,16 +529,16 @@ public class ReportData {
 							.valueOf((char) 0X0A));
 					if (arrayParameter.length > 1) {
 						this.numberOfLastZReport = Integer
-								.parseInt(arrayParameter[0]);
-						int y = Integer.parseInt(arrayParameter[1].substring(0,
+								.parseInt(arrayParameter[1]);
+						int y = Integer.parseInt(arrayParameter[3].substring(0,
 								2)) + 2000;
-						int m = Integer.parseInt(arrayParameter[1].substring(2,
+						int m = Integer.parseInt(arrayParameter[3].substring(2,
 								4));
-						int d = Integer.parseInt(arrayParameter[1].substring(4,
+						int d = Integer.parseInt(arrayParameter[3].substring(4,
 								6));
-						int hh = Integer.parseInt(arrayParameter[2].substring(
+						int hh = Integer.parseInt(arrayParameter[4].substring(
 								0, 2));
-						int min = Integer.parseInt(arrayParameter[2].substring(
+						int min = Integer.parseInt(arrayParameter[4].substring(
 								2, 4));
 
 						if (m == 0 && d == 0 && y == 2000) {
@@ -555,15 +555,15 @@ public class ReportData {
 
 						this.ZReportDate = cal.getTime();
 						this.numberOfLastTransaction = Integer
-								.parseInt(arrayParameter[3]);
+								.parseInt(arrayParameter[5]);
 
-						y = Integer.parseInt(arrayParameter[4].substring(0, 2)) + 2000;
-						m = Integer.parseInt(arrayParameter[4].substring(2, 4));
-						d = Integer.parseInt(arrayParameter[4].substring(4, 6));
+						y = Integer.parseInt(arrayParameter[6].substring(0, 2)) + 2000;
+						m = Integer.parseInt(arrayParameter[6].substring(2, 4));
+						d = Integer.parseInt(arrayParameter[6].substring(4, 6));
 
 						hh = Integer
-								.parseInt(arrayParameter[5].substring(0, 2));
-						min = Integer.parseInt(arrayParameter[5]
+								.parseInt(arrayParameter[7].substring(0, 2));
+						min = Integer.parseInt(arrayParameter[7]
 								.substring(2, 4));
 
 						if (m == 0 && d == 0 && y == 2000) {
@@ -576,20 +576,22 @@ public class ReportData {
 
 						this.lastTransactionDate = cal.getTime();
 						this.numberOfLastNonFiscal = Integer
-								.parseInt(arrayParameter[6]);
-						this.amountInvoiceCanceled = Integer
-								.parseInt(arrayParameter[7]);
-						this.amountDocumentsSale = Integer
 								.parseInt(arrayParameter[8]);
-						this.amountDocumentsNoSale = Integer
+						this.amountInvoiceCanceled = Integer
 								.parseInt(arrayParameter[9]);
+						this.amountDocumentsSale = Integer
+								.parseInt(arrayParameter[10]);
+						this.amountDocumentsNoSale = Integer
+								.parseInt(arrayParameter[11]);
 						this.totalTechnicalInterventions = this
-								.doValueDecimal(arrayParameter[10]);
+								.doValueDecimal(arrayParameter[12]);
 
 					}
 				} catch (ArrayIndexOutOfBoundsException aexp) {
 					return;
 				} catch (NumberFormatException nfexp) {
+					return;
+				}catch (StringIndexOutOfBoundsException nfexp) {
 					return;
 				}
 

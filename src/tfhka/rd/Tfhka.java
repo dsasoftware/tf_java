@@ -1280,7 +1280,7 @@ public boolean SendCmd(String sCMD) throws PrinterException
 				 * ++m; }
 				 */
 				for (int i = 0; i < this.ReporteArrayPC.length; i++) {
-					Object contenido = this.ReporteArrayPC.length;
+					Object contenido = this.dataLectorFisc.get(0);
 					ReportData report = new ReportData();
 					report.ReportDataArray(String.valueOf(contenido));		
 					this.ReporteArrayPC[rep / 4] = report;
@@ -1306,6 +1306,10 @@ public boolean SendCmd(String sCMD) throws PrinterException
 		} catch (NullPointerException ex) {
 			this.ReporteArrayPC = null;
 			Estado = ex.getMessage();
+			throw new PrinterException(Estado, getPrinterStatus());
+		}catch (ArrayIndexOutOfBoundsException ex) {
+			this.ReporteArrayPC = null;
+			Estado = "Error, indice fuera del rango designado.";//ex.getMessage();
 			throw new PrinterException(Estado, getPrinterStatus());
 		}
 
