@@ -530,15 +530,15 @@ public class ReportData {
 					if (arrayParameter.length > 1) {
 						this.numberOfLastZReport = Integer
 								.parseInt(arrayParameter[0]);
-						int y = Integer.parseInt(arrayParameter[1].substring(0,
+						int y = Integer.parseInt(arrayParameter[2].substring(0,
 								2)) + 2000;
-						int m = Integer.parseInt(arrayParameter[1].substring(2,
+						int m = Integer.parseInt(arrayParameter[2].substring(2,
 								4));
-						int d = Integer.parseInt(arrayParameter[1].substring(4,
+						int d = Integer.parseInt(arrayParameter[2].substring(4,
 								6));
-						int hh = Integer.parseInt(arrayParameter[2].substring(
+						int hh = Integer.parseInt(arrayParameter[3].substring(
 								0, 2));
-						int min = Integer.parseInt(arrayParameter[2].substring(
+						int min = Integer.parseInt(arrayParameter[3].substring(
 								2, 4));
 
 						if (m == 0 && d == 0 && y == 2000) {
@@ -555,15 +555,15 @@ public class ReportData {
 
 						this.ZReportDate = cal.getTime();
 						this.numberOfLastTransaction = Integer
-								.parseInt(arrayParameter[3]);
+								.parseInt(arrayParameter[4]);
 
-						y = Integer.parseInt(arrayParameter[4].substring(0, 2)) + 2000;
-						m = Integer.parseInt(arrayParameter[4].substring(2, 4));
-						d = Integer.parseInt(arrayParameter[4].substring(4, 6));
+						y = Integer.parseInt(arrayParameter[5].substring(0, 2)) + 2000;
+						m = Integer.parseInt(arrayParameter[5].substring(2, 4));
+						d = Integer.parseInt(arrayParameter[5].substring(4, 6));
 
 						hh = Integer
-								.parseInt(arrayParameter[5].substring(0, 2));
-						min = Integer.parseInt(arrayParameter[5]
+								.parseInt(arrayParameter[6].substring(0, 2));
+						min = Integer.parseInt(arrayParameter[6]
 								.substring(2, 4));
 
 						if (m == 0 && d == 0 && y == 2000) {
@@ -576,20 +576,22 @@ public class ReportData {
 
 						this.lastTransactionDate = cal.getTime();
 						this.numberOfLastNonFiscal = Integer
-								.parseInt(arrayParameter[6]);
-						this.amountInvoiceCanceled = Integer
 								.parseInt(arrayParameter[7]);
-						this.amountDocumentsSale = Integer
+						this.amountInvoiceCanceled = Integer
 								.parseInt(arrayParameter[8]);
-						this.amountDocumentsNoSale = Integer
+						this.amountDocumentsSale = Integer
 								.parseInt(arrayParameter[9]);
+						this.amountDocumentsNoSale = Integer
+								.parseInt(arrayParameter[10]);
 						this.totalTechnicalInterventions = this
-								.doValueDecimal(arrayParameter[10]);
+								.doValueDecimal(arrayParameter[11]);
 
 					}
 				} catch (ArrayIndexOutOfBoundsException aexp) {
 					return;
 				} catch (NumberFormatException nfexp) {
+					return;
+				}catch (StringIndexOutOfBoundsException nfexp) {
 					return;
 				}
 
@@ -606,33 +608,33 @@ public class ReportData {
 					if (arrayParameter.length > 1) {
 
 						this.totalInvoiceFinalClient = this
-								.doValueDecimal(arrayParameter[1]);
+								.doValueDecimal(arrayParameter[0]);
 						this.tax1InvoiceFinalClient = this
-								.doValueDecimal(arrayParameter[2]);
+								.doValueDecimal(arrayParameter[1]);
 						this.tax2InvoiceFinalClient = this
-								.doValueDecimal(arrayParameter[3]);
+								.doValueDecimal(arrayParameter[2]);
 						this.tax3InvoiceFinalClient = this
-								.doValueDecimal(arrayParameter[4]);
+								.doValueDecimal(arrayParameter[3]);
 						this.tax4InvoiceFinalClient = this
-								.doValueDecimal(arrayParameter[5]);
+								.doValueDecimal(arrayParameter[4]);
 						this.tax5InvoiceFinalClient = this
-								.doValueDecimal(arrayParameter[6]);
+								.doValueDecimal(arrayParameter[5]);
 						this.totalHomeOperationInvoiceFinalClient = this
-								.doValueDecimal(arrayParameter[7]);
+								.doValueDecimal(arrayParameter[6]);
 						this.totalInvoiceFiscalCredit = this
-								.doValueDecimal(arrayParameter[8]);
+								.doValueDecimal(arrayParameter[7]);
 						this.tax1InvoiceFiscalCredit = this
-								.doValueDecimal(arrayParameter[9]);
+								.doValueDecimal(arrayParameter[8]);
 						this.tax2InvoiceFiscalCredit = this
-								.doValueDecimal(arrayParameter[10]);
+								.doValueDecimal(arrayParameter[9]);
 						this.tax3InvoiceFiscalCredit = this
-								.doValueDecimal(arrayParameter[11]);
+								.doValueDecimal(arrayParameter[10]);
 						this.tax4InvoiceFiscalCredit = this
-								.doValueDecimal(arrayParameter[12]);
+								.doValueDecimal(arrayParameter[11]);
 						this.tax5InvoiceFiscalCredit = this
-								.doValueDecimal(arrayParameter[13]);
+								.doValueDecimal(arrayParameter[12]);
 						this.totalHomeOperationInvoiceFiscalCredit = this
-								.doValueDecimal(arrayParameter[14]);
+								.doValueDecimal(arrayParameter[13]);
 
 					}
 				} catch (ArrayIndexOutOfBoundsException aexp) {
@@ -655,33 +657,33 @@ public class ReportData {
 					if (arrayParameter.length > 1) {
 
 						this.totalCreditNoteFinalClient = this
-								.doValueDecimal(arrayParameter[1]);
+								.doValueDecimal(arrayParameter[0]);
 						this.tax1CreditNoteFinalClient = this
-								.doValueDecimal(arrayParameter[2]);
+								.doValueDecimal(arrayParameter[1]);
 						this.tax2CreditNoteFinalClient = this
-								.doValueDecimal(arrayParameter[3]);
+								.doValueDecimal(arrayParameter[2]);
 						this.tax3CreditNoteFinalClient = this
-								.doValueDecimal(arrayParameter[4]);
+								.doValueDecimal(arrayParameter[3]);
 						this.tax4CreditNoteFinalClient = this
-								.doValueDecimal(arrayParameter[5]);
+								.doValueDecimal(arrayParameter[4]);
 						this.tax5CreditNoteFinalClient = this
-								.doValueDecimal(arrayParameter[6]);
+								.doValueDecimal(arrayParameter[5]);
 						this.totalHomeOperationCreditNoteFinalClient = this
-								.doValueDecimal(arrayParameter[7]);
+								.doValueDecimal(arrayParameter[6]);
 						this.totalCreditNoteFiscalCredit = this
-								.doValueDecimal(arrayParameter[8]);
+								.doValueDecimal(arrayParameter[7]);
 						this.tax1CreditNoteFiscalCredit = this
-								.doValueDecimal(arrayParameter[9]);
+								.doValueDecimal(arrayParameter[8]);
 						this.tax2CreditNoteFiscalCredit = this
-								.doValueDecimal(arrayParameter[10]);
+								.doValueDecimal(arrayParameter[9]);
 						this.tax3CreditNoteFiscalCredit = this
-								.doValueDecimal(arrayParameter[11]);
+								.doValueDecimal(arrayParameter[10]);
 						this.tax4CreditNoteFiscalCredit = this
-								.doValueDecimal(arrayParameter[12]);
+								.doValueDecimal(arrayParameter[11]);
 						this.tax5CreditNoteFiscalCredit = this
-								.doValueDecimal(arrayParameter[13]);
+								.doValueDecimal(arrayParameter[12]);
 						this.totalHomeOperationCreditNoteFiscalCredit = this
-								.doValueDecimal(arrayParameter[14]);
+								.doValueDecimal(arrayParameter[13]);
 
 					}
 				} catch (ArrayIndexOutOfBoundsException aexp) {
@@ -704,45 +706,45 @@ public class ReportData {
 					if (arrayParameter.length > 1) {
 
 						this.exonerationItbis = this
-								.doValueDecimal(arrayParameter[1]);
+								.doValueDecimal(arrayParameter[0]);
 						this.exonerationItbisCreditnote = this
-								.doValueDecimal(arrayParameter[2]);
+								.doValueDecimal(arrayParameter[1]);
 						this.vouchersCanceled = this
-								.doValueDecimal(arrayParameter[3]);
+								.doValueDecimal(arrayParameter[2]);
 						this.itemsRepayment = this
-								.doValueDecimal(arrayParameter[4]);
+								.doValueDecimal(arrayParameter[3]);
 						this.itemsDiscount = this
-								.doValueDecimal(arrayParameter[5]);
+								.doValueDecimal(arrayParameter[4]);
 						this.itemsSurcharge = this
-								.doValueDecimal(arrayParameter[6]);
+								.doValueDecimal(arrayParameter[5]);
 						this.subtotalDiscount = this
-								.doValueDecimal(arrayParameter[7]);
+								.doValueDecimal(arrayParameter[6]);
 						this.subtotalSurcharge = this
-								.doValueDecimal(arrayParameter[8]);
+								.doValueDecimal(arrayParameter[7]);
 						this.totalMeansPayment1 = this
-								.doValueDecimal(arrayParameter[9]);
+								.doValueDecimal(arrayParameter[8]);
 						this.totalMeansPayment2 = this
-								.doValueDecimal(arrayParameter[10]);
+								.doValueDecimal(arrayParameter[9]);
 						this.totalMeansPayment3 = this
-								.doValueDecimal(arrayParameter[11]);
+								.doValueDecimal(arrayParameter[10]);
 						this.totalMeansPayment4 = this
-								.doValueDecimal(arrayParameter[12]);
+								.doValueDecimal(arrayParameter[11]);
 						this.totalMeansPayment5 = this
-								.doValueDecimal(arrayParameter[13]);
+								.doValueDecimal(arrayParameter[12]);
 						this.totalMeansPayment6 = this
-								.doValueDecimal(arrayParameter[14]);
+								.doValueDecimal(arrayParameter[13]);
 						this.totalMeansPayment7 = this
-								.doValueDecimal(arrayParameter[15]);
+								.doValueDecimal(arrayParameter[14]);
 						this.totalMeansPayment8 = this
-								.doValueDecimal(arrayParameter[16]);
+								.doValueDecimal(arrayParameter[15]);
 						this.totalMeansPayment9 = this
-								.doValueDecimal(arrayParameter[17]);
+								.doValueDecimal(arrayParameter[16]);
 						this.totalMeansPayment10 = this
-								.doValueDecimal(arrayParameter[18]);
+								.doValueDecimal(arrayParameter[17]);
 						this.totalMeansPaymentCreditnote = this
-								.doValueDecimal(arrayParameter[19]);
+								.doValueDecimal(arrayParameter[18]);
 						this.totalDonations = this
-								.doValueDecimal(arrayParameter[20]);
+								.doValueDecimal(arrayParameter[19]);
 					}
 				} catch (ArrayIndexOutOfBoundsException aexp) {
 					return;
