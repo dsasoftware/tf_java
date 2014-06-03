@@ -2,43 +2,42 @@ package tfhka.ve;
 
 import java.util.Date;
 import java.util.GregorianCalendar; 
-import java.lang.*;
 /** 
 * Representa una estructura para almacenar los datos de los reportes X y Z
 */ 
 public class ReportData {
-private int numberOfLastZReport;
-private Date ZReportDate;
-private Date lastInvoiceDate; //(includes the hour)
-//Facturas
-private double freeSalesTax;
-private double generalRate1Sale;
-private double generalRate1Tax;
-private double reducedRate2Sale;
-private double reducedRate2Tax;
-private double additionalRate3Sal;
-private double additionalRate3Tax;
-//Nota de Creditos
-private double freeTaxDevolution;
-private double generalRateDevolution;
-private double generalRateTaxDevolution;
-private double reducedRateDevolution;
-private double reducedRateTaxDevolution;
-private double additionalRateDevolution;
-private double additionalRateTaxDevolution;
-// Notas de Debito
-private double freeTaxDebit; 
-private double generalRateDebit;
-private double generalRateTaxDebit;
-private double reducedRateDebit;
-private double reducedRateTaxDebit;
-private double additionalRateDebit;
-private double additionalRateTaxDebit;
+	private int numberOfLastZReport;
+	private Date ZReportDate;
+	private Date lastInvoiceDate; // (includes the hour)
+	// Facturas
+	private double freeSalesTax;
+	private double generalRate1Sale;
+	private double generalRate1Tax;
+	private double reducedRate2Sale;
+	private double reducedRate2Tax;
+	private double additionalRate3Sale;
+	private double additionalRate3Tax;
+	// Nota de Creditos
+	private double freeTaxDevolution;
+	private double generalRateDevolution;
+	private double generalRateTaxDevolution;
+	private double reducedRateDevolution;
+	private double reducedRateTaxDevolution;
+	private double additionalRateDevolution;
+	private double additionalRateTaxDevolution;
+	// Notas de Debito
+	private double freeTaxDebit;
+	private double generalRateDebit;
+	private double generalRateTaxDebit;
+	private double reducedRateDebit;
+	private double reducedRateTaxDebit;
+	private double additionalRateDebit;
+	private double additionalRateTaxDebit;
 
-private int numberOfLastInvoice;
-private int numberOfLastCreditNote;
-private int numberOfLastDebitNote;
-private int numberOfLastNonFiscal;
+	private int numberOfLastInvoice;
+	private int numberOfLastCreditNote;
+	private int numberOfLastDebitNote;
+	private int numberOfLastNonFiscal;
 
     /** Creates a new instance of ReportX 
      *@param trama cadena de caracteres que contiene la data de reportes
@@ -95,7 +94,7 @@ private int numberOfLastNonFiscal;
                                 this.generalRate1Tax = this.doValueDecimal(arrayParameter[7]);
                                 this.reducedRate2Sale = this.doValueDecimal(arrayParameter[8]);
                                 this.reducedRate2Tax = this.doValueDecimal(arrayParameter[9]);
-                                this.additionalRate3Sal = this.doValueDecimal(arrayParameter[10]);
+                                this.additionalRate3Sale = this.doValueDecimal(arrayParameter[10]);
                                 this.additionalRate3Tax = this.doValueDecimal(arrayParameter[11]);
                                 this.freeTaxDevolution = this.doValueDecimal(arrayParameter[12]);
                                 this.generalRateDevolution = this.doValueDecimal(arrayParameter[13]);
@@ -164,7 +163,7 @@ private int numberOfLastNonFiscal;
                              this.generalRate1Tax = this.doValueDecimal(arrayParameter[11]);
                              this.reducedRate2Sale = this.doValueDecimal(arrayParameter[12]);
                              this.reducedRate2Tax = this.doValueDecimal(arrayParameter[13]);
-                             this.additionalRate3Sal = this.doValueDecimal(arrayParameter[14]);
+                             this.additionalRate3Sale = this.doValueDecimal(arrayParameter[14]);
                              this.additionalRate3Tax = this.doValueDecimal(arrayParameter[15]);
                              this.freeTaxDebit = this.doValueDecimal(arrayParameter[16]);
                              this.generalRateDebit = this.doValueDecimal(arrayParameter[17]);
@@ -199,283 +198,7 @@ private int numberOfLastNonFiscal;
      /**
       * Retorna el número del ultimo reporte Z efectuado.
       */
-    public int getNumberOfLastZReport() {
-        return numberOfLastZReport;
-    }
-
-    private void setNumberOfLastZReport(int numberOfLastZReport) {
-        this.numberOfLastZReport = numberOfLastZReport;
-    }
-     /**
-      * Retorna la fecha  del ultimo reporte Z efectuado.
-      */
-    public Date getZReportDate() {
-        return ZReportDate;
-    }
-
-    private void setZReportDate(Date ZReportDate) {
-        this.ZReportDate = ZReportDate;
-    }
-     /**
-      * Retorna el número de la ultima factura emitida.
-      */
-    public int getNumberOfLastInvoice() {
-        return numberOfLastInvoice;
-    }
-
-    private void setNumberOfLastInvoice(int numberOfLastInvoice) {
-        this.numberOfLastInvoice = numberOfLastInvoice;
-    }
-    /**
-      * Retorna la fecha y la hora de la ultima factura emitida.
-      */
-    public Date getLastInvoiceDate() {
-        return lastInvoiceDate;
-    }
-
-    private void setLastInvoiceDate(Date lastInvoiceDate) {
-        this.lastInvoiceDate = lastInvoiceDate;
-    }
-    /**
-      * Retorna el monto total Exento almacenado.
-      */
-    public double getFreeSalesTax() {
-        return freeSalesTax;
-    }
-
-    private void setFreeSalesTax(double freeSalesTax) {
-        this.freeSalesTax = freeSalesTax;
-    }
-     /**
-      * Retorna el monto total de Base Imponible General almacenado.
-      */
-    public double getGeneralRate1Sale() {
-        return generalRate1Sale;
-    }
-
-   private void setGeneralRate1Sale(double generalRate1Sale) {
-        this.generalRate1Sale = generalRate1Sale;
-    }
-     /**
-      * Retorna el monto total de IVA General ó Tasa(1) almacenado.
-      */
-    public double getGeneralRate1Tax() {
-        return generalRate1Tax;
-    }
-
-   private void setGeneralRate1Tax(double generalRate1Tax) {
-        this.generalRate1Tax = generalRate1Tax;
-    }
-     /**
-      * Retorna el monto total de Base Imponible Reducida almacenado.
-      */
-    public double getReducedRate2Sale() {
-        return reducedRate2Sale;
-    }
-
-    private void setReducedRate2Sale(double reducedRate2Sale) {
-        this.reducedRate2Sale = reducedRate2Sale;
-    }
-     /**
-      * Retorna el monto total de IVA Reducido ó Tasa(2) almacenado.
-      */
-    public double getReducedRate2Tax() {
-        return reducedRate2Tax;
-    }
-
-    private void setReducedRate2Tax(double reducedRate2Tax) {
-        this.reducedRate2Tax = reducedRate2Tax;
-    }
-    /**
-      * Retorna el monto total de Base Imponible Adicional almacenado.
-      */
-    public double getAdditionalRate3Sal() {
-        return additionalRate3Sal;
-    }
-
-    private void setAdditionalRate3Sal(double additionalRate3Sal) {
-        this.additionalRate3Sal = additionalRate3Sal;
-    }
-    /**
-      * Retorna el monto total de IVA Adicional ó Tasa(3) almacenado.
-      */
-    public double getAdditionalRate3Tax() {
-        return additionalRate3Tax;
-    }
-
-    private void setAdditionalRate3Tax(double additionalRate3Tax) {
-        this.additionalRate3Tax = additionalRate3Tax;
-    }
-    /**
-      * Retorna el monto total Exento en Devolución almacenado.
-      */
-    public double getFreeTaxDevolution() {
-        return freeTaxDevolution;
-    }
-
-    private void setFreeTaxDevolution(double freeTaxDevolution) {
-        this.freeTaxDevolution = freeTaxDevolution;
-    }
-    /**
-      * Retorna el monto total de Base Imponible General en Devolución almacenado.
-      */
-    public double getGeneralRateDevolution() {
-        return generalRateDevolution;
-    }
-
-   private void setGeneralRateDevolution(double generalRateDevolution) {
-        this.generalRateDevolution = generalRateDevolution;
-    }
-    /**
-      * Retorna el monto total de IVA General ó Tasa(1) en Devolución almacenado.
-      */
-    public double getGeneralRateTaxDevolution() {
-        return generalRateTaxDevolution;
-    }
-
-   private void setGeneralRateTaxDevolution(double generalRateTaxDevolution) {
-        this.generalRateTaxDevolution = generalRateTaxDevolution;
-    }
-    /**
-      * Retorna el monto total de Base Imponible Reducida en Devolución almacenado.
-      */
-    public double getReducedRateDevolution() {
-        return reducedRateDevolution;
-    }
-
-   private void setReducedRateDevolution(double reducedRateDevolution) {
-        this.reducedRateDevolution = reducedRateDevolution;
-    }
-    /**
-      * Retorna el monto total de IVA Reducido ó Tasa(2) en Devolución almacenado.
-      */
-    public double getReducedRateTaxDevolution() {
-        return reducedRateTaxDevolution;
-    }
-
-    private void setReducedRateTaxDevolution(double reducedRateTaxDevolution) {
-        this.reducedRateTaxDevolution = reducedRateTaxDevolution;
-    }
-    /**
-      * Retorna el monto total de Base Imponible Adicional en Devolución almacenado.
-      */
-    public double getAdditionalRateDevolution() {
-        return additionalRateDevolution;
-    }
-
-   private void setAdditionalRateDevolution(double additionalRateDevolution) {
-        this.additionalRateDevolution = additionalRateDevolution;
-    }
-     /**
-      * Retorna el monto total de IVA Adicional ó Tasa(3) en Devolución almacenado.
-      */
-    public double getAdditionalRateTaxDevolution() {
-        return additionalRateTaxDevolution;
-    }
-
-   private void setAdditionalRateTaxDevolution(double additionalRateTaxDevolution) {
-        this.additionalRateTaxDevolution = additionalRateTaxDevolution;
-    }
-     /**
-      * Retorna el número de la última Nota de Credito ó Devolución.
-      */
-    public int getNumberOfLastCreditNote() {
-        return numberOfLastCreditNote;
-    }
-
-   private void setNumberOfLastCreditNote(int numberOfLastCreditNote) {
-        this.numberOfLastCreditNote = numberOfLastCreditNote;
-    }
-    /**
-      * Retorna el número de la última Nota de Débito ó Devolución.
-      */
-    public int getNumberOfLastDebitNote() {
-        return numberOfLastDebitNote;
-    }
-
-   private void setNumberOfLastDebitNote(int numberOfLastDebitNote) {
-        this.numberOfLastDebitNote = numberOfLastDebitNote;
-    }
-   /**
-      * Retorna el número de la última Nota de Débito ó Devolución.
-      */
-    public int getNumberOfLastNonFiscal() {
-        return numberOfLastNonFiscal;
-    }
-
-   private void setNumberOfLastNonFiscal(int numberOfLastNonFiscal) {
-        this.numberOfLastNonFiscal = numberOfLastNonFiscal;
-    }
-    /**
-      * Retorna el monto total Exento en Nota de debito almacenado.
-      */
-    public double getFreeTaxDebitNote() {
-        return freeTaxDebit;
-    }
-
-    private void setFreeTaxDebitNote(double freeTaxDebit) {
-        this.freeTaxDebit = freeTaxDebit;
-    }
-    /**
-      * Retorna el monto total de Base Imponible General en Nota de debito almacenado.
-      */
-    public double getGeneralRateDebitNote() {
-        return generalRateDebit;
-    }
-
-   private void setGeneralRateDebitNote(double generalRateDebit) {
-        this.generalRateDebit = generalRateDebit;
-    }
-    /**
-      * Retorna el monto total de IVA General ó Tasa(1) en Nota de debito almacenado.
-      */
-    public double getGeneralRateTaxDebitNote() {
-        return generalRateTaxDebit;
-    }
-
-   private void setGeneralRateTaxDebitNote(double generalRateTaxDebit) {
-        this.generalRateTaxDebit = generalRateTaxDebit;
-    }
-    /**
-      * Retorna el monto total de Base Imponible Reducida en Nota de debito almacenado.
-      */
-    public double getReducedRateDebitNote() {
-        return reducedRateDebit;
-    }
-
-   private void setReducedRateDebitNote(double reducedRateDebit) {
-        this.reducedRateDebit = reducedRateDebit;
-    }
-    /**
-      * Retorna el monto total de IVA Reducido ó Tasa(2) en Nota de debito almacenado.
-      */
-    public double getReducedRateTaxDebitNote() {
-        return reducedRateTaxDebit;
-    }
-
-    private void setReducedRateTaxDebitNote(double reducedRateTaxDebit) {
-        this.reducedRateTaxDebit= reducedRateTaxDebit;
-    }
-    /**
-      * Retorna el monto total de Base Imponible Adicional en Nota de debito almacenado.
-      */
-    public double getAdditionalRateDebitNote() {
-        return additionalRateDebit;
-    }
-
-   private void setAdditionalRateDebitNote(double additionalRateDebit) {
-        this.additionalRateDebit = additionalRateDebit;
-    }
-     /**
-      * Retorna el monto total de IVA Adicional ó Tasa(3) en Nota de debito almacenado.
-      */
-    public double getAdditionalRateTaxDebitNote() {
-        return additionalRateTaxDebit;
-    }
-
-   private void setAdditionalRateTaxDebitNote(double additionalRateTaxDebit) {
-        this.additionalRateTaxDebit = additionalRateTaxDebit;
-    }
+   
     //region Metodos Privados
 
         private double doValueDecimal(String tramaString)
@@ -493,4 +216,172 @@ private int numberOfLastNonFiscal;
 
             return valor;
         }
+	public int getNumberOfLastZReport() {
+		return numberOfLastZReport;
+	}
+	public void setNumberOfLastZReport(int numberOfLastZReport) {
+		this.numberOfLastZReport = numberOfLastZReport;
+	}
+	public Date getZReportDate() {
+		return ZReportDate;
+	}
+	public void setZReportDate(Date zReportDate) {
+		ZReportDate = zReportDate;
+	}
+	public Date getLastInvoiceDate() {
+		return lastInvoiceDate;
+	}
+	public void setLastInvoiceDate(Date lastInvoiceDate) {
+		this.lastInvoiceDate = lastInvoiceDate;
+	}
+	public double getFreeSalesTax() {
+		return freeSalesTax;
+	}
+	public void setFreeSalesTax(double freeSalesTax) {
+		this.freeSalesTax = freeSalesTax;
+	}
+	public double getGeneralRate1Sale() {
+		return generalRate1Sale;
+	}
+	public void setGeneralRate1Sale(double generalRate1Sale) {
+		this.generalRate1Sale = generalRate1Sale;
+	}
+	public double getGeneralRate1Tax() {
+		return generalRate1Tax;
+	}
+	public void setGeneralRate1Tax(double generalRate1Tax) {
+		this.generalRate1Tax = generalRate1Tax;
+	}
+	public double getReducedRate2Sale() {
+		return reducedRate2Sale;
+	}
+	public void setReducedRate2Sale(double reducedRate2Sale) {
+		this.reducedRate2Sale = reducedRate2Sale;
+	}
+	public double getReducedRate2Tax() {
+		return reducedRate2Tax;
+	}
+	public void setReducedRate2Tax(double reducedRate2Tax) {
+		this.reducedRate2Tax = reducedRate2Tax;
+	}
+	public double getAdditionalRate3Sale() {
+		return additionalRate3Sale;
+	}
+	public void setAdditionalRate3Sale(double additionalRate3Sale) {
+		this.additionalRate3Sale = additionalRate3Sale;
+	}
+	public double getAdditionalRate3Tax() {
+		return additionalRate3Tax;
+	}
+	public void setAdditionalRate3Tax(double additionalRate3Tax) {
+		this.additionalRate3Tax = additionalRate3Tax;
+	}
+	public double getFreeTaxDevolution() {
+		return freeTaxDevolution;
+	}
+	public void setFreeTaxDevolution(double freeTaxDevolution) {
+		this.freeTaxDevolution = freeTaxDevolution;
+	}
+	public double getGeneralRateDevolution() {
+		return generalRateDevolution;
+	}
+	public void setGeneralRateDevolution(double generalRateDevolution) {
+		this.generalRateDevolution = generalRateDevolution;
+	}
+	public double getGeneralRateTaxDevolution() {
+		return generalRateTaxDevolution;
+	}
+	public void setGeneralRateTaxDevolution(double generalRateTaxDevolution) {
+		this.generalRateTaxDevolution = generalRateTaxDevolution;
+	}
+	public double getReducedRateDevolution() {
+		return reducedRateDevolution;
+	}
+	public void setReducedRateDevolution(double reducedRateDevolution) {
+		this.reducedRateDevolution = reducedRateDevolution;
+	}
+	public double getReducedRateTaxDevolution() {
+		return reducedRateTaxDevolution;
+	}
+	public void setReducedRateTaxDevolution(double reducedRateTaxDevolution) {
+		this.reducedRateTaxDevolution = reducedRateTaxDevolution;
+	}
+	public double getAdditionalRateDevolution() {
+		return additionalRateDevolution;
+	}
+	public void setAdditionalRateDevolution(double additionalRateDevolution) {
+		this.additionalRateDevolution = additionalRateDevolution;
+	}
+	public double getAdditionalRateTaxDevolution() {
+		return additionalRateTaxDevolution;
+	}
+	public void setAdditionalRateTaxDevolution(double additionalRateTaxDevolution) {
+		this.additionalRateTaxDevolution = additionalRateTaxDevolution;
+	}
+	public double getFreeTaxDebit() {
+		return freeTaxDebit;
+	}
+	public void setFreeTaxDebit(double freeTaxDebit) {
+		this.freeTaxDebit = freeTaxDebit;
+	}
+	public double getGeneralRateDebit() {
+		return generalRateDebit;
+	}
+	public void setGeneralRateDebit(double generalRateDebit) {
+		this.generalRateDebit = generalRateDebit;
+	}
+	public double getGeneralRateTaxDebit() {
+		return generalRateTaxDebit;
+	}
+	public void setGeneralRateTaxDebit(double generalRateTaxDebit) {
+		this.generalRateTaxDebit = generalRateTaxDebit;
+	}
+	public double getReducedRateDebit() {
+		return reducedRateDebit;
+	}
+	public void setReducedRateDebit(double reducedRateDebit) {
+		this.reducedRateDebit = reducedRateDebit;
+	}
+	public double getReducedRateTaxDebit() {
+		return reducedRateTaxDebit;
+	}
+	public void setReducedRateTaxDebit(double reducedRateTaxDebit) {
+		this.reducedRateTaxDebit = reducedRateTaxDebit;
+	}
+	public double getAdditionalRateDebit() {
+		return additionalRateDebit;
+	}
+	public void setAdditionalRateDebit(double additionalRateDebit) {
+		this.additionalRateDebit = additionalRateDebit;
+	}
+	public double getAdditionalRateTaxDebit() {
+		return additionalRateTaxDebit;
+	}
+	public void setAdditionalRateTaxDebit(double additionalRateTaxDebit) {
+		this.additionalRateTaxDebit = additionalRateTaxDebit;
+	}
+	public int getNumberOfLastInvoice() {
+		return numberOfLastInvoice;
+	}
+	public void setNumberOfLastInvoice(int numberOfLastInvoice) {
+		this.numberOfLastInvoice = numberOfLastInvoice;
+	}
+	public int getNumberOfLastCreditNote() {
+		return numberOfLastCreditNote;
+	}
+	public void setNumberOfLastCreditNote(int numberOfLastCreditNote) {
+		this.numberOfLastCreditNote = numberOfLastCreditNote;
+	}
+	public int getNumberOfLastDebitNote() {
+		return numberOfLastDebitNote;
+	}
+	public void setNumberOfLastDebitNote(int numberOfLastDebitNote) {
+		this.numberOfLastDebitNote = numberOfLastDebitNote;
+	}
+	public int getNumberOfLastNonFiscal() {
+		return numberOfLastNonFiscal;
+	}
+	public void setNumberOfLastNonFiscal(int numberOfLastNonFiscal) {
+		this.numberOfLastNonFiscal = numberOfLastNonFiscal;
+	}
 }

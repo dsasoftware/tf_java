@@ -6,7 +6,8 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import gnu.io.*;
+//import gnu.io.*;
+import javax.comm.*;
 import tfhka._private.TfhkaRaiz;
 import tfhka.*;
 import tfhka.rd.ReportData;
@@ -21,29 +22,29 @@ public final  class Tfhka extends TfhkaRaiz {
 	private static Enumeration listaPuertos;
 	private static CommPortIdentifier idPuerto;
         /**Objeto de tipo ReportData que se carga al subir reporte X ??½ Z del PC por medio de los m??½todos getZReport()  y  getXReport()*/
-        public ReportData ReportePC;
+	private ReportData ReportePC;
          /**Objeto de tipo AcumuladosX que se carga al subir reporte X4, X5 y X7 del PC por medio de los metodos getX4Report(), getX5Report()  y  getX7Report()*/
-        public AcumuladosX ReporteAcumX;
+	private AcumuladosX ReporteAcumX;
         /**Arreglo de Objetos de tipo ReportData que se cargan al subir lectura de memoria fiscal del PC mediante los m??½todos getZReport(Date fecha1, Date fecha2)
          * y getZReport(int nroZ1, int nroZ2).
          */
-        public ReportData[] ReporteArrayPC;
+	private ReportData[] ReporteArrayPC;
          /**Objeto de tipo PrinterStatus que se carga al leer Status y Error de la impresora por medio del m??½todo getPrinterStatus()*/       
-        public PrinterStatus StatusErrorPrinter;
+	private PrinterStatus StatusErrorPrinter;
          /**Objeto de tipo S1PrinterData que carga informaci??½n cuando se hace una subida de estado S1 por el m??½todo  getS1PrinterData()*/
-        public S1PrinterData S1Estado;
+	private S1PrinterData S1Estado;
         /**Objeto de tipo S2PrinterData que carga informaci??½n cuando se hace una subida de estado S2 por el m??½todo  getS2PrinterData()*/
-        public S2PrinterData S2Estado;
+	private S2PrinterData S2Estado;
         /**Objeto de tipo S3PrinterData que carga informaci??½n cuando se hace una subida de estado S3 por el m??½todo  getS3PrinterData()*/
-        public S3PrinterData S3Estado;
+	private S3PrinterData S3Estado;
         /**Objeto de tipo S4PrinterData que carga informaci??½n cuando se hace una subida de estado S4 por el m??½todo  getS4PrinterData()*/
-        public S4PrinterData S4Estado;
+	private S4PrinterData S4Estado;
         /**Objeto de tipo S5PrinterData que carga informaci??½n cuando se hace una subida de estado S5 por el m??½todo  getS5PrinterData()*/
-        public S5PrinterData S5Estado;
+	private S5PrinterData S5Estado;
         /**Objeto de tipo S6PrinterData que carga informaci??½n cuando se hace una subida de estado S6 por el m??½todo  getS6PrinterData()*/
-        public S6PrinterData S6Estado;
+	private S6PrinterData S6Estado;
         /**Objeto de tipo S7PrinterData que carga informaci??½n cuando se hace una subida de estado S7 por el m??½todo  getS7PrinterData()*/
-        public S7PrinterData S7Estado;
+	private S7PrinterData S7Estado;
 
         /**Nombre del puerto serial a manejar*/
 	public String Terminar;
@@ -147,81 +148,59 @@ public final  class Tfhka extends TfhkaRaiz {
 
             }
 
-            this.IndPuerto = puerto;
+			this.IndPuerto = puerto;
 
-            if (puerto == true)
-            {
-                if (ManipulaCTS_RTS())
-                {
-                    UsandoLineasControl = true;
-                    puertoSerie.notifyOnCTS(true);
-                    Estado = "Puerto Abierto";
-                }
-                else if (CheckFprinter())
-                {
-                    UsandoLineasControl = false;
-                    puertoSerie.setRTS(false);
-                    Estado = "Puerto Abierto";
-                }else
-                {
-                   Estado = "Impresora no detectada";
-                    this.IndPuerto = false;
-                    puerto = this.IndPuerto;
-                }
-                
-            }
-            else
-            {
-                Estado = "Error al Abrir puerto";
-            }
+			if (puerto == true) {
+				if (ManipulaCTS_RTS()) {
+					UsandoLineasControl = true;
+					puertoSerie.notifyOnCTS(true);
+					Estado = "Puerto Abierto";
+				} else if (CheckFprinter()) {
+					UsandoLineasControl = false;
+					puertoSerie.setRTS(false);
+					Estado = "Puerto Abierto";
+				} else {
+					Estado = "Impresora no detectada";
+					this.IndPuerto = false;
+					puerto = this.IndPuerto;
+				}
 
+			} else {
+				Estado = "Error al Abrir puerto";
+			}
 
-            return puerto;
+			return puerto;
 
-        }
-        catch (java.util.TooManyListenersException e)
-        {
-            Estado = e.getMessage();
-            return false;
-        }
-        catch (PortInUseException e)
-        {
-            Estado = e.getMessage();
-            return false;
-        }
-        catch (IOException e)
-        {
-            Estado = e.getMessage();
-            return false;
-        }
-        catch (UnsupportedCommOperationException e)
-        {
-            Estado = e.getMessage();
-            return false;
-        }
-        catch (Exception ioe)
-        {
-            Estado = ioe.getMessage();
-            return false;
-        }
+		} catch (java.util.TooManyListenersException e) {
+			Estado = e.getMessage();
+			return false;
+		} catch (PortInUseException e) {
+			Estado = e.getMessage();
+			return false;
+		} catch (IOException e) {
+			Estado = e.getMessage();
+			return false;
+		} catch (UnsupportedCommOperationException e) {
+			Estado = e.getMessage();
+			return false;
+		} catch (Exception ioe) {
+			Estado = ioe.getMessage();
+			return false;
+		}
 
-    }
+	}
 
     /**
      * Metodo para Cerrar el Puerto serie
      */
-    public void CloseFpctrl()
-    {
-        try
-        {
-            puertoSerie.close();
-            this.IndPuerto = false;
+	public void CloseFpctrl() {
+		try {
+			puertoSerie.close();
+			this.IndPuerto = false;
 
-        }
-        catch (NullPointerException e)
-        {
-        }
-    }
+		} catch (NullPointerException e) {
+		}
+	}
 
     /**
      * Metodo para Chequear la conexi?n de la Impresora.
@@ -1254,13 +1233,13 @@ public boolean SendCmd(String sCMD) throws PrinterException
        
        /**
 	*Retorna un arreglo de objetos  ReportData Z con todos sus atributos por rango de n??½meros
-	*@param StarReportNumber N??½mero del  Z inicial a subir
+	*@param StartReportNumber N??½mero del  Z inicial a subir
         *@param EndReportNumber N??½mero del  Z final a subir
         *@throws PrinterException Error de  transacci??½n.
         */
-        public ReportData[] getZReport(int StarReportNumber, int EndReportNumber ) throws PrinterException
+        public ReportData[] getZReport(int StartReportNumber, int EndReportNumber ) throws PrinterException
         {  
-		String IntervaloNi = String.valueOf(StarReportNumber);
+		String IntervaloNi = String.valueOf(StartReportNumber);
 		while (IntervaloNi.length() < 6) {
 			IntervaloNi = "0" + IntervaloNi;
 		}
@@ -1295,7 +1274,7 @@ public boolean SendCmd(String sCMD) throws PrinterException
 				this.ReporteArrayPC = null;
 				Estado = "Sin repuesta";
 
-				if (StarReportNumber > EndReportNumber)
+				if (StartReportNumber > EndReportNumber)
 					this.Estado = "The original number can not be greater than the final number";
 
 				throw new PrinterException(Estado, getPrinterStatus());
@@ -1312,15 +1291,15 @@ public boolean SendCmd(String sCMD) throws PrinterException
 	}
          /**
 	  *Retorna un arreglo de objetos de ReportData Z con todos sus atributos por rango de fechas
-          *@param StarDate Fecha inicial del  Z a subir
+          *@param StartDate Fecha inicial del  Z a subir
           *@param EndDate Fecha final del  Z a subir
           *@throws PrinterException Error de  transacci??½n.
           */
-        public ReportData[] getZReport(Date StarDate, Date EndDate)throws PrinterException
+        public ReportData[] getZReport(Date StartDate, Date EndDate)throws PrinterException
         {  
             Calendar Cale = Calendar.getInstance();
             Calendar Cale2 = Calendar.getInstance();
-           Cale.setTime(StarDate);       
+           Cale.setTime(StartDate);       
            
            int y =   Cale.get(Calendar.YEAR);
            int m = Cale.get(Calendar.MONTH);
@@ -1417,15 +1396,15 @@ public boolean SendCmd(String sCMD) throws PrinterException
         }
         /**
    	  *Imprime Reporte de Lectura de Memoria Fiscal por rango de fechas
-             *@param StarDate Fecha inicial del  Z a imprimir
+             *@param StartDate Fecha inicial del  Z a imprimir
              *@param EndDate Fecha final del  Z a imprimir
              *@throws PrinterException Error de  transacci?n.
              */
-           public void printZReport(Date StarDate, Date EndDate)throws PrinterException
+           public void printZReport(Date StartDate, Date EndDate)throws PrinterException
            {  
                Calendar Cale = Calendar.getInstance();
                Calendar Cale2 = Calendar.getInstance();
-              Cale.setTime(StarDate);       
+              Cale.setTime(StartDate);       
               
               int y =   Cale.get(Calendar.YEAR);
               int m = Cale.get(Calendar.MONTH);
@@ -1474,13 +1453,13 @@ public boolean SendCmd(String sCMD) throws PrinterException
            }
   /**
    *Imprime un Reporte de Lectura de Memoria Fiscal por rango de n?meros
-   *@param StarReportNumber N?mero del  Z inicial a imprimir
+   *@param StartReportNumber N?mero del  Z inicial a imprimir
    *@param EndReportNumber N?mero del  Z final a imprimir
    *@throws PrinterException Error de  transacci?n.
    */
-   public void printZReport(int StarReportNumber, int EndReportNumber ) throws PrinterException
+   public void printZReport(int StartReportNumber, int EndReportNumber ) throws PrinterException
    {  
-     String IntervaloNi =  String.valueOf(StarReportNumber);
+     String IntervaloNi =  String.valueOf(StartReportNumber);
      while(IntervaloNi.length()<6)
      {
          IntervaloNi = "0" + IntervaloNi;
@@ -1494,7 +1473,7 @@ public boolean SendCmd(String sCMD) throws PrinterException
       boolean rep =  this.SendCmd("I3A" + IntervaloNi + IntervaloNf);
       if (!rep)
       { 
-              if (StarReportNumber > EndReportNumber)
+              if (StartReportNumber > EndReportNumber)
               this.Estado = "The original number can not be greater than the final number";
 
               throw new PrinterException(Estado, getPrinterStatus());

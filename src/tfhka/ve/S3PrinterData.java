@@ -20,7 +20,7 @@ public class S3PrinterData {
     private double tax2;
     private int typeTax3;
     private double tax3;
-    private int[] systemFlags0to19;
+    private int[] allSystemFlags;
     
     /** Creates a new instance of S3PrinterData
      *@param trama Cadena de caracteres ASCII que contiene datos del S3 de la impresora fiscal subidos al PC
@@ -45,14 +45,14 @@ public class S3PrinterData {
 
                            int indice = arrayParameter[3].length()/2;
 
-                           this.systemFlags0to19 = new int[indice];
+                           this.allSystemFlags = new int[indice];
                            int a = 0;
                            int b = 2;
                            int ite = 0;
 
                            while (ite < indice)
                            {
-                               this.systemFlags0to19[ite] = Integer.parseInt(arrayParameter[3].substring(a, b));
+                               this.allSystemFlags[ite] = Integer.parseInt(arrayParameter[3].substring(a, b));
 
                                a = a + 2;
                                b = b + 2;
@@ -60,7 +60,7 @@ public class S3PrinterData {
                                ++ite;
                            }
 
-                           this.setSystemFlags0to19(systemFlags0to19);
+                           this.setAllSystemFlags(allSystemFlags);
                        }
                   }
                     catch(ArrayIndexOutOfBoundsException are)
@@ -101,17 +101,20 @@ public class S3PrinterData {
         return tax3;
     }
     /**Retorta un arreglo de 20 valores enteros correspondiente a la configuración de los flags del 0 al 19.
-     * Ejemplo; systemFlags0to19[0] = 1, quiere decil que el flags número 0 está configurado en 1.
+     * Ejemplo; systemFlags[0] = 1, quiere decil que el flags número 0 está configurado en 1.
      */
-    public int[] getSystemFlags0to19() {
-        return systemFlags0to19;
-    }
     
     private void setTypeTax1(int typeTax1) {
         this.typeTax1 = typeTax1;
     }
 
-    private void setTax1(double tax1) {
+    public int[] getAllSystemFlags() {
+		return allSystemFlags;
+	}
+	public void setAllSystemFlags(int[] allSystemFlags) {
+		this.allSystemFlags = allSystemFlags;
+	}
+	private void setTax1(double tax1) {
         this.tax1 = tax1;
     }
 
@@ -131,10 +134,6 @@ public class S3PrinterData {
         this.tax3 = tax3;
     }
 
-    private void setSystemFlags0to19(int[] systemFlags0to19) {
-        this.systemFlags0to19 = systemFlags0to19;
-    }
-    
     //region Metodos Privados
 
         private double doValueDecimal(String tramaString)

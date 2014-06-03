@@ -15,7 +15,7 @@ package tfhka.ve;
  */
 public class S2PrinterData {
     private double subTotalBases;
-    private double sudTotalTax;
+    private double subTotalTax;
     private String dataDummy;
     private double amountPayable;
     private int typeDocument;
@@ -39,7 +39,7 @@ public class S2PrinterData {
                         if (arrayParameter.length > 1)
                         {
                             this.setSubTotalBases(Double.parseDouble(arrayParameter[0].substring(2)));
-                            this.setSudTotalTax(Double.parseDouble(arrayParameter[1]));
+                            this.setSubTotalTax(Double.parseDouble(arrayParameter[1]));
                             this.setDataDummy(arrayParameter[2]);
                             this.setQuantityArticles(Integer.parseInt(arrayParameter[3]));
                             this.setAmountPayable(Double.parseDouble(arrayParameter[4]));
@@ -55,7 +55,7 @@ public class S2PrinterData {
                         if (arrayParameter.length > 1)
                         {
                             this.setSubTotalBases(Double.parseDouble(arrayParameter[0].substring(2)));
-                            this.setSudTotalTax(Double.parseDouble(arrayParameter[1]));
+                            this.setSubTotalTax(Double.parseDouble(arrayParameter[1]));
                             this.setDataDummy(arrayParameter[2]);
                             this.setAmountPayable(Double.parseDouble(arrayParameter[3]));
                             this.setNumberPaymentsMade(Integer.parseInt(arrayParameter[4]));
@@ -81,8 +81,8 @@ public class S2PrinterData {
         return subTotalBases;
     }
     /**Retorna el monto total de los IVA(s) de una transacción activa*/
-    public double getSudTotalTax() {
-        return sudTotalTax;
+    public double getSubTotalTax() {
+        return subTotalTax;
     }
     /**Retorna una data de relleno y el nuero de items de una transacción cuando esta activada esta modalidad*/
     public String getDataDummy() {
@@ -119,8 +119,8 @@ public class S2PrinterData {
      {
        this.quantityArticles = value;
      }
-    private void setSudTotalTax(double sudTotalTax) {
-        this.sudTotalTax = sudTotalTax;
+    private void setSubTotalTax(double subTotalTax) {
+        this.subTotalTax = subTotalTax;
     }
 
     private void setDataDummy(String dataDummy) {

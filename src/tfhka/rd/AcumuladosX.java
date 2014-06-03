@@ -8,11 +8,9 @@ package tfhka.rd;
 * Representa una estructura para almacenar los datos de los reportes X acumulados en las diferentes bases y tasas
 */ 
 public class AcumuladosX {
-    
     /*
      * Variables Globales 
      */
-
    private double cumulativeExc;
    private double rateTaxBase1;
    private double rateTaxBase2;
@@ -29,40 +27,31 @@ public class AcumuladosX {
    /*
     *Constructor
     */
-    public AcumuladosX(String trama)
-    {
-      if (trama != null)
-      {
-        if (trama.length() >  0) // DT230
-        {
+	public AcumuladosX(String trama) {
+		if (trama != null) {
+			if (trama.length() > 0) // DT230
+			{
 
-        try{
-        	
-        	String[] arrayParameter = trama.split(String.valueOf((char)0X0A));
-        	this.cumulativeExc = this.doValueDecimal(arrayParameter[1]);
-        	this.rateTaxBase1 = this.doValueDecimal(arrayParameter[2]);
-        	this.rateTaxBase2 = this.doValueDecimal(arrayParameter[3]);
-        	this.rateTaxBase3 = this.doValueDecimal(arrayParameter[4]);
-        	this.rateTaxBase4 = this.doValueDecimal(arrayParameter[5]);
-        	this.rateTaxBase5 = this.doValueDecimal(arrayParameter[6]);
-        	this.taxRate1 = this.doValueDecimal(arrayParameter[7]);
-        	this.taxRate2 = this.doValueDecimal(arrayParameter[8]);
-        	this.taxRate3 = this.doValueDecimal(arrayParameter[9]);
-        	this.taxRate4 = this.doValueDecimal(arrayParameter[10]);
-        	this.taxRate5 = this.doValueDecimal(arrayParameter[11]);
-        	
-        	
-        }
-        catch (ArrayIndexOutOfBoundsException aexp)
-        {
-            return;
-        }
-        catch (NumberFormatException nfexp)
-        {
-            return;
-        }
-        }
-      }
+				try {
+		        	String[] arrayParameter = trama.split(String.valueOf((char)0X0A));
+		        	this.cumulativeExc = this.doValueDecimal(arrayParameter[1]);
+		        	this.rateTaxBase1 = this.doValueDecimal(arrayParameter[2]);
+		        	this.rateTaxBase2 = this.doValueDecimal(arrayParameter[3]);
+		        	this.rateTaxBase3 = this.doValueDecimal(arrayParameter[4]);
+		        	this.rateTaxBase4 = this.doValueDecimal(arrayParameter[5]);
+		        	this.rateTaxBase5 = this.doValueDecimal(arrayParameter[6]);
+		        	this.taxRate1 = this.doValueDecimal(arrayParameter[7]);
+		        	this.taxRate2 = this.doValueDecimal(arrayParameter[8]);
+		        	this.taxRate3 = this.doValueDecimal(arrayParameter[9]);
+		        	this.taxRate4 = this.doValueDecimal(arrayParameter[10]);
+		        	this.taxRate5 = this.doValueDecimal(arrayParameter[11]);
+				} catch (ArrayIndexOutOfBoundsException aexp) {
+					return;
+				} catch (NumberFormatException nfexp) {
+					return;
+				}
+			}
+		}
 
     }
     
@@ -71,24 +60,19 @@ public class AcumuladosX {
      */
     /*
     * Retorna el monto total Exento almacenado.
-    */
-  
-    
+    */  
   //region Metodos Privados
 
-    private double doValueDecimal(String tramaString)
-    {
-        //////////////////////////////
-        int size = tramaString.length();
-        int dif = size - 2;
-
+	private double doValueDecimal(String tramaString) {
+		// ////////////////////////////
+		int size = tramaString.length();
+		int dif = size - 2;
         double valor = Double.parseDouble(tramaString.substring(0, dif));
         // para evitar errores con numeros negativos...
         if (valor < 0)
             valor -= Double.parseDouble(tramaString.substring(dif)) / 100;
         else
             valor += Double.parseDouble(tramaString.substring(dif)) / 100;
-
         return valor;
     }
 
@@ -135,7 +119,5 @@ public class AcumuladosX {
 	public double getTaxRate5() {
 		return taxRate5;
 	}
-
-	
     
 }

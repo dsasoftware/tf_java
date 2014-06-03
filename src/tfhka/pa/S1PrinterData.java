@@ -22,10 +22,10 @@ private int cashierNumber;
 private double totalDailySales;
 private int lastInvoiceNumber;
 private int quantityOfInvoicesToday;
-private int lastNCNumber;
-private int quantityOfNCToday;
-private int lastNoteDebitNumber;
-private int quantityOfNoteDebitToday;
+private int lastCNNumber;
+private int quantityOfCNToday;
+private int lastDebitNoteNumber;
+private int quantityOfDebitNoteToday;
 private int numberNonFiscalDocuments;
 private int quantityNonFiscalDocuments;
 private int dailyClosureCounter;
@@ -48,11 +48,11 @@ private Date currentPrinterDateTime;
             this.setLastInvoiceNumber(Integer.parseInt(trama.substring(21,29)));  
             this.setQuantityOfInvoicesToday(Integer.parseInt(trama.substring(29,34)));
             //Nota Credito
-             this.setLastNCNumber(Integer.parseInt(trama.substring(34, 42)));
-             this.setQuantityOfNCsToday(Integer.parseInt(trama.substring(42, 47)));
+             this.setLastCNNumber(Integer.parseInt(trama.substring(34, 42)));
+             this.setQuantityOfCNsToday(Integer.parseInt(trama.substring(42, 47)));
              // Nota Debito 
-             this.setLastNoteDebitNumber(Integer.parseInt(trama.substring(47, 55)));
-             this.setQuantityOfNoteDebitsToday(Integer.parseInt(trama.substring(55, 60)));
+             this.setLastDebitNoteNumber(Integer.parseInt(trama.substring(47, 55)));
+             this.setQuantityOfDebitNotesToday(Integer.parseInt(trama.substring(55, 60)));
             //DNF
             this.setNumberNonFiscalDocuments(Integer.parseInt(trama.substring(60,68)));  
             this.setQuantityNonFiscalDocuments(Integer.parseInt(trama.substring(68,73)));  
@@ -89,34 +89,35 @@ private Date currentPrinterDateTime;
     public int getLastInvoiceNumber() {
         return lastInvoiceNumber;
     }
-      /**
-        * Retorna el número de la ultima nota de credito emitida
-        **/
-        public int getLastNCNumber()
-        {
-            return lastNCNumber;
-        }
-        /**
-        * Retorna la cantidad de notas de creditos emitidas en el día
-        **/
-        public int getQuantityOfNCsToday()
-        {
-            return quantityOfNCToday;
-        }
-        /**
-        * Retorna el número de la ultima nota de débito emitida
-        **/
-        public int getLastNDNumber()
-        {
-            return lastNoteDebitNumber;
-        }
-        /**
-        * Retorna la cantidad de notas de deditos emitidas en el día
-        **/
-        public int getQuantityOfNDsToday()
-        {
-            return quantityOfNoteDebitToday;
-        }    
+
+	/**
+	 * Retorna el número de la ultima nota de credito emitida
+	 **/
+	public int getLastCNNumber() {
+		return lastCNNumber;
+	}
+
+	/**
+	 * Retorna la cantidad de notas de creditos emitidas en el día
+	 **/
+	public int getQuantityOfCNsToday() {
+		return quantityOfCNToday;
+	}
+
+	/**
+	 * Retorna el número de la ultima nota de débito emitida
+	 **/
+	public int getLastNDNumber() {
+		return lastDebitNoteNumber;
+	}
+
+	/**
+	 * Retorna la cantidad de notas de deditos emitidas en el día
+	 **/
+	public int getQuantityOfNDsToday() {
+		return quantityOfDebitNoteToday;
+	}
+   
      /**Retorna la cantidad de facturas emitidas en el d�a*/
     public int getQuantityOfInvoicesToday() {
         return quantityOfInvoicesToday;
@@ -144,10 +145,9 @@ private Date currentPrinterDateTime;
       /**
        * Retorna el DV de la razón social de fiscalización de la impresora fiscal
       **/
-     public String getDV()
-        {
-            return DV;
-        }
+	public String getDV() {
+		return DV;
+	}
     /**Retorna el n�mero de serial de la impresora fiscal*/
     public String getRegisteredMachineNumber() {
         return registeredMachineNumber;
@@ -172,25 +172,22 @@ private Date currentPrinterDateTime;
     private void setQuantityOfInvoicesToday(int q) {
         this.quantityOfInvoicesToday = q;
     }
-     private void setLastNCNumber(int lNCNumber)
-        {
-            this.lastNCNumber = lNCNumber;
-        }
 
-        private void setQuantityOfNCsToday(int qNCsToday)
-        {
-            this.quantityOfNCToday = qNCsToday;
-        }
+	private void setLastCNNumber(int lCNNumber) {
+		this.lastCNNumber = lCNNumber;
+	}
 
-        private void setLastNoteDebitNumber(int value)
-        {
-            this.lastNoteDebitNumber = value;
-        }
+	private void setQuantityOfCNsToday(int qCNsToday) {
+		this.quantityOfCNToday = qCNsToday;
+	}
 
-        private void setQuantityOfNoteDebitsToday(int value)
-        {
-            this.quantityOfNoteDebitToday = value;
-        }
+	private void setLastDebitNoteNumber(int value) {
+		this.lastDebitNoteNumber = value;
+	}
+
+	private void setQuantityOfDebitNotesToday(int value) {
+		this.quantityOfDebitNoteToday = value;
+	}
     private void setNumberNonFiscalDocuments(int n) {
         this.numberNonFiscalDocuments = n;
     }
@@ -211,10 +208,9 @@ private Date currentPrinterDateTime;
         this.RIF = r;
     }
     
-     private void setDV(String dv)
-        {
-            this.DV = dv;
-        }
+	private void setDV(String dv) {
+		this.DV = dv;
+	}
 
     private void setRegisteredMachineNumber(String reg) {
         this.registeredMachineNumber = reg;

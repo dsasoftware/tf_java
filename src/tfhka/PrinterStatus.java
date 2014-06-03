@@ -66,12 +66,12 @@ public  class  PrinterStatus {
     /**
       * Indica la validez  del Error de la Impresora Fiscal.
       */
-    public boolean isErrorValidity() {
-        return ErrorValidity;
-    }
-
     private void setErrorValidity(boolean ErrorValidity) {
         this.ErrorValidity = ErrorValidity;
     }
+	public boolean getErrorValidity() {
+		return ErrorValidity;
+	}
+    
     
 }

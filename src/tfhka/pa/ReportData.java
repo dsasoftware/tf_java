@@ -23,20 +23,28 @@ public class ReportData {
     /** Creates a new instance of ReportX 
      *@param trama cadena de caracteres que contiene la data de reportes
      */
-    public ReportData(String trama) {
-           if (trama != null)
-        { 
-        if (trama.length() >= 126)
-        {
-            
-        this.setNumberOfLastZReport(Integer.parseInt(trama.substring(0,4)));
-         GregorianCalendar cal = new GregorianCalendar(); 
-         cal.set(Integer.parseInt(trama.substring(4,6))+2000,Integer.parseInt(trama.substring(6,8))-1,Integer.parseInt(trama.substring(8,10)),Integer.parseInt(trama.substring(10,12)),Integer.parseInt(trama.substring(12,14)));
-        this.setZReportDate(cal.getTime());   
-       
-        this.setNumberOfLastInvoice(Integer.parseInt(trama.substring(84,92)));  
-        cal.set(Integer.parseInt(trama.substring(92,94))+2000,Integer.parseInt(trama.substring(94,96))-1,Integer.parseInt(trama.substring(96,98)),Integer.parseInt(trama.substring(98,100)),Integer.parseInt(trama.substring(100,102))); 
-        this.setLastInvoiceDate(cal.getTime()); 
+	public ReportData(String trama) {
+		if (trama != null) {
+			if (trama.length() >= 126) {
+
+				this.setNumberOfLastZReport(Integer.parseInt(trama.substring(0,
+						4)));
+				GregorianCalendar cal = new GregorianCalendar();
+				cal.set(Integer.parseInt(trama.substring(4, 6)) + 2000,
+						Integer.parseInt(trama.substring(6, 8)) - 1,
+						Integer.parseInt(trama.substring(8, 10)),
+						Integer.parseInt(trama.substring(10, 12)),
+						Integer.parseInt(trama.substring(12, 14)));
+				this.setZReportDate(cal.getTime());
+
+				this.setNumberOfLastInvoice(Integer.parseInt(trama.substring(
+						84, 92)));
+				cal.set(Integer.parseInt(trama.substring(92, 94)) + 2000,
+						Integer.parseInt(trama.substring(94, 96)) - 1,
+						Integer.parseInt(trama.substring(96, 98)),
+						Integer.parseInt(trama.substring(98, 100)),
+						Integer.parseInt(trama.substring(100, 102)));
+				this.setLastInvoiceDate(cal.getTime());
      
        
          // Innovice
@@ -130,48 +138,52 @@ public class ReportData {
     public double getAdditionalRate3Tax() {
         return additionalRate3Tax;
     } 
-    /**
-        * Retorna el monto total neto de las ventas  almacenado.
-        **/
-        public double getTotalVenta()  //TotalVenta
-        {
-            return this.totalVenta; 
 
-        }       
-       /**
-        * Retorna el monto total de monto en Devolución almacenado.
-        **/
-        public double getTotalVentaDevolution()     //TotalVentaDevolution
-        {
-            return this.totalVentaDevolution; 
+	/**
+	 * Retorna el monto total neto de las ventas almacenado.
+	 **/
+	public double getTotalVenta() // TotalVenta
+	{
+		return this.totalVenta;
 
-        }
-        
-       /**
-        * Retorna el monto total de monto en Nota de Débito almacenado.
-        **/
-        public double getTotalVentaDebitNote()  //TotalVentaDebitNote
-        {
-            return this.totalVentaDebitNote; 
+	}
 
-        } 
-     /**
-      * Retorna el n�mero de la �ltima Nota de Credito � Devoluci�n.
-      */
-    public int getNumberOfLastCreditNote() {
-        return numberOfLastCreditNote;
-    }
-     /**
-      * Retorna el n�mero de la �ltima Nota de Debito.
-      */
-    public int getOfLastDebitNote() {
-        return this.numberOfLastDebitNote;
-    }
-     /**
-       * Retorna el número del último Documento No Fiscal.
-      **/ 
-    public int getNumberOfLastDNF(){
-           return this.numberOfLastDNF; 
-    }       
+	/**
+	 * Retorna el monto total de monto en Devolución almacenado.
+	 **/
+	public double getTotalVentaDevolution() // TotalVentaDevolution
+	{
+		return this.totalVentaDevolution;
+
+	}
+
+	/**
+	 * Retorna el monto total de monto en Nota de Débito almacenado.
+	 **/
+	public double getTotalVentaDebitNote() // TotalVentaDebitNote
+	{
+		return this.totalVentaDebitNote;
+
+	}
+
+	/**
+	 * Retorna el n�mero de la �ltima Nota de Credito � Devoluci�n.
+	 */
+	public int getNumberOfLastCreditNote() {
+		return numberOfLastCreditNote;
+	}
+
+	/**
+	 * Retorna el n�mero de la �ltima Nota de Debito.
+	 */
+	public int getOfLastDebitNote() {
+		return this.numberOfLastDebitNote;
+	}
+
+	/**
+	 * Retorna el número del último Documento No Fiscal.
+	 **/
+	public int getNumberOfLastDNF() {
+		return this.numberOfLastDNF;
+	}
 }
-

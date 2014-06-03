@@ -11,8 +11,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-//import javax.comm.*;
-import gnu.io.*;
+import javax.comm.*;
+//import gnu.io.*;
 
 /**
  *
