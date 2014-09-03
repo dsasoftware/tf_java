@@ -6,8 +6,8 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-//import gnu.io.*;
-import javax.comm.*;
+import gnu.io.*;
+//import javax.comm.*;
 import tfhka._private.TfhkaRaiz;
 import tfhka.*;
 
@@ -20,27 +20,27 @@ public final  class Tfhka extends TfhkaRaiz {
 	// Declaracion de los Atributos a utilizar
 	private static Enumeration listaPuertos;
 	private static CommPortIdentifier idPuerto;
-        /**Objeto de tipo ReportData que se carga al subir reporte X ??½ Z del PC por medio de los m??½todos getZReport()  y  getXReport()*/
+        /**Objeto de tipo ReportData que se carga al subir reporte X ??ï¿½ Z del PC por medio de los m??ï¿½todos getZReport()  y  getXReport()*/
 	private ReportData ReportePC;
-        /**Arreglo de Objetos de tipo ReportData que se cargan al subir lectura de memoria fiscal del PC mediante los m??½todos getZReport(Date fecha1, Date fecha2)
+        /**Arreglo de Objetos de tipo ReportData que se cargan al subir lectura de memoria fiscal del PC mediante los m??ï¿½todos getZReport(Date fecha1, Date fecha2)
          * y getZReport(int nroZ1, int nroZ2).
          */
 	private ReportData[] ReporteArrayPC;
-         /**Objeto de tipo PrinterStatus que se carga al leer Status y Error de la impresora por medio del m??½todo getPrinterStatus()*/       
+         /**Objeto de tipo PrinterStatus que se carga al leer Status y Error de la impresora por medio del m??ï¿½todo getPrinterStatus()*/       
 	private PrinterStatus StatusErrorPrinter;
-         /**Objeto de tipo S1PrinterData que carga informaci??½n cuando se hace una subida de estado S1 por el m??½todo  getS1PrinterData()*/
+         /**Objeto de tipo S1PrinterData que carga informaci??ï¿½n cuando se hace una subida de estado S1 por el m??ï¿½todo  getS1PrinterData()*/
 	private S1PrinterData S1Estado;
-        /**Objeto de tipo S2PrinterData que carga informaci??½n cuando se hace una subida de estado S2 por el m??½todo  getS2PrinterData()*/
+        /**Objeto de tipo S2PrinterData que carga informaci??ï¿½n cuando se hace una subida de estado S2 por el m??ï¿½todo  getS2PrinterData()*/
 	private S2PrinterData S2Estado;
-        /**Objeto de tipo S3PrinterData que carga informaci??½n cuando se hace una subida de estado S3 por el m??½todo  getS3PrinterData()*/
+        /**Objeto de tipo S3PrinterData que carga informaci??ï¿½n cuando se hace una subida de estado S3 por el m??ï¿½todo  getS3PrinterData()*/
 	private S3PrinterData S3Estado;
-        /**Objeto de tipo S4PrinterData que carga informaci??½n cuando se hace una subida de estado S4 por el m??½todo  getS4PrinterData()*/
+        /**Objeto de tipo S4PrinterData que carga informaci??ï¿½n cuando se hace una subida de estado S4 por el m??ï¿½todo  getS4PrinterData()*/
 	private S4PrinterData S4Estado;
-        /**Objeto de tipo S5PrinterData que carga informaci??½n cuando se hace una subida de estado S5 por el m??½todo  getS5PrinterData()*/
+        /**Objeto de tipo S5PrinterData que carga informaci??ï¿½n cuando se hace una subida de estado S5 por el m??ï¿½todo  getS5PrinterData()*/
 	private S5PrinterData S5Estado;
-        /**Objeto de tipo S6PrinterData que carga informaci??½n cuando se hace una subida de estado S6 por el m??½todo  getS6PrinterData()*/
+        /**Objeto de tipo S6PrinterData que carga informaci??ï¿½n cuando se hace una subida de estado S6 por el m??ï¿½todo  getS6PrinterData()*/
 	private S6PrinterData S6Estado;
-        /**Objeto de tipo S7PrinterData que carga informaci??½n cuando se hace una subida de estado S7 por el m??½todo  getS7PrinterData()*/
+        /**Objeto de tipo S7PrinterData que carga informaci??ï¿½n cuando se hace una subida de estado S7 por el m??ï¿½todo  getS7PrinterData()*/
 	private S7PrinterData S7Estado;
 
         /**Nombre del puerto serial a manejar*/
@@ -64,11 +64,11 @@ public final  class Tfhka extends TfhkaRaiz {
         _dataReady = false;
         _bytesRecibidos = 0;
         _auxBytesRecibidos = 0;
-        setSerialPortReceiveTimeout(20); // El timeout por defecto se aumentó de 10 a 20
+        setSerialPortReceiveTimeout(20); // El timeout por defecto se aumentï¿½ de 10 a 20
         setSendCmdRetryAttempts(2);   // Por defecto no se intenta reenviar un comando fallido
         setSendCmdRetryInterval(5000); // Tiempo en milisegundos a esperan antes de reenviar un comando fallido por NAK
          if(!UsandoLineasControl)
-        UsandoLineasControl = false; // Esto sólo para iniciar la propiedad, realemnte se sabrá si se usan líneas de control a abrir el puerto
+        UsandoLineasControl = false; // Esto sï¿½lo para iniciar la propiedad, realemnte se sabrï¿½ si se usan lï¿½neas de control a abrir el puerto
     }
         /**
 	*Inicializa una nueva instancia de la clase Tfhka
@@ -81,10 +81,10 @@ public final  class Tfhka extends TfhkaRaiz {
             _dataReady = false;
             _bytesRecibidos = 0;
             _auxBytesRecibidos = 0;
-            setSerialPortReceiveTimeout(20); // El timeout por defecto se aumentó de 10 a 20
+            setSerialPortReceiveTimeout(20); // El timeout por defecto se aumentï¿½ de 10 a 20
             setSendCmdRetryAttempts(2);   // Por defecto no se intenta reenviar un comando fallido
             setSendCmdRetryInterval(5000); // Tiempo en milisegundos a esperan antes de reenviar un comando fallido por NAK
-            UsandoLineasControl = false; // Esto sólo para iniciar la propiedad, realemnte se sabrá si se usan líneas de control a abrir el puerto
+            UsandoLineasControl = false; // Esto sï¿½lo para iniciar la propiedad, realemnte se sabrï¿½ si se usan lï¿½neas de control a abrir el puerto
 
         }           
 	/**
@@ -276,14 +276,14 @@ public final  class Tfhka extends TfhkaRaiz {
         }
     }
          /// <summary>
-        /// Método para Chequear la Apertura de Gaveta
+        /// Mï¿½todo para Chequear la Apertura de Gaveta
         /// </summary>
-        public boolean CheckDrawer() // Error ortográfico corregido
+        public boolean CheckDrawer() // Error ortogrï¿½fico corregido
         {        
  
             int bytesRecibidos = 0;
 
-                if (!IndPuerto)   //  Misma observación de la funcion CheckFprinter()
+                if (!IndPuerto)   //  Misma observaciï¿½n de la funcion CheckFprinter()
                 {
                     return false;
                 }
@@ -328,7 +328,7 @@ public boolean SendCmd(String sCMD) throws PrinterException
         cCMD[cCMD.length - 1] = Do_XOR(sCMD);
         try
         {
-            // Se envía el mensaje                        
+            // Se envï¿½a el mensaje                        
             bytesRecibidos = SerialPortWriteAndRead(cCMD, true);
         }
         catch (IOException ex)
@@ -357,7 +357,7 @@ public boolean SendCmd(String sCMD) throws PrinterException
                 }
                 try
                 {
-                    // Se reenvía el mensaje                        
+                    // Se reenvï¿½a el mensaje                        
                     bytesRecibidos = SerialPortWriteAndRead(cCMD, true);
                 }
                 catch (IOException ex)
@@ -785,10 +785,10 @@ public boolean SendCmd(String sCMD) throws PrinterException
 
     }
        /**
-	*Retorna un arreglo de objetos  ReportData Z con todos sus atributos por rango de n??½meros
-	*@param StartReportNumber N??½mero del  Z inicial a subir
-        *@param EndReportNumber N??½mero del  Z final a subir
-        *@throws PrinterException Error de  transacci??½n.
+	*Retorna un arreglo de objetos  ReportData Z con todos sus atributos por rango de n??ï¿½meros
+	*@param StartReportNumber N??ï¿½mero del  Z inicial a subir
+        *@param EndReportNumber N??ï¿½mero del  Z final a subir
+        *@throws PrinterException Error de  transacci??ï¿½n.
         */
         public ReportData[] getZReport(int StartReportNumber, int EndReportNumber ) throws PrinterException
         {  
@@ -850,7 +850,7 @@ public boolean SendCmd(String sCMD) throws PrinterException
 	  *Retorna un arreglo de objetos de ReportData Z con todos sus atributos por rango de fechas
           *@param StartDate Fecha inicial del  Z a subir
           *@param EndDate Fecha final del  Z a subir
-          *@throws PrinterException Error de  transacci??½n.
+          *@throws PrinterException Error de  transacci??ï¿½n.
           */
         public ReportData[] getZReport(Date StartDate, Date EndDate)throws PrinterException
         {  

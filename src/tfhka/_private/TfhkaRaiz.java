@@ -11,8 +11,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.comm.*;
-//import gnu.io.*;
+//import javax.comm.*;
+import gnu.io.*;
 
 /**
  *
@@ -32,12 +32,12 @@ public abstract class TfhkaRaiz implements SerialPortEventListener{
     protected int _SendCmdRetryInterval;
     protected boolean UsandoLineasControl;
     protected boolean _dataReady;
-    protected int _bytesRecibidos; // Exclusivo para el evento de recepción de datos
+    protected int _bytesRecibidos; // Exclusivo para el evento de recepciï¿½n de datos
     protected int _auxBytesRecibidos;
     protected byte[] bResp;
     protected byte[] tempBuffer;
     protected byte[] _dataBuffer;
-    protected byte[] _emptyBuffer = new byte[20]; //Debe estar vacío, por eso su nombre "_emptyBuffer"
+    protected byte[] _emptyBuffer = new byte[20]; //Debe estar vacï¿½o, por eso su nombre "_emptyBuffer"
     protected static SerialPort puertoSerie;
     protected static OutputStream salida;
     protected static InputStream entrada;
@@ -77,7 +77,7 @@ public abstract class TfhkaRaiz implements SerialPortEventListener{
          
         public boolean setSerialPortReceiveTimeout(int valueInSeconds) 
         {          
-            if (valueInSeconds >= 5 && valueInSeconds <= 80)  // El tiempo de espera o Timeout configurable está en un rango de 5 - 80 segundos
+            if (valueInSeconds >= 5 && valueInSeconds <= 80)  // El tiempo de espera o Timeout configurable estï¿½ en un rango de 5 - 80 segundos
             {
                  _SerialPortReceiveTimeout = valueInSeconds;
                  return true;
@@ -142,7 +142,7 @@ public abstract class TfhkaRaiz implements SerialPortEventListener{
         
         public byte[] getSerialPortInputBuffer()
         {          
-                _dataReady = false; // Si leemos datos en el buffer serial de forma manual, para casos extremadamente extraños.
+                _dataReady = false; // Si leemos datos en el buffer serial de forma manual, para casos extremadamente extraï¿½os.
                 return _dataBuffer;
         }
         
@@ -190,7 +190,7 @@ public void serialEvent(SerialPortEvent e)
           break;
       case SerialPortEvent.DATA_AVAILABLE:
           try
-          { // Si el puerto está cerrado, no hace nada
+          { // Si el puerto estï¿½ cerrado, no hace nada
             if (!IndPuerto) return;
            
             byte rcvdByte;
@@ -225,12 +225,12 @@ public void serialEvent(SerialPortEvent e)
                     
                     case Recibiendo:                       
 
-                        // Recibe los bytes que estén por leerse desde el buffer de entrada
+                        // Recibe los bytes que estï¿½n por leerse desde el buffer de entrada
                         _auxBytesRecibidos += entrada.read(tempBuffer, _auxBytesRecibidos, entrada.available());
 
                         if (tempBuffer[_auxBytesRecibidos - 1] == (byte)EOT) //EOT, este es un caso especial, por el problema detectado en el firmware de las impresoras
                         {
-                            if (_auxBytesRecibidos >= 3) // Para evitar errores de acceso fuera de límites
+                            if (_auxBytesRecibidos >= 3) // Para evitar errores de acceso fuera de lï¿½mites
                             {
                                 if (tempBuffer[_auxBytesRecibidos - 3] == (byte)ETX)
                                 {
@@ -287,10 +287,10 @@ public void serialEvent(SerialPortEvent e)
     
     /*Metodos privados*/
     /// <summary>
-        /// Función privada de uso exclusivo de la función "SerialPortWriteAndRead" que lee el buffer de datos 
+        /// Funciï¿½n privada de uso exclusivo de la funciï¿½n "SerialPortWriteAndRead" que lee el buffer de datos 
         /// recibidos por el metodo SerialPortReceiveEvent y retorna la cantidad de bytes recibidos
         /// </summary>
-        /// <param name="OutByteBuffer">Buffer donde se colocará lo recibido de la impresora (Requiere el uso de la palabra clave "out")</param>
+        /// <param name="OutByteBuffer">Buffer donde se colocarï¿½ lo recibido de la impresora (Requiere el uso de la palabra clave "out")</param>
 private int getAnswer()
 {
     //out byte[] OutByteBuffer
@@ -301,7 +301,7 @@ private int getAnswer()
 
     cronometro.start();
    
-    // Espera mientras los datos están listos o se acabe el tiempo
+    // Espera mientras los datos estï¿½n listos o se acabe el tiempo
     while ((!_dataReady) && (!timeExpired))
     {
        try {
@@ -312,7 +312,7 @@ private int getAnswer()
         }
         if (cronometro.getElapsedTime() > _SerialPortReceiveTimeout * 1000)
         {
-            timeExpired = true; // Se venció el  tiempo
+            timeExpired = true; // Se venciï¿½ el  tiempo
         }
 
     }
@@ -343,10 +343,10 @@ private int getAnswer()
         return LocalBytesRecibidos;
     }
 } /// <summary>
-/// Función que escribe la trama a la impresora y retorna la cantidad de bytes leídos y un Array de bytes con la respuesta
+/// Funciï¿½n que escribe la trama a la impresora y retorna la cantidad de bytes leï¿½dos y un Array de bytes con la respuesta
 /// (Depende de getAnswer)
 /// </summary>
-/// <param name="bResp">Buffer donde se colocará lo recibido de la impresora (Requiere el uso de la palabra clave "out")</param>
+/// <param name="bResp">Buffer donde se colocarï¿½ lo recibido de la impresora (Requiere el uso de la palabra clave "out")</param>
 protected  int SerialPortWriteAndRead(char[] cTrama, boolean bEsperarCTS) throws IOException
 {
     int bytesRecibidos = 0;         // Cantidad de bytes recibidos, siempre se debe comparar con la cantidad esperada de bytes
@@ -354,7 +354,7 @@ protected  int SerialPortWriteAndRead(char[] cTrama, boolean bEsperarCTS) throws
     // out  byte[] bResp
     try
     {
-        // Vacío los buffers de entrada / salida         
+        // Vacï¿½o los buffers de entrada / salida         
         if (entrada.available() > 0)
         {
             entrada.reset(); // Port.DiscardInBuffer();      
@@ -380,7 +380,7 @@ protected  int SerialPortWriteAndRead(char[] cTrama, boolean bEsperarCTS) throws
             {
                 if (Wait_CTS(40000))
                 {
-             // Pues esperó... y si entra aca es TRUE
+             // Pues esperï¿½... y si entra aca es TRUE
                 }
                 else
                 {
@@ -390,7 +390,7 @@ protected  int SerialPortWriteAndRead(char[] cTrama, boolean bEsperarCTS) throws
             }
         }
 
-       salida.write(vectorbyte, 0, cTrama.length);   // Escribimos el comando a la impresora (Aquí ya tienen STX, CMD, ETX y LRC)
+       salida.write(vectorbyte, 0, cTrama.length);   // Escribimos el comando a la impresora (Aquï¿½ ya tienen STX, CMD, ETX y LRC)
  
     }
     catch (IOException ex)
@@ -411,9 +411,9 @@ protected  void ReiniciarVariables()
     this.dataLectorFisc = new ArrayList();
 } 
 /// <summary>
-/// Método Exclusivo para los métodos SendCmd y SendCmd_Archivos, calcula el LRC de una trama y lo retorna como un char
+/// Mï¿½todo Exclusivo para los mï¿½todos SendCmd y SendCmd_Archivos, calcula el LRC de una trama y lo retorna como un char
 /// </summary>
-/// <param name="cmd">Comando o trama a la cual se le calculará el LRC</param>
+/// <param name="cmd">Comando o trama a la cual se le calcularï¿½ el LRC</param>
 protected  char Do_XOR(String sCMD)
 {
     char[] cCMD = sCMD.toCharArray();   // cCMD = Comando en modo char            
@@ -434,18 +434,18 @@ protected  char Do_XOR(String sCMD)
         {
             LRC_AUX ^= cCMD[i];
         }
-        else         // En caso de que se envíe el ETX dentro de la trama...
+        else         // En caso de que se envï¿½e el ETX dentro de la trama...
         {
-            CheckSum = LRC_AUX ^ ETX;    // Se asigna a CheckSum el último Xor con ETX (03)
-            return (char)CheckSum;      // Salgo de la función retornando el CheckSum
+            CheckSum = LRC_AUX ^ ETX;    // Se asigna a CheckSum el ï¿½ltimo Xor con ETX (03)
+            return (char)CheckSum;      // Salgo de la funciï¿½n retornando el CheckSum
         }
     }
 
-    CheckSum = LRC_AUX ^ ETX;    // Finalmente se asigna a CheckSum el último Xor, con ETX (03)
+    CheckSum = LRC_AUX ^ ETX;    // Finalmente se asigna a CheckSum el ï¿½ltimo Xor, con ETX (03)
     return (char)CheckSum;      // Retorno el checksum por si no lo voy a tomar desde la variable global
 }
 /// <summary>
-/// Método Exclusivo para los métodos UploadStatus y UploadReport
+/// Mï¿½todo Exclusivo para los mï¿½todos UploadStatus y UploadReport
 /// </summary>
 /// <param name="cmd">Comando o trama</param>
 /// <param name="bResp">Respuesta desde la impresora</param>
@@ -466,13 +466,13 @@ protected  char Do_XOR(String sCMD)
 
         try
         {
-               // Se envía el mensaje y recibe respuesta...   
+               // Se envï¿½a el mensaje y recibe respuesta...   
             bytesRecibidos = SerialPortWriteAndRead(cCMD, true);
 
             if(bytesRecibidos < 0) // Timeout por RTS/CTS o por Falta de respuesta de la impresora
             {
-                // No esperamos tiempo extra antes de reenviar el comando pues ya se esperó el timeout
-                // Se envía el mensaje y recibe respuesta...                     
+                // No esperamos tiempo extra antes de reenviar el comando pues ya se esperï¿½ el timeout
+                // Se envï¿½a el mensaje y recibe respuesta...                     
                 bytesRecibidos = SerialPortWriteAndRead(cCMD, true);
                 // Si falla la segunda vez... pues se retorna el valor de bytesRecibidos
             }
@@ -700,7 +700,7 @@ protected String DarStatus_Error(int st, int er) {
 
 }
 /// <summary>
-/// Consulta y hace el intento de trabajr con las señales CTS y RTS antes de ejecutar metodos de escrituras
+/// Consulta y hace el intento de trabajr con las seï¿½ales CTS y RTS antes de ejecutar metodos de escrituras
 /// </summary>
 protected boolean ManipulaCTS_RTS()
 {
@@ -719,7 +719,7 @@ protected boolean ManipulaCTS_RTS()
     }
 }
 /// <summary>
-/// Metodo para esperar que la señal CTS se ponga en true (Si lo hace en un tiempo determinado, sino, pues no).
+/// Metodo para esperar que la seï¿½al CTS se ponga en true (Si lo hace en un tiempo determinado, sino, pues no).
 /// </summary>
 private boolean Wait_CTS(int timeout)
 {
@@ -730,7 +730,7 @@ private boolean Wait_CTS(int timeout)
         
         
         
-        long tiempoEsperaCTS = timeout; // se esperan 4 segundos para que se coloque en TRUE la señal CTS antes de decir que no
+        long tiempoEsperaCTS = timeout; // se esperan 4 segundos para que se coloque en TRUE la seï¿½al CTS antes de decir que no
         long lastTime = 0;
         StopWatch crono = new StopWatch();
         crono.start();
@@ -749,7 +749,7 @@ private boolean Wait_CTS(int timeout)
             if ((crono.getElapsedTime() > tiempoEsperaCTS) && (CTS == false)) // 4 segundos
             {
                 CTS = false;
-                return false; // Se venció el  tiempo
+                return false; // Se venciï¿½ el  tiempo
             }
 
         }
@@ -784,7 +784,7 @@ protected int SubirDataReport(String sCMD)
             this.ReiniciarVariables();
             try
             { 
-                Thread.sleep(100); // para evitar problemas de que la maquina no esté lista para procesar
+                Thread.sleep(100); // para evitar problemas de que la maquina no estï¿½ lista para procesar
                 bytesLeidos = SerialPortWriteAndRead(new char[]{ACK}, false); // --> ACK    
             }
             catch (InterruptedException ex)
@@ -796,7 +796,7 @@ protected int SubirDataReport(String sCMD)
                 Logger.getLogger(TfhkaRaiz.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-            while ((bytesLeidos > 0) && (bResp[0] != EOT)&& (bResp[0] != NAK)) // si es 1, debería ser EOT en casos normales
+            while ((bytesLeidos > 0) && (bResp[0] != EOT)&& (bResp[0] != NAK)) // si es 1, deberï¿½a ser EOT en casos normales
                                                                                // y si es NAK es por error de la impresora...
             {  
                 int Pos_ETX = bytesLeidos - 2;
@@ -832,7 +832,7 @@ protected int SubirDataReport(String sCMD)
                         if (!(bitParada == (byte) ETX && lineasProcesadas == 0))
                         {
                             bytesLeidos = SerialPortWriteAndRead(new char[]  {ACK}, false);
-                        } // OJO ANTES DE ENVIAR ACK SE DEBERÍA CALCULAR EL CHECKSUM DE LA TRAMA RECIBIDA
+                        } // OJO ANTES DE ENVIAR ACK SE DEBERï¿½A CALCULAR EL CHECKSUM DE LA TRAMA RECIBIDA
                         else
                         {
                             bytesLeidos = 0;
