@@ -101,7 +101,7 @@ public class S8EPrinterData
 		if(trama != null){
 			String[] arrayParameter = trama.split(String.valueOf((char) 0X0A));
 			if(arrayParameter.length > 0){
-				this.setHeaderLine1(arrayParameter[0]);
+				this.setHeaderLine1(arrayParameter[0].substring(3));
 				this.setHeaderLine2(arrayParameter[1]);
 				this.setHeaderLine3(arrayParameter[2]);
 				this.setHeaderLine4(arrayParameter[3]);
