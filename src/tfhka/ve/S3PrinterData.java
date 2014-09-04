@@ -1,5 +1,5 @@
 /*
- * S3PrinterData.java
+  * S3PrinterData.java
  *
  * Created on 4 de junio de 2009, 07:38 PM
  *
@@ -100,8 +100,8 @@ public class S3PrinterData {
     public double getTax3() {
         return tax3;
     }
-    /**Retorta un arreglo de 20 valores enteros correspondiente a la configuración de los flags del 0 al 19.
-     * Ejemplo; systemFlags[0] = 1, quiere decil que el flags número 0 está configurado en 1.
+    /**Retorta un arreglo de 20 valores enteros correspondiente a la configuraciï¿½n de los flags del 0 al 19.
+     * Ejemplo; systemFlags[0] = 1, quiere decil que el flags nï¿½mero 0 estï¿½ configurado en 1.
      */
     
     private void setTypeTax1(int typeTax1) {

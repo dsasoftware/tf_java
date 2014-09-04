@@ -11,6 +11,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import tfhka.SVPrinterData;
 //import javax.comm.*;
 import gnu.io.*;
 
@@ -61,7 +63,7 @@ public abstract class TfhkaRaiz implements SerialPortEventListener{
          * Si el puerto esta abierto IndPuerto = true;
          * Si el puerto esta cerrado IndPuerto = false;
          */
-    public boolean IndPuerto = false;       
+    public boolean IndPuerto = false;
    
          public int getSerialPortReceiveTimeout()
          {
@@ -960,6 +962,27 @@ private class StopWatch {
         }
         return elapsed;
     }
-}   
-     
+}
+//METODO PARA SOLICITAR EL MODELO Y EL PAIS
+/**Objeto de tipo SVPrinterData que carga informaci??�n cuando se solicita el modelo y el pais de la maquina por el metodo getModel() y getCountry()*/
+
+	public SVPrinterData getSVPrinterData()
+	{
+		SVPrinterData Status;
+		int rep = 0;
+		String sBuffer = (String) "";
+		rep = this.SubirDataStatus("SV");
+		if (rep > 0) // Se procesó al menos una línea
+		{
+			Status = new SVPrinterData(sBuffer);
+			this.ReiniciarVariables();
+		}
+		else
+		{
+			this.ReiniciarVariables();
+			//  throw new PrinterException(Estado);
+			Status = new SVPrinterData(null);
+		}
+		return Status;
+	}   
 }

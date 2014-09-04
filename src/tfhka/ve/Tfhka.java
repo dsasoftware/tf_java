@@ -50,6 +50,7 @@ public final  class Tfhka extends TfhkaRaiz {
         /**Objeto de tipo S8PPrinterData que carga informaci??�n cuando se hace una subida de estado S8P por el m??�todo  getS8EPrinterData()*/
         private S8PPrinterData S8PEstado;
         
+        
         /**Nombre del puerto serial a manejar*/
 	public String Terminar;
 	/**
@@ -1495,7 +1496,7 @@ public boolean SendCmd(String sCMD) throws PrinterException
       {
         try
 	  {
-        int rep = this.SubirDataStatus("S8E");
+        int rep = this.SubirDataStatus("");
 		
         if(rep>0)
         {
@@ -1525,7 +1526,7 @@ public boolean SendCmd(String sCMD) throws PrinterException
       {
         try
 	  {
-        int rep = this.SubirDataStatus("S8P");
+        int rep = this.SubirDataStatus("");
 		
         if(rep>0)
         {
