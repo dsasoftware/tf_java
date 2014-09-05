@@ -8,8 +8,6 @@ public class SVPrinterData
 {
 	private String Model;
 	private String Country;
-
-	public String PModel;
         
 	private static final String TallyD_1125 = "Tally-1125",
 		SRP_270 = "SRP-270",
@@ -28,9 +26,6 @@ public class SVPrinterData
 		DO = "Republica Dominicana",
 		CW = "Curazao",
 		UN = "Unknown";
-	
-	
-	public String PCountry;	
 	
 	//Nota: Los Datos correspondientes a la versión y al País vienen en la trama?
 	public String getModel()

@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import tfhka.SVPrinterData;
+import tfhka.*;
 //import javax.comm.*;
 import gnu.io.*;
 
@@ -966,7 +966,7 @@ private class StopWatch {
 //METODO PARA SOLICITAR EL MODELO Y EL PAIS
 /**Objeto de tipo SVPrinterData que carga informaci??�n cuando se solicita el modelo y el pais de la maquina por el metodo getModel() y getCountry()*/
 
-	public SVPrinterData getSVPrinterData()
+	public SVPrinterData getSVPrinterData() throws PrinterException
 	{
 		SVPrinterData Status;
 		int rep = 0;
@@ -979,9 +979,9 @@ private class StopWatch {
 		}
 		else
 		{
-			this.ReiniciarVariables();
-			//  throw new PrinterException(Estado);
-			Status = new SVPrinterData(null);
+                        Status = null;
+                        Estado = "Sin Repuesta";
+		      throw new PrinterException(Estado, null);			
 		}
 		return Status;
 	}   
