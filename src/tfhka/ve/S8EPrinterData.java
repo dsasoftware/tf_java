@@ -98,10 +98,12 @@ public class S8EPrinterData
 	}
 
 	public S8EPrinterData (String trama){
+            try
+            {
 		if(trama != null){
 			String[] arrayParameter = trama.split(String.valueOf((char) 0X0A));
 			if(arrayParameter.length > 0){
-				this.setHeaderLine1(arrayParameter[0].substring(3));
+				this.setHeaderLine1(arrayParameter[0].replaceAll("S8E", ""));
 				this.setHeaderLine2(arrayParameter[1]);
 				this.setHeaderLine3(arrayParameter[2]);
 				this.setHeaderLine4(arrayParameter[3]);
@@ -111,5 +113,15 @@ public class S8EPrinterData
 				this.setHeaderLine8(arrayParameter[7]);
 			}
 		}	
+            }catch(ArrayIndexOutOfBoundsException are)
+	                    {
+	                        return;
+	                    }catch (NumberFormatException nfexp)
+	                    {
+	                        return;
+	                    }catch (StringIndexOutOfBoundsException sfexp)
+	                    {
+	                        return;
+	                    }
 	}
 }

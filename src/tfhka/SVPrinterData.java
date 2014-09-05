@@ -58,38 +58,38 @@ public class SVPrinterData
 					 String arrayParamater[] = trama.split(String.valueOf((char) 0X0A));
 					 if(arrayParamater.length >= 1){                                        
 							
-							 if (arrayParamater[1] == "Z6A"){ //TalyDascom 1125
+							 if (arrayParamater[1].equals("Z6A")){ //TalyDascom 1125
 								 Model = TallyD_1125;
 								 }							 
-                                                         else if (arrayParamater[1] ==  "Z1B"){ //SRP_350
+                                                         else if (arrayParamater[1].equals("Z1B")){ //SRP_350
 								 Model = SRP_350;
 								 }								 
-                                                         else if (arrayParamater[1] ==  "Z6B"){//Dascom DT230
+                                                         else if (arrayParamater[1].equals("Z6B")){//Dascom DT230
 								 Model = Dascom_DT230;
 								 }								 
-                                                         else if (arrayParamater[1] ==  "ZZB"){ //PP1F3
+                                                         else if (arrayParamater[1].equals("ZZB")){ //PP1F3
 								 Model = PP1F3;
 								 }			 
-                                                         else if (arrayParamater[1] ==  "Z1A"){ //SRP 270
+                                                         else if (arrayParamater[1].equals("Z1A")){ //SRP 270
 								 Model = SRP_270;
 								 }							
-							  else if (arrayParamater[1] ==  "DLA"){//KUBE
+							  else if (arrayParamater[1].equals("DLA")){//KUBE
 								 Model = KUBE;
 								 }							 
-							  else if (arrayParamater[1] ==  "ZPA"){ //HSP7000
+							  else if (arrayParamater[1].equals("ZPA")){ //HSP7000
 								 Model = HSP7000;
 								 }								 
-							  else if (arrayParamater[1] ==  "Z7A"){//HKA112
+							  else if (arrayParamater[1].equals("Z7A")){//HKA112
 								 Model = HKA112;
 								 }								 
-							  else if (arrayParamater[1] ==  "Z1E"){ //SRP 280
+							  else if (arrayParamater[1].equals("Z1E")){ //SRP 280
 								 Model = SRP_280;
 								 }								 
-							  else if (arrayParamater[1] ==  "Z1F"){ //SRP 812
+							  else if (arrayParamater[1].equals("Z1F")){ //SRP 812
 								 Model = SRP_812;
 								 }
 								
-							  else if (arrayParamater[1] ==  "Z4A"){ //OKI ML1120
+							  else if (arrayParamater[1].equals("Z4A")){ //OKI ML1120
 								 Model = OKI_ML1120;
 								 }								 
                                                           else{
@@ -98,16 +98,16 @@ public class SVPrinterData
 						 
 						 
 						  
-						 if (arrayParamater[2] == "VE"){ //Venezuela
+						 if (arrayParamater[2].equals("VE")){ //Venezuela
 							 Country = VE;
 							 }						 
-                                                 else if (arrayParamater[2] ==  "RD"){ //Republica Dominicana
+                                                 else if (arrayParamater[2].equals("RD")){ //Republica Dominicana
 							 Country = DO;
 							 }							 
-                                                 else if (arrayParamater[2] ==  "DO"){ //Dominicana
+                                                 else if (arrayParamater[2].equals("DO")){ //Dominicana
 							 Country = DO;
 							 }						 
-						 else if (arrayParamater[2] ==  "CW"){//Curazao
+						 else if (arrayParamater[2].equals("CW")){//Curazao
 							 Country = CW;
 							 }
                                                  else{

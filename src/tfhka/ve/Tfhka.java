@@ -1496,7 +1496,7 @@ public boolean SendCmd(String sCMD) throws PrinterException
       {
         try
 	  {
-        int rep = this.SubirDataStatus("");
+        int rep = this.SubirDataStatus("S8E");
 		
         if(rep>0)
         {
@@ -1526,7 +1526,7 @@ public boolean SendCmd(String sCMD) throws PrinterException
       {
         try
 	  {
-        int rep = this.SubirDataStatus("");
+        int rep = this.SubirDataStatus("S8P");
 		
         if(rep>0)
         {

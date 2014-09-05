@@ -970,11 +970,10 @@ private class StopWatch {
 	{
 		SVPrinterData Status;
 		int rep = 0;
-		String sBuffer = (String) "";
 		rep = this.SubirDataStatus("SV");
 		if (rep > 0) // Se procesó al menos una línea
 		{
-			Status = new SVPrinterData(sBuffer);
+			Status = new SVPrinterData(this.sDataSubida);
 			this.ReiniciarVariables();
 		}
 		else

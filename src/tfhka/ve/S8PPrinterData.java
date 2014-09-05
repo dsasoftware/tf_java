@@ -99,12 +99,14 @@ public class S8PPrinterData
 
 	public S8PPrinterData(String trama)
 	{
+            try
+            {
 		if (trama != null)
 		{
 			String[] arrayParameter = trama.split(String.valueOf((char) 0X0A));
 			if (arrayParameter.length > 0)
 			{
-				this.setFooter1(arrayParameter[0].substring(3));
+				this.setFooter1(arrayParameter[0].replaceAll("S8P", ""));
 				this.setFooter2(arrayParameter[1]);
 				this.setFooter3(arrayParameter[2]);
 				this.setFooter4(arrayParameter[3]);
@@ -114,5 +116,15 @@ public class S8PPrinterData
 				this.setFooter8(arrayParameter[7]);
 			}
 		}
+            }catch(ArrayIndexOutOfBoundsException are)
+	                    {
+	                        return;
+	                    }catch (NumberFormatException nfexp)
+	                    {
+	                        return;
+	                    }catch (StringIndexOutOfBoundsException sfexp)
+	                    {
+	                        return;
+	                    }
 	}
 }
