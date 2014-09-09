@@ -6,9 +6,12 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import gnu.io.*;
 //import javax.comm.*;
 import tfhka._private.TfhkaRaiz;
+import tfhka.ve.S8EPrinterData;
+import tfhka.ve.S8PPrinterData;
 import tfhka.*;
 
 /** 
@@ -42,6 +45,10 @@ public final  class Tfhka extends TfhkaRaiz {
 	private S6PrinterData S6Estado;
         /**Objeto de tipo S7PrinterData que carga informaci??�n cuando se hace una subida de estado S7 por el m??�todo  getS7PrinterData()*/
 	private S7PrinterData S7Estado;
+	/**Objeto de tipo S8EPrinterData que carga informaci??�n cuando se hace una subida de estado S8E por el m??�todo  getS8EPrinterData()*/
+  private S8EPrinterData S8EEstado;
+  /**Objeto de tipo S8PPrinterData que carga informaci??�n cuando se hace una subida de estado S8P por el m??�todo  getS8EPrinterData()*/
+  private S8PPrinterData S8PEstado;
 
         /**Nombre del puerto serial a manejar*/
 	public String Terminar;
@@ -1375,6 +1382,66 @@ public boolean SendCmd(String sCMD) throws PrinterException
 		
 		}catch (NullPointerException ex) {
             this.S7Estado = null;
+            Estado = ex.getMessage();
+                throw new PrinterException(Estado, getPrinterStatus());
+        }
+      }
+      /**
+       *Sube el estado S8E de la Impresora fiscal y retorna un objeto de tipo S8EPrinterData con los parametros de informaci?n.
+       *@throws PrinterException "??????????".
+       */
+      public S8EPrinterData getS8EPrinterData() throws PrinterException
+      {
+        try
+	  {
+        int rep = this.SubirDataStatus("S8E");
+		
+        if(rep>0)
+        {
+           this.S8EEstado = new S8EPrinterData(this.sDataSubida);
+           Estado = " Status: 00  Error: 00";
+        }
+        else
+        {
+             this.S8EEstado = null;
+             Estado = "Sin repuesta";
+            throw new PrinterException(Estado, getPrinterStatus());
+        }
+        
+        return S8EEstado;
+		
+		}catch (NullPointerException ex) {
+            this.S8EEstado = null;
+            Estado = ex.getMessage();
+                throw new PrinterException(Estado, getPrinterStatus());
+        }
+      }
+      /**
+       *Sube el estado S8P de la Impresora fiscal y retorna un objeto de tipo S8PrinterData con los parametros de informaci?n.
+       *@throws PrinterException "??????????".
+       */
+      public S8PPrinterData getS8PPrinterData() throws PrinterException
+      {
+        try
+	  {
+        int rep = this.SubirDataStatus("S8P");
+		
+        if(rep>0)
+        {
+           this.S8PEstado = new S8PPrinterData(this.sDataSubida);
+           Estado = " Status: 00  Error: 00";
+        }
+        else
+        {
+             this.S8PEstado = null;
+             Estado = "Sin repuesta";
+            throw new PrinterException(Estado, getPrinterStatus());
+        }
+        
+        return S8PEstado;
+		
+		}catch (NullPointerException ex) {
+            this.S8PEstado = null;
             Estado = ex.getMessage();
                 throw new PrinterException(Estado, getPrinterStatus());
         }
