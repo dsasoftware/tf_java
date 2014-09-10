@@ -1502,7 +1502,7 @@ public boolean SendCmd(String sCMD) throws PrinterException
      */
       public void printZReport() throws PrinterException
       {  
-        boolean rep =  this.SendCmd("I0Z"); 
+        boolean rep =  this.SendCmd("I0Z0"); 
         if(!rep)
           throw new PrinterException(Estado, getPrinterStatus());
 
