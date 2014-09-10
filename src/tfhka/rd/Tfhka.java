@@ -1498,7 +1498,7 @@ public boolean SendCmd(String sCMD) throws PrinterException
        }
     /**
      *Imprime un Reporte Z.
-     *@throws PrinterException Error de  transacci?n.
+     *@throws PrinterException Error de  transacci?n. //Modificado
      */
       public void printZReport() throws PrinterException
       {  
