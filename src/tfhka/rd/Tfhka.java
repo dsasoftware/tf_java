@@ -11,9 +11,6 @@ import gnu.io.*;
 //import javax.comm.*;
 import tfhka._private.TfhkaRaiz;
 import tfhka.*;
-import tfhka.rd.ReportData;
-import tfhka.ve.S8EPrinterData;
-import tfhka.ve.S8PPrinterData;
 
 /** 
 * Representa una Libreria de Clase para Protocolo de Comunicacion Directo

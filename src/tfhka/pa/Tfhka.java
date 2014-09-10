@@ -10,8 +10,6 @@ import java.util.logging.Logger;
 import gnu.io.*;
 //import javax.comm.*;
 import tfhka._private.TfhkaRaiz;
-import tfhka.ve.S8EPrinterData;
-import tfhka.ve.S8PPrinterData;
 import tfhka.*;
 
 /** 
