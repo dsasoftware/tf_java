@@ -634,28 +634,28 @@ public boolean SendCmd(String sCMD) throws PrinterException
           
           return StatusErrorPrinter;
         }
+        
+        // <editor-fold defaultstate="collapsed" desc="SubReportesX">
         /**
 	 *Retorna un objeto  de tipo ReportData  con todas la informaci?n para la carga de un reporte X actual("U0X").
          *@throws PrinterException Error de  transacci?n.
 	 */
-	public ReportData getXReportU0X01() throws PrinterException {
+	public ReportData.BasicInfoClass getX01Report() throws PrinterException {
 		try {
-
+                        ReportData.BasicInfoClass report;
 			int rep = this.SubirDataReport("U0X01");
 
 			if (rep > 0) {
-				ReportData report = new ReportData();
-				report.ReportData01(this.sDataSubida);
-				this.ReportePC = report;
+				report = new ReportData.BasicInfoClass(this.sDataSubida);
 				// this.ReportePC = new ReportData(this.sDataSubida);
 				Estado = " Status: 00  Error: 00";
 			} else {
-				this.ReportePC = null;
+				report = null;
 				Estado = "Sin repuesta";
 				throw new PrinterException(Estado, getPrinterStatus());
 			}
 
-			return ReportePC;
+			return report;
 
 		} catch (NullPointerException ex) {
 			Estado = ex.getMessage();
@@ -665,24 +665,21 @@ public boolean SendCmd(String sCMD) throws PrinterException
 
 	}
 
-	public ReportData getXReportU0X02() throws PrinterException {
+	public ReportData.InvoicesAccumulatedClass getX02Report() throws PrinterException {
 		try {
-
+                     ReportData.InvoicesAccumulatedClass report;
 			int rep = this.SubirDataReport("U0X02");
 
 			if (rep > 0) {
-				ReportData report = new ReportData();
-				report.ReportData02(this.sDataSubida);
-				this.ReportePC = report;
-				// this.ReportePC = new ReportData(this.sDataSubida);
+				report = new ReportData.InvoicesAccumulatedClass(this.sDataSubida);				
 				Estado = " Status: 00  Error: 00";
 			} else {
-				this.ReportePC = null;
+				report = null;
 				Estado = "Sin repuesta";
 				throw new PrinterException(Estado, getPrinterStatus());
 			}
 
-			return ReportePC;
+			return report;
 
 		} catch (NullPointerException ex) {
 			Estado = ex.getMessage();
@@ -692,24 +689,21 @@ public boolean SendCmd(String sCMD) throws PrinterException
 
 	}
 
-	public ReportData getXReportU0X03() throws PrinterException {
+	public ReportData.CreditNotesAccumulatedClass getX03Report() throws PrinterException {
 		try {
-
+                        ReportData.CreditNotesAccumulatedClass report;
 			int rep = this.SubirDataReport("U0X03");
 
 			if (rep > 0) {
-				ReportData report = new ReportData();
-				report.ReportData03(this.sDataSubida);
-				this.ReportePC = report;
-				// this.ReportePC = new ReportData(this.sDataSubida);
+				report = new ReportData.CreditNotesAccumulatedClass(this.sDataSubida);
 				Estado = " Status: 00  Error: 00";
 			} else {
-				this.ReportePC = null;
+				report = null;
 				Estado = "Sin repuesta";
 				throw new PrinterException(Estado, getPrinterStatus());
 			}
 
-			return ReportePC;
+			return report;
 
 		} catch (NullPointerException ex) {
 			Estado = ex.getMessage();
@@ -719,24 +713,21 @@ public boolean SendCmd(String sCMD) throws PrinterException
 
 	}
 
-	public ReportData getXReportU0X04() throws PrinterException {
+	public ReportData.OtherAccumulatedClass getX04Report() throws PrinterException {
 		try {
-
+                        ReportData.OtherAccumulatedClass report;
 			int rep = this.SubirDataReport("U0X04");
 
 			if (rep > 0) {
-				ReportData report = new ReportData();
-				report.ReportData04(this.sDataSubida);
-				this.ReportePC = report;
-				// this.ReportePC = new ReportData(this.sDataSubida);
+				report = new ReportData.OtherAccumulatedClass(this.sDataSubida);
 				Estado = " Status: 00  Error: 00";
 			} else {
-				this.ReportePC = null;
+				report = null;
 				Estado = "Sin repuesta";
 				throw new PrinterException(Estado, getPrinterStatus());
 			}
 
-			return ReportePC;
+			return report;
 
 		} catch (NullPointerException ex) {
 			Estado = ex.getMessage();
@@ -745,122 +736,110 @@ public boolean SendCmd(String sCMD) throws PrinterException
 		}
 
 	}
-
+        // </editor-fold>
+        
+        // <editor-fold defaultstate="collapsed" desc="SubReportesZ">
 	/**
-	 * Retorna un objeto de tipo ReportData con todas la informaci?n para la
-	 * carga de un reporte X2 actual("U1X").
+	 * Retorna un objeto de tipo ReportData con todas la informaci?n del ?ltimo
+	 * reporte Z reaizado ("U0Z").
 	 * 
 	 * @throws PrinterException
 	 *             Error de transacci?n.
 	 */
-	public ReportData getX2Report01() throws PrinterException {
+	public ReportData.BasicInfoClass getZ01Report() throws PrinterException {
 		try {
-
-			int rep = this.SubirDataReport("U1X01");
-
+                        ReportData.BasicInfoClass report;
+			int rep = this.SubirDataReport("U0Z01");
 			if (rep > 0) {
-				ReportData report = new ReportData();
-				report.ReportData01(this.sDataSubida);
-				this.ReportePC = report;
-				// this.ReportePC = new ReportData(this.sDataSubida);
+				report = new ReportData.BasicInfoClass(this.sDataSubida);
 				Estado = " Status: 00  Error: 00";
 			} else {
-				this.ReportePC = null;
+				report = null;
 				Estado = "Sin repuesta";
 				throw new PrinterException(Estado, getPrinterStatus());
 			}
 
-			return ReportePC;
+			return report;
 
 		} catch (NullPointerException ex) {
-			Estado = ex.getMessage();
 			this.ReportePC = null;
+			Estado = ex.getMessage();
 			throw new PrinterException(Estado, getPrinterStatus());
 		}
 
 	}
 
-	public ReportData getX2Report02() throws PrinterException {
+	public ReportData.InvoicesAccumulatedClass getZ02Report() throws PrinterException {
 		try {
-
-			int rep = this.SubirDataReport("U1X02");
-
+                        ReportData.InvoicesAccumulatedClass report;
+			int rep = this.SubirDataReport("U0Z02");
 			if (rep > 0) {
-				ReportData report = new ReportData();
-				report.ReportData02(this.sDataSubida);
-				this.ReportePC = report;
-				// this.ReportePC = new ReportData(this.sDataSubida);
+				report = new ReportData.InvoicesAccumulatedClass(this.sDataSubida);
 				Estado = " Status: 00  Error: 00";
 			} else {
-				this.ReportePC = null;
+				report = null;
 				Estado = "Sin repuesta";
 				throw new PrinterException(Estado, getPrinterStatus());
 			}
 
-			return ReportePC;
+			return report;
 
 		} catch (NullPointerException ex) {
-			Estado = ex.getMessage();
 			this.ReportePC = null;
+			Estado = ex.getMessage();
 			throw new PrinterException(Estado, getPrinterStatus());
 		}
 
 	}
 
-	public ReportData getX2Report03() throws PrinterException {
+	public ReportData.CreditNotesAccumulatedClass getZ03Report() throws PrinterException {
 		try {
-
-			int rep = this.SubirDataReport("U1X03");
-
+                        ReportData.CreditNotesAccumulatedClass report;
+			int rep = this.SubirDataReport("U0Z03");
 			if (rep > 0) {
-				ReportData report = new ReportData();
-				report.ReportData03(this.sDataSubida);
-				this.ReportePC = report;
-				// this.ReportePC = new ReportData(this.sDataSubida);
+				report = new ReportData.CreditNotesAccumulatedClass(this.sDataSubida);
 				Estado = " Status: 00  Error: 00";
 			} else {
-				this.ReportePC = null;
+				report = null;
 				Estado = "Sin repuesta";
 				throw new PrinterException(Estado, getPrinterStatus());
 			}
 
-			return ReportePC;
+			return report;
 
 		} catch (NullPointerException ex) {
-			Estado = ex.getMessage();
 			this.ReportePC = null;
+			Estado = ex.getMessage();
 			throw new PrinterException(Estado, getPrinterStatus());
 		}
 
 	}
 
-	public ReportData getX2Report04() throws PrinterException {
+	public ReportData.OtherAccumulatedClass getZ04Report() throws PrinterException {
 		try {
-
-			int rep = this.SubirDataReport("U1X04");
-
+                        ReportData.OtherAccumulatedClass report;
+			int rep = this.SubirDataReport("U0Z04");
 			if (rep > 0) {
-				ReportData report = new ReportData();
-				report.ReportData04(this.sDataSubida);
-				this.ReportePC = report;
-				// this.ReportePC = new ReportData(this.sDataSubida);
+				report = new ReportData.OtherAccumulatedClass(this.sDataSubida);
 				Estado = " Status: 00  Error: 00";
 			} else {
-				this.ReportePC = null;
+				report = null;
 				Estado = "Sin repuesta";
 				throw new PrinterException(Estado, getPrinterStatus());
 			}
 
-			return ReportePC;
+			return report;
 
 		} catch (NullPointerException ex) {
-			Estado = ex.getMessage();
 			this.ReportePC = null;
+			Estado = ex.getMessage();
 			throw new PrinterException(Estado, getPrinterStatus());
 		}
 
 	}
-
+        // </editor-fold>
+        
+        // <editor-fold defaultstate="collapsed" desc="AcumuladosX">
 	/**
 	 * Retorna un objeto de tipo AcumuladosX con todas la informaci?n para la
 	 * carga de un reporte X2 actual (U0X4).
@@ -868,7 +847,7 @@ public boolean SendCmd(String sCMD) throws PrinterException
 	 * @throws PrinterException
 	 *             Error de transaccion.
 	 */
-	public AcumuladosX getX02Report() throws PrinterException {
+	public AcumuladosX getX2Report() throws PrinterException {
 		try {
 
 			int rep = this.SubirDataReport("U0X2");
@@ -899,7 +878,7 @@ public boolean SendCmd(String sCMD) throws PrinterException
 	 * @throws PrinterException
 	 *             Error de transaccion.
 	 */
-	public AcumuladosX getX03Report() throws PrinterException {
+	public AcumuladosX getX3Report() throws PrinterException {
 		try {
 
 			int rep = this.SubirDataReport("U0X3");
@@ -930,7 +909,7 @@ public boolean SendCmd(String sCMD) throws PrinterException
 	 * @throws PrinterException
 	 *             Error de transaccion.
 	 */
-	public AcumuladosX getX04Report() throws PrinterException {
+	public AcumuladosX getX4Report() throws PrinterException {
 		try {
 
 			int rep = this.SubirDataReport("U0X4");
@@ -961,7 +940,7 @@ public boolean SendCmd(String sCMD) throws PrinterException
 	 * @throws PrinterException
 	 *             Error de transaccion.
 	 */
-	public AcumuladosX getX05Report() throws PrinterException {
+	public AcumuladosX getX5Report() throws PrinterException {
 		try {
 
 			int rep = this.SubirDataReport("U0X5");
@@ -1015,226 +994,8 @@ public boolean SendCmd(String sCMD) throws PrinterException
 		}
 
 	}
-
-	/**
-	 * Retorna un objeto de tipo ReportData con todas la informaci?n del ?ltimo
-	 * reporte Z reaizado ("U0Z").
-	 * 
-	 * @throws PrinterException
-	 *             Error de transacci?n.
-	 */
-	public ReportData getZReportU0Z01() throws PrinterException {
-		try {
-
-			int rep = this.SubirDataReport("U0Z01");
-			if (rep > 0) {
-				ReportData report = new ReportData();
-				report.ReportData01(this.sDataSubida);
-				this.ReportePC = report;
-				// this.ReportePC = new ReportData(this.sDataSubida);
-				Estado = " Status: 00  Error: 00";
-			} else {
-				this.ReportePC = null;
-				Estado = "Sin repuesta";
-				throw new PrinterException(Estado, getPrinterStatus());
-			}
-
-			return ReportePC;
-
-		} catch (NullPointerException ex) {
-			this.ReportePC = null;
-			Estado = ex.getMessage();
-			throw new PrinterException(Estado, getPrinterStatus());
-		}
-
-	}
-
-	public ReportData getZReportU0Z02() throws PrinterException {
-		try {
-
-			int rep = this.SubirDataReport("U0Z02");
-			if (rep > 0) {
-				ReportData report = new ReportData();
-				report.ReportData02(this.sDataSubida);
-				this.ReportePC = report;
-				// this.ReportePC = new ReportData(this.sDataSubida);
-				Estado = " Status: 00  Error: 00";
-			} else {
-				this.ReportePC = null;
-				Estado = "Sin repuesta";
-				throw new PrinterException(Estado, getPrinterStatus());
-			}
-
-			return ReportePC;
-
-		} catch (NullPointerException ex) {
-			this.ReportePC = null;
-			Estado = ex.getMessage();
-			throw new PrinterException(Estado, getPrinterStatus());
-		}
-
-	}
-
-	public ReportData getZReportU0Z03() throws PrinterException {
-		try {
-
-			int rep = this.SubirDataReport("U0Z03");
-			if (rep > 0) {
-				ReportData report = new ReportData();
-				report.ReportData03(this.sDataSubida);
-				this.ReportePC = report;
-				// this.ReportePC = new ReportData(this.sDataSubida);
-				Estado = " Status: 00  Error: 00";
-			} else {
-				this.ReportePC = null;
-				Estado = "Sin repuesta";
-				throw new PrinterException(Estado, getPrinterStatus());
-			}
-
-			return ReportePC;
-
-		} catch (NullPointerException ex) {
-			this.ReportePC = null;
-			Estado = ex.getMessage();
-			throw new PrinterException(Estado, getPrinterStatus());
-		}
-
-	}
-
-	public ReportData getZReportU0Z04() throws PrinterException {
-		try {
-
-			int rep = this.SubirDataReport("U0Z04");
-			if (rep > 0) {
-				ReportData report = new ReportData();
-				report.ReportData04(this.sDataSubida);
-				this.ReportePC = report;
-				// this.ReportePC = new ReportData(this.sDataSubida);
-				Estado = " Status: 00  Error: 00";
-			} else {
-				this.ReportePC = null;
-				Estado = "Sin repuesta";
-				throw new PrinterException(Estado, getPrinterStatus());
-			}
-
-			return ReportePC;
-
-		} catch (NullPointerException ex) {
-			this.ReportePC = null;
-			Estado = ex.getMessage();
-			throw new PrinterException(Estado, getPrinterStatus());
-		}
-
-	}
-       
-        /**
-	 *Retorna un objeto  de tipo ReportData  con todas la informaci?n del ?ltimo reporte Z2 reaizado ("U1Z").
-         *@throws PrinterException Error de  transacci?n.
-	 */
-	public ReportData getZ2Report01() throws PrinterException {
-		try {
-
-			int rep = this.SubirDataReport("U1Z01");
-			if (rep > 0) {
-				ReportData report = new ReportData();
-				report.ReportData01(this.sDataSubida);
-				this.ReportePC = report;
-				// this.ReportePC = new ReportData(this.sDataSubida);
-				Estado = " Status: 00  Error: 00";
-			} else {
-				this.ReportePC = null;
-				Estado = "Sin repuesta";
-				throw new PrinterException(Estado, getPrinterStatus());
-			}
-
-			return ReportePC;
-
-		} catch (NullPointerException ex) {
-			this.ReportePC = null;
-			Estado = ex.getMessage();
-			throw new PrinterException(Estado, getPrinterStatus());
-		}
-
-	}
-
-	public ReportData getZ2Report02() throws PrinterException {
-		try {
-
-			int rep = this.SubirDataReport("U1Z02");
-			if (rep > 0) {
-				ReportData report = new ReportData();
-				report.ReportData02(this.sDataSubida);
-				this.ReportePC = report;
-				// this.ReportePC = new ReportData(this.sDataSubida);
-				Estado = " Status: 00  Error: 00";
-			} else {
-				this.ReportePC = null;
-				Estado = "Sin repuesta";
-				throw new PrinterException(Estado, getPrinterStatus());
-			}
-
-			return ReportePC;
-
-		} catch (NullPointerException ex) {
-			this.ReportePC = null;
-			Estado = ex.getMessage();
-			throw new PrinterException(Estado, getPrinterStatus());
-		}
-
-	}
-
-	public ReportData getZ2Report03() throws PrinterException {
-		try {
-
-			int rep = this.SubirDataReport("U1Z03");
-			if (rep > 0) {
-				ReportData report = new ReportData();
-				report.ReportData03(this.sDataSubida);
-				this.ReportePC = report;
-				// this.ReportePC = new ReportData(this.sDataSubida);
-				Estado = " Status: 00  Error: 00";
-			} else {
-				this.ReportePC = null;
-				Estado = "Sin repuesta";
-				throw new PrinterException(Estado, getPrinterStatus());
-			}
-
-			return ReportePC;
-
-		} catch (NullPointerException ex) {
-			this.ReportePC = null;
-			Estado = ex.getMessage();
-			throw new PrinterException(Estado, getPrinterStatus());
-		}
-
-	}
-
-	public ReportData getZ2Report04() throws PrinterException {
-		try {
-
-			int rep = this.SubirDataReport("U1Z04");
-			if (rep > 0) {
-				ReportData report = new ReportData();
-				report.ReportData04(this.sDataSubida);
-				this.ReportePC = report;
-				// this.ReportePC = new ReportData(this.sDataSubida);
-				Estado = " Status: 00  Error: 00";
-			} else {
-				this.ReportePC = null;
-				Estado = "Sin repuesta";
-				throw new PrinterException(Estado, getPrinterStatus());
-			}
-
-			return ReportePC;
-
-		} catch (NullPointerException ex) {
-			this.ReportePC = null;
-			Estado = ex.getMessage();
-			throw new PrinterException(Estado, getPrinterStatus());
-		}
-
-	}
-       
+        // </editor-fold>
+            
        /**
 	*Retorna un arreglo de objetos  ReportData Z con todos sus atributos por rango de n??�meros
 	*@param StartReportNumber N??�mero del  Z inicial a subir
