@@ -15,7 +15,6 @@ public class ReportData {
      public OtherAccumulatedClass OtherAccumulated;
 
     ReportData() {
-        
     }
     
     // <editor-fold defaultstate="collapsed" desc="BasicInfoClass">
@@ -145,17 +144,17 @@ public class ReportData {
 					String[] arrayParameter = trama.split(String
 							.valueOf((char) 0X0A));
 					if (arrayParameter.length > 1) {
-						this.numberOfLastZReport = Integer
-								.parseInt(arrayParameter[0]);
-						int y = Integer.parseInt(arrayParameter[2].substring(0,
+						this.numberOfLastZReport = Integer.parseInt(arrayParameter[0]);
+						
+						int y = Integer.parseInt(arrayParameter[4].substring(0,
 								2)) + 2000;
-						int m = Integer.parseInt(arrayParameter[2].substring(2,
+						int m = Integer.parseInt(arrayParameter[4].substring(2,
 								4));
-						int d = Integer.parseInt(arrayParameter[2].substring(4,
+						int d = Integer.parseInt(arrayParameter[4].substring(4,
 								6));
-						int hh = Integer.parseInt(arrayParameter[3].substring(
+						int hh = Integer.parseInt(arrayParameter[5].substring(
 								0, 2));
-						int min = Integer.parseInt(arrayParameter[3].substring(
+						int min = Integer.parseInt(arrayParameter[5].substring(
 								2, 4));
 
 						if (m == 0 && d == 0 && y == 2000) {
@@ -171,16 +170,14 @@ public class ReportData {
 						cal.set(y + 2000, m - 1, d, hh, min, 0);
 
 						this.ZReportDate = cal.getTime();
-						this.numberOfLastTransaction = Integer
-								.parseInt(arrayParameter[4]);
+						this.numberOfLastTransaction = Integer.parseInt(arrayParameter[3]);
 
-						y = Integer.parseInt(arrayParameter[5].substring(0, 2)) + 2000;
-						m = Integer.parseInt(arrayParameter[5].substring(2, 4));
-						d = Integer.parseInt(arrayParameter[5].substring(4, 6));
+						y = Integer.parseInt(arrayParameter[1].substring(0, 2)) + 2000;
+						m = Integer.parseInt(arrayParameter[1].substring(2, 4));
+						d = Integer.parseInt(arrayParameter[1].substring(4, 6));
 
-						hh = Integer
-								.parseInt(arrayParameter[6].substring(0, 2));
-						min = Integer.parseInt(arrayParameter[6]
+						hh = Integer.parseInt(arrayParameter[2].substring(0, 2));
+						min = Integer.parseInt(arrayParameter[2]
 								.substring(2, 4));
 
 						if (m == 0 && d == 0 && y == 2000) {
@@ -193,19 +190,19 @@ public class ReportData {
 
 						this.lastTransactionDate = cal.getTime();
 						this.numberOfLastNonFiscal = Integer
-								.parseInt(arrayParameter[7]);
+								.parseInt(arrayParameter[6]);
 						this.amountInvoiceCanceled = Integer
-								.parseInt(arrayParameter[8]);
+								.parseInt(arrayParameter[7]);
 						this.amountDocumentsSale = Integer
-								.parseInt(arrayParameter[9]);
+								.parseInt(arrayParameter[8]);
 						this.amountDocumentsNoSale = Integer
-								.parseInt(arrayParameter[10]);
+								.parseInt(arrayParameter[9]);
 						this.totalTechnicalInterventions = 
-								Integer.parseInt(arrayParameter[11]);
-                                                this.amountOfCopiesToday = Integer.parseInt(arrayParameter[12]);
-                                                this.amountOfItemsSold = Integer.parseInt(arrayParameter[13]);
-                                                this.amountOfCashTransactions = Integer.parseInt(arrayParameter[14]);
-                                                this.counterOfDrawerOpenings = Integer.parseInt(arrayParameter[15]);
+								Integer.parseInt(arrayParameter[14]);
+                                                this.amountOfCopiesToday = Integer.parseInt(arrayParameter[10]);
+                                                this.amountOfItemsSold = Integer.parseInt(arrayParameter[11]);
+                                                this.amountOfCashTransactions = Integer.parseInt(arrayParameter[12]);
+                                                this.counterOfDrawerOpenings = Integer.parseInt(arrayParameter[13]);
                                                 
 
 					}
