@@ -13,9 +13,9 @@ public class ReportData {
      public InvoicesAccumulatedClass InvoicesAccumulated;
      public CreditNotesAccumulatedClass CreditNotesAccumulated;
      public OtherAccumulatedClass OtherAccumulated;
-
-    ReportData() {
-    }
+     
+     public ReportData()
+     {}
     
     // <editor-fold defaultstate="collapsed" desc="BasicInfoClass">
       public static class BasicInfoClass
@@ -146,18 +146,18 @@ public class ReportData {
 					if (arrayParameter.length > 1) {
 						this.numberOfLastZReport = Integer.parseInt(arrayParameter[0]);
 						
-						int y = Integer.parseInt(arrayParameter[4].substring(0,
-								2)) + 2000;
-						int m = Integer.parseInt(arrayParameter[4].substring(2,
+						int y = Integer.parseInt(arrayParameter[1].substring(0,
+								2));
+						int m = Integer.parseInt(arrayParameter[1].substring(2,
 								4));
-						int d = Integer.parseInt(arrayParameter[4].substring(4,
+						int d = Integer.parseInt(arrayParameter[1].substring(4,
 								6));
-						int hh = Integer.parseInt(arrayParameter[5].substring(
+						int hh = Integer.parseInt(arrayParameter[2].substring(
 								0, 2));
-						int min = Integer.parseInt(arrayParameter[5].substring(
+						int min = Integer.parseInt(arrayParameter[2].substring(
 								2, 4));
 
-						if (m == 0 && d == 0 && y == 2000) {
+						if (m == 0 && d == 0 && y == 0) {
 							m = 1;
 							d = 1;
 							y = 1;
@@ -167,26 +167,26 @@ public class ReportData {
 
 						// Date cal = new Date(y, m, d, hh, min, 0);
 						GregorianCalendar cal = new GregorianCalendar();
-						cal.set(y + 2000, m - 1, d, hh, min, 0);
+						cal.set(y, m - 1, d, hh, min, 0);
 
 						this.ZReportDate = cal.getTime();
 						this.numberOfLastTransaction = Integer.parseInt(arrayParameter[3]);
 
-						y = Integer.parseInt(arrayParameter[1].substring(0, 2)) + 2000;
-						m = Integer.parseInt(arrayParameter[1].substring(2, 4));
-						d = Integer.parseInt(arrayParameter[1].substring(4, 6));
+						y = Integer.parseInt(arrayParameter[4].substring(0, 2));
+						m = Integer.parseInt(arrayParameter[4].substring(2, 4));
+						d = Integer.parseInt(arrayParameter[4].substring(4, 6));
 
-						hh = Integer.parseInt(arrayParameter[2].substring(0, 2));
-						min = Integer.parseInt(arrayParameter[2]
+						hh = Integer.parseInt(arrayParameter[5].substring(0, 2));
+						min = Integer.parseInt(arrayParameter[5]
 								.substring(2, 4));
 
-						if (m == 0 && d == 0 && y == 2000) {
+						if (m == 0 && d == 0 && y == 0) {
 							m = 1;
 							d = 1;
 							y = 1;
 
 						}
-						cal.set(y + 2000, m - 1, d, hh, min, 0);
+						cal.set(y, m - 1, d, hh, min, 0);
 
 						this.lastTransactionDate = cal.getTime();
 						this.numberOfLastNonFiscal = Integer
