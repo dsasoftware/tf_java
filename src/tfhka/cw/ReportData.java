@@ -167,7 +167,7 @@ public class ReportData {
 
 						// Date cal = new Date(y, m, d, hh, min, 0);
 						GregorianCalendar cal = new GregorianCalendar();
-						cal.set(y, m - 1, d, hh, min, 0);
+						cal.set(2000 + y, m - 1, d, hh, min, 0);
 
 						this.ZReportDate = cal.getTime();
 						this.numberOfLastTransaction = Integer.parseInt(arrayParameter[3]);
@@ -186,7 +186,7 @@ public class ReportData {
 							y = 1;
 
 						}
-						cal.set(y, m - 1, d, hh, min, 0);
+						cal.set(2000 + y, m - 1, d, hh, min, 0);
 
 						this.lastTransactionDate = cal.getTime();
 						this.numberOfLastNonFiscal = Integer
