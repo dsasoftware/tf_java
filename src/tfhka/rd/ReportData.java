@@ -32,7 +32,7 @@ public class ReportData {
                 	// endregion
 		// region Propiedades
 		// / <summary>
-		// / Retorna el número del ultimo reporte Z efectuado.
+		// / Retorna el nï¿½mero del ultimo reporte Z efectuado.
 		// / </summary>
 		
 		public int getNumberOfLastZReport() {
@@ -47,7 +47,7 @@ public class ReportData {
 		}
 	
 		// / <summary>
-		// / Retorna el número de la ultima factura emitida.
+		// / Retorna el nï¿½mero de la ultima factura emitida.
 		// / </summary>
 		public int getNumberOfLastTransaction() {
 			return numberOfLastTransaction;
@@ -61,14 +61,14 @@ public class ReportData {
 		}
                 
                 // / <summary>
-		// / Retorna el número del último Documento No Fiscal.
+		// / Retorna el nï¿½mero del ï¿½ltimo Documento No Fiscal.
 		// / </summary>
 		public int getNumberOfLastNonFiscal() {
 			return numberOfLastNonFiscal;
 		}
 	
 		// / <summary>
-		// / Retorna el número de facturas canceladas.
+		// / Retorna el nï¿½mero de facturas canceladas.
 		// / </summary>
 		public int getAmountInvoiceCanceled() {
 			return amountInvoiceCanceled;
@@ -89,7 +89,7 @@ public class ReportData {
 		}
                 
                 // / <summary>
-		// / Retorna la Cantidad de intervenciones técnicas.
+		// / Retorna la Cantidad de intervenciones tï¿½cnicas.
 		// / </summary>
 		public int getTotalTechnicalInterventions() {
 			return totalTechnicalInterventions;
@@ -129,7 +129,7 @@ public class ReportData {
 						this.ZReportDate = cal.getTime();
 						this.numberOfLastTransaction = Integer.parseInt(arrayParameter[3]);
 
-						y = Integer.parseInt(arrayParameter[4].substring(0, 2)) + 2000;
+						y = Integer.parseInt(arrayParameter[4].substring(0, 2)) /*+ 2000*/;
 						m = Integer.parseInt(arrayParameter[4].substring(2, 4));
 						d = Integer.parseInt(arrayParameter[4].substring(4, 6));
 
@@ -286,7 +286,7 @@ public class ReportData {
 		}
                 
                 // / <summary>
-		// / Retorna el Total desde inicio de Operación de facturas consumidor
+		// / Retorna el Total desde inicio de Operaciï¿½n de facturas consumidor
 		// final.
 		// / </summary>
 		public double getTotalHomeOperationInvoiceFinalClient() {
@@ -294,7 +294,7 @@ public class ReportData {
 		}
 	
 		// / <summary>
-		// / Retorna el Total desde inicio de Operación de facturas crédito fiscal.
+		// / Retorna el Total desde inicio de Operaciï¿½n de facturas crï¿½dito fiscal.
 		// / </summary>
 		public double getTotalHomeOperationInvoiceFiscalCredit() {
 			return totalHomeOperationInvoiceFiscalCredit;
@@ -456,7 +456,7 @@ public class ReportData {
 		}		
 	
 		// / <summary>
-		// / Retorna el Total desde inicio de Operación de notas de crédito
+		// / Retorna el Total desde inicio de Operaciï¿½n de notas de crï¿½dito
 		// consumidor final.
 		// / </summary>
 		public double getTotalHomeOperationCreditNoteFinalClient() {
@@ -464,8 +464,8 @@ public class ReportData {
 		}
 	
 		// / <summary>
-		// / Retorna el Total desde inicio de Operación de notas de crédito para
-		// crédito fiscal.
+		// / Retorna el Total desde inicio de Operaciï¿½n de notas de crï¿½dito para
+		// crï¿½dito fiscal.
 		// / </summary>
 		public double getTotalHomeOperationCreditNoteFiscalCredit() {
 			return totalHomeOperationCreditNoteFiscalCredit;
@@ -533,14 +533,14 @@ public class ReportData {
 		private double totalMeansPaymentCreditnote;
 		private double totalDonations;			
 		// / <summary>
-		// / Retorna la Exoneración ITBIS.
+		// / Retorna la Exoneraciï¿½n ITBIS.
 		// / </summary>
 		public double getExonerationItbis() {
 			return exonerationItbis;
 		}
 	
 		// / <summary>
-		// / Retorna las notas de credito de Exoneración ITBIS.
+		// / Retorna las notas de credito de Exoneraciï¿½n ITBIS.
 		// / </summary>
 		public double getExonerationItbisCreditnote() {
 			return exonerationItbisCreditnote;
@@ -561,14 +561,14 @@ public class ReportData {
 		}
 	
 		// / <summary>
-		// / Retorna los Descuentos sobre ítems.
+		// / Retorna los Descuentos sobre ï¿½tems.
 		// / </summary>
 		public double getItemsDiscount() {
 			return itemsDiscount;
 		}
 	
 		// / <summary>
-		// / Retorna los Recargos sobre ítems.
+		// / Retorna los Recargos sobre ï¿½tems.
 		// / </summary>
 		public double getItemsSurcharge() {
 			return itemsSurcharge;
@@ -659,7 +659,7 @@ public class ReportData {
 		}
 	
 		// / <summary>
-		// / Retorna el Total medio de pago Nota de Crédito.
+		// / Retorna el Total medio de pago Nota de Crï¿½dito.
 		// / </summary>
 		public double getTotalMeansPaymentCreditnote() {
 			return totalMeansPaymentCreditnote;

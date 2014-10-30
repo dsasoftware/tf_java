@@ -55,7 +55,7 @@ public class ReportData {
                             if (arrayParameter.length > 1)
                             {
                                 this.numberOfLastZReport = Integer.parseInt(arrayParameter[0]);
-                                int y = Integer.parseInt(arrayParameter[1].substring(0, 2)) + 2000;
+                                int y = Integer.parseInt(arrayParameter[1].substring(0, 2)) /*+ 2000*/;
                                 int m = Integer.parseInt(arrayParameter[1].substring(2, 4));
                                 int d = Integer.parseInt(arrayParameter[1].substring(4, 6));
 
@@ -68,12 +68,12 @@ public class ReportData {
 
                                 //   Date cal = new Date(y, m, d, hh, min, 0);
                             GregorianCalendar cal = new GregorianCalendar(); 
-                            cal.set(y+2000,m-1,d);
+                            cal.set(y + 2000,m-1,d);
 
                             this.ZReportDate = cal.getTime();
                             this.numberOfLastInvoice = Integer.parseInt(arrayParameter[2]);
 
-                                y = Integer.parseInt(arrayParameter[3].substring(0, 2)) + 2000;
+                                y = Integer.parseInt(arrayParameter[3].substring(0, 2)) /*+ 2000*/;
                                 m = Integer.parseInt(arrayParameter[3].substring(2, 4));
                                 d = Integer.parseInt(arrayParameter[3].substring(4, 6));
 
@@ -86,7 +86,7 @@ public class ReportData {
                                     y = 1;
 
                                 }
-                                  cal.set(y+2000,m-1,d,h,min,0);
+                                  cal.set(y + 2000,m-1,d,h,min,0);
 
                                 this.lastInvoiceDate = cal.getTime();
                                 this.freeSalesTax = this.doValueDecimal(arrayParameter[5]);
@@ -114,13 +114,13 @@ public class ReportData {
                          if (arrayParameter.length > 1)
                          {
                              this.numberOfLastZReport = Integer.parseInt(arrayParameter[0]);
-                             int y = Integer.parseInt(arrayParameter[1].substring(0, 2)) + 2000;
+                             int y = Integer.parseInt(arrayParameter[1].substring(0, 2)) /*+ 2000*/;
                              int m = Integer.parseInt(arrayParameter[1].substring(2, 4));
                              int d = Integer.parseInt(arrayParameter[1].substring(4, 6));
                              int hh = Integer.parseInt(arrayParameter[2].substring(0, 2));
                              int min = Integer.parseInt(arrayParameter[2].substring(2, 4));
 
-                             if (m == 0 && d == 0 && y == 2000)
+                             if (m == 0 && d == 0 && y == 0/*2000*/)
                              {
                                  m = 1;
                                  d = 1;
@@ -131,26 +131,26 @@ public class ReportData {
 
                               //   Date cal = new Date(y, m, d, hh, min, 0);
                             GregorianCalendar cal = new GregorianCalendar(); 
-                            cal.set(y+2000,m-1,d,hh,min,0);
+                            cal.set(2000 + y,m-1,d,hh,min,0);
 
                              this.ZReportDate = cal.getTime();
                              this.numberOfLastInvoice = Integer.parseInt(arrayParameter[3]);
 
-                             y = Integer.parseInt(arrayParameter[4].substring(0, 2)) + 2000;
+                             y = Integer.parseInt(arrayParameter[4].substring(0, 2)) /*+ 2000*/;
                              m = Integer.parseInt(arrayParameter[4].substring(2, 4));
                              d = Integer.parseInt(arrayParameter[4].substring(4, 6));
 
                              hh = Integer.parseInt(arrayParameter[5].substring(0, 2));
                              min = Integer.parseInt(arrayParameter[5].substring(2, 4));
 
-                             if (m == 0 && d == 0 && y == 2000)
+                             if (m == 0 && d == 0 && y == 0/*2000*/)
                              {
                                  m = 1;
                                  d = 1;
                                  y = 1;
 
                              }
-                               cal.set(y+2000,m-1,d,hh,min,0);
+                               cal.set(2000 + y ,m-1,d,hh,min,0);
 
                              this.lastInvoiceDate = cal.getTime();
 
@@ -196,7 +196,7 @@ public class ReportData {
             }
     }
      /**
-      * Retorna el número del ultimo reporte Z efectuado.
+      * Retorna el nï¿½mero del ultimo reporte Z efectuado.
       */
    
     //region Metodos Privados
