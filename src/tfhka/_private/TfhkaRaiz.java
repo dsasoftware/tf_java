@@ -4,17 +4,14 @@
  */
 package tfhka._private;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import tfhka.*;
-//import javax.comm.*;
-import gnu.io.*;
+//import gnu.io.*;
+import jssc.*;
 
 /**
  *
@@ -41,8 +38,8 @@ public abstract class TfhkaRaiz implements SerialPortEventListener{
     protected byte[] _dataBuffer;
     protected byte[] _emptyBuffer = new byte[20]; //Debe estar vac�o, por eso su nombre "_emptyBuffer"
     protected static SerialPort puertoSerie;
-    protected static OutputStream salida;
-    protected static InputStream entrada;
+    //protected static OutputStream salida;
+    //protected static InputStream entrada;
     public String Estado;
      // Caracteres de control
     protected char
@@ -64,7 +61,12 @@ public abstract class TfhkaRaiz implements SerialPortEventListener{
          * Si el puerto esta cerrado IndPuerto = false;
          */
     public boolean IndPuerto = false;
-   
+    
+    protected void init(String pNamePort)
+    {
+       puertoSerie = new SerialPort(pNamePort);
+    }
+         
          public int getSerialPortReceiveTimeout()
          {
              if (UsandoLineasControl)
@@ -172,6 +174,7 @@ public abstract class TfhkaRaiz implements SerialPortEventListener{
        /**
          * Metodos Implemantados
          * Efectua los eventos en el puerto serial
+     * @param e
          * @param SerialPortEvent e Evento en el  Puerto Serial
          */
      
@@ -180,36 +183,31 @@ public void serialEvent(SerialPortEvent e)
     {
   // Determine type of event.
  switch (e.getEventType()) {
-      case SerialPortEvent.BI:
-      case SerialPortEvent.OE:
-      case SerialPortEvent.FE:
-      case SerialPortEvent.PE:
-      case SerialPortEvent.CD:
+      case SerialPortEvent.RLSD:
       case SerialPortEvent.CTS:
       case SerialPortEvent.DSR:
-      case SerialPortEvent.RI:
-      case SerialPortEvent.OUTPUT_BUFFER_EMPTY:        
+      case SerialPortEvent.TXEMPTY:        
           break;
-      case SerialPortEvent.DATA_AVAILABLE:
+      case SerialPortEvent.RXCHAR:
           try
           { // Si el puerto est� cerrado, no hace nada
             if (!IndPuerto) return;
            
             byte rcvdByte;
             
-           while (entrada.available() > 0)
+           while (puertoSerie.getInputBufferBytesCount() > 0)
            {   
                switch (PortReceiveStatus)
                {
                     case Espera:  
-                         rcvdByte = (byte)entrada.read();
+                           rcvdByte = puertoSerie.readBytes()[0];
                            tempBuffer[_auxBytesRecibidos] = rcvdByte;
                         if (rcvdByte == (byte)STX) // STX
                         {   
                            // PortReceiveStatus = _SerialPortReceiveStatus.Recibiendo;
                              PortReceiveStatus = Recibiendo;
                             _auxBytesRecibidos++;
-                            Thread.sleep(5); // Tiempo suficiente para recibir 6 caracteres
+                            Thread.sleep(1); // Tiempo suficiente para recibir 6 caracteres
                         }
                         else if ((rcvdByte == (byte)ACK) || (rcvdByte == (byte)NAK) || (rcvdByte == (byte)ENQ) || (rcvdByte == (byte)EOT))
                         {	// ACK NAK ENQ EOT 	
@@ -228,8 +226,8 @@ public void serialEvent(SerialPortEvent e)
                     case Recibiendo:                       
 
                         // Recibe los bytes que est�n por leerse desde el buffer de entrada
-                        _auxBytesRecibidos += entrada.read(tempBuffer, _auxBytesRecibidos, entrada.available());
-
+                        //_auxBytesRecibidos += entrada.read(tempBuffer, _auxBytesRecibidos, entrada.available());
+                        _auxBytesRecibidos += puertoSerie.readBytes().length;
                         if (tempBuffer[_auxBytesRecibidos - 1] == (byte)EOT) //EOT, este es un caso especial, por el problema detectado en el firmware de las impresoras
                         {
                             if (_auxBytesRecibidos >= 3) // Para evitar errores de acceso fuera de l�mites
@@ -255,7 +253,7 @@ public void serialEvent(SerialPortEvent e)
                         break;
                         
                      case inLRC:
-                          rcvdByte = (byte)entrada.read();
+                          rcvdByte = puertoSerie.readBytes()[0];
                         tempBuffer[_auxBytesRecibidos] = rcvdByte;
                         _auxBytesRecibidos++;
                         //PortReceiveStatus.valor++; // listo
@@ -277,7 +275,7 @@ public void serialEvent(SerialPortEvent e)
                     _dataReady = true;
                 }
            }
-          }catch(IOException ioe)
+          }catch(SerialPortException spe)
            {}
           catch(InterruptedException ie)
           { }
@@ -349,20 +347,13 @@ private int getAnswer()
 /// (Depende de getAnswer)
 /// </summary>
 /// <param name="bResp">Buffer donde se colocar� lo recibido de la impresora (Requiere el uso de la palabra clave "out")</param>
-protected  int SerialPortWriteAndRead(char[] cTrama, boolean bEsperarCTS) throws IOException
+protected  int SerialPortWriteAndRead(char[] cTrama, boolean bEsperarCTS) throws  SerialPortException
 {
     int bytesRecibidos = 0;         // Cantidad de bytes recibidos, siempre se debe comparar con la cantidad esperada de bytes
     byte[] vectorbyte = new byte[cTrama.length];
     // out  byte[] bResp
     try
     {
-        // Vac�o los buffers de entrada / salida         
-        if (entrada.available() > 0)
-        {
-            entrada.reset(); // Port.DiscardInBuffer();      
-        }
-
-        salida.flush();//Port.DiscardOutBuffer();
 
         int x = 0;
         while (x < cTrama.length)
@@ -392,12 +383,13 @@ protected  int SerialPortWriteAndRead(char[] cTrama, boolean bEsperarCTS) throws
             }
         }
 
-       salida.write(vectorbyte, 0, cTrama.length);   // Escribimos el comando a la impresora (Aqu� ya tienen STX, CMD, ETX y LRC)
+        puertoSerie.writeBytes(vectorbyte);
+      //  salida.write(vectorbyte, 0, cTrama.length);   // Escribimos el comando a la impresora (Aqu� ya tienen STX, CMD, ETX y LRC)
  
     }
-    catch (IOException ex)
+     catch (SerialPortException sex)
     {
-        throw ex;
+        throw sex;
     }
 
     bytesRecibidos = getAnswer();  // Recibimos la respuesta en bResp, junto con la cantidad de bytes recibidos
@@ -482,15 +474,15 @@ protected  char Do_XOR(String sCMD)
             //Retorno la cantidad de caracteres recibidos en la trama de repuesta de la impresora
             return bytesRecibidos;
         }
-        catch (IOException e)
-        {
-            estado = "Error... " + e.getMessage();
-            //bResp = null;
-            return 0;
-        }
         catch (NullPointerException e1)
         {
             estado = "Error... " + e1.getMessage();
+            //bResp = null;
+            return 0;
+        }
+        catch (SerialPortException spe)
+        {
+            estado = "Error... " + spe.getMessage();
             //bResp = null;
             return 0;
         }
@@ -719,11 +711,17 @@ protected boolean ManipulaCTS_RTS()
         ////Port.RtsEnable = false;
         return false;
     }
+    catch (SerialPortException spe)
+    {
+        estado = "Error... " + spe.getMessage();
+        ////Port.RtsEnable = false;
+        return false;
+    }
 }
 /// <summary>
 /// Metodo para esperar que la se�al CTS se ponga en true (Si lo hace en un tiempo determinado, sino, pues no).
 /// </summary>
-private boolean Wait_CTS(int timeout)
+private boolean Wait_CTS(int timeout) throws SerialPortException
 {
     if (!IndPuerto) return false;
 
@@ -793,9 +791,9 @@ protected int SubirDataReport(String sCMD)
             {
                 ex.printStackTrace();
             }
-            catch (IOException ex)
+            catch (SerialPortException sex)
             {
-                Logger.getLogger(TfhkaRaiz.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TfhkaRaiz.class.getName()).log(Level.SEVERE, null, sex);
             }
             
             while ((bytesLeidos > 0) && (bResp[0] != EOT)&& (bResp[0] != NAK)) // si es 1, deber�a ser EOT en casos normales
@@ -840,9 +838,9 @@ protected int SubirDataReport(String sCMD)
                             bytesLeidos = 0;
                         }
                     }
-                    catch (IOException ex)
+                    catch (SerialPortException sex)
                     {
-                        Logger.getLogger(TfhkaRaiz.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(TfhkaRaiz.class.getName()).log(Level.SEVERE, null, sex);
                     }
                 }
                 
