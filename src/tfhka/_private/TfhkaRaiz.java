@@ -192,35 +192,30 @@ public void serialEvent(SerialPortEvent e)
           try
           { // Si el puerto est� cerrado, no hace nada
             if (!IndPuerto) return;
-           
             byte rcvdByte;
-            
            while (puertoSerie.getInputBufferBytesCount() > 0)
            {   
                switch (PortReceiveStatus)
                {
                     case Espera:  
-                           rcvdByte = puertoSerie.readBytes()[0];
-                           tempBuffer[_auxBytesRecibidos] = rcvdByte;
-                        if (rcvdByte == (byte)STX) // STX
+                         Thread.sleep(1000);
+                           tempBuffer = puertoSerie.readBytes();
+                           _auxBytesRecibidos = tempBuffer.length;
+                           PortReceiveStatus = Listo;
+                           puertoSerie.purgePort(SerialPort.PURGE_RXCLEAR);
+                      /*  if (rcvdByte == (byte)STX) // STX
                         {   
                            // PortReceiveStatus = _SerialPortReceiveStatus.Recibiendo;
                              PortReceiveStatus = Recibiendo;
                             _auxBytesRecibidos++;
                             Thread.sleep(1); // Tiempo suficiente para recibir 6 caracteres
                         }
-                        else if ((rcvdByte == (byte)ACK) || (rcvdByte == (byte)NAK) || (rcvdByte == (byte)ENQ) || (rcvdByte == (byte)EOT))
-                        {	// ACK NAK ENQ EOT 	
-                            _auxBytesRecibidos++;
-                            //PortReceiveStatus = _SerialPortReceiveStatus.Listo;                           
+                        else  if ((rcvdByte == (byte)ACK) || (rcvdByte == (byte)NAK) || (rcvdByte == (byte)ENQ) || (rcvdByte == (byte)EOT))
+                        {	// ACK NAK ENQ EOT 	                          
                             PortReceiveStatus = Listo;
                         }
-                        else
-                        {  
-                            _auxBytesRecibidos = 0;
-                            //PortReceiveStatus = _SerialPortReceiveStatus.Espera;
-                            PortReceiveStatus = Espera;
-                        }
+                           */
+                        
                         break;
                     
                     case Recibiendo:                       
@@ -273,6 +268,7 @@ public void serialEvent(SerialPortEvent e)
                     _bytesRecibidos = _auxBytesRecibidos;
                     _auxBytesRecibidos = 0;
                     _dataReady = true;
+                     puertoSerie.purgePort(SerialPort.PURGE_RXCLEAR);
                 }
            }
           }catch(SerialPortException spe)
