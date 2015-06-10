@@ -92,7 +92,7 @@ public class S3PrinterData {
                            this.setAllSystemFlags(allSystemFlags);
                        }
                   }
-                    catch(ArrayIndexOutOfBoundsException | NumberFormatException | StringIndexOutOfBoundsException are)
+                    catch(Exception are)
                     {
                         return;
                     }

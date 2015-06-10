@@ -51,7 +51,7 @@ public class S4PrinterData {
 					}
 				} catch (ArrayIndexOutOfBoundsException are) {
 					return;
-				} catch (NumberFormatException | IndexOutOfBoundsException nfexp) {
+				} catch (Exception nfexp) {
 					return;
 				}
 			}

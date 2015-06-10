@@ -42,7 +42,7 @@ public class S5PrinterData {
 							this.setQuantityOfDocuments(Integer
 									.parseInt(arrayParameter[5]));
 						}
-					} catch (ArrayIndexOutOfBoundsException | NumberFormatException | StringIndexOutOfBoundsException are) {
+					} catch (Exception are) {
 						return;
 					}
 				}
