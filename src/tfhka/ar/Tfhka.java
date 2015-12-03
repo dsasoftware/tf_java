@@ -18,8 +18,7 @@ public final  class Tfhka extends TfhkaCommon {
 	// Declaracion de los Atributos a utilizar
         /**Objeto de tipo ReportData que se carga al subir reporte X ??ï¿½ Z del PC por medio de los m??ï¿½todos getZReport()  y  getXReport()*/
         private ReportData ReportePC;
-         /**Objeto de tipo AcumuladosX que se carga al subir reporte X4, X5 y X7 del PC por medio de los metodos getX4Report(), getX5Report()  y  getX7Report()*/
-        private AcumuladosX ReporteAcumX;
+
         /**Arreglo de Objetos de tipo ReportData que se cargan al subir lectura de memoria fiscal del PC mediante los m??ï¿½todos getZReport(Date fecha1, Date fecha2)
          * y getZReport(int nroZ1, int nroZ2).
          */
@@ -62,398 +61,807 @@ public final  class Tfhka extends TfhkaCommon {
         public Tfhka()
         {
             super();
-        }           	
-        /**
-	 *Retorna un objeto  de tipo ReportData  con todas la informaci?n para la carga de un reporte X actual("U0X").
-         *@throws PrinterException Error de  transacci?n.
-	 */
-    public ReportData getXReport() throws PrinterException
-    {
-        try
+        } 
+        /*
+        #region SubReportes X
+
+        /// <summary>
+        /// Sube la información acumulada de ventas actuales, 1er paquete.
+        /// <exception cref="PrinterException">Thrown cuando ocurre un error en la transacción con la impresora fiscal</exception>
+        /// </summary>
+        public ReportData.FirstPackageClass GetX01Report()
         {
 
-            int rep = this.SubirDataReport("U0X");
+            int rep = 0;
+            ReportData.FirstPackageClass Report;
+            rep = this.SubirDataReport("U0X00");
 
-            if (rep > 0)
+            if (rep > 0) // Se procesó al menos una línea
             {
-                this.ReportePC = new ReportData(this.sDataSubida);
-                Estado = " Status: 00  Error: 00";
+                string dataArray = null;
+                foreach (string contenido in this.dataLectorFisc)
+                {
+                    dataArray = contenido;
+                }
+
+                Report = new ReportData.FirstPackageClass(dataArray);
+
+
+                this.ReiniciarVariables();
             }
             else
             {
-                this.ReportePC = null;
-                Estado = "Sin repuesta";
-                throw new PrinterException(Estado, getPrinterStatus());
+                this.ReiniciarVariables();
+                throw new PrinterException(Estado);
             }
 
-            return ReportePC;
+            return Report;
+
 
         }
-        catch (NullPointerException ex)
-        {
-            Estado = ex.getMessage();
-            this.ReportePC = null;
-            throw new PrinterException(Estado, getPrinterStatus());
-        }
 
-    }
-     /**
-	 *Retorna un objeto  de tipo ReportData  con todas la informaci?n para la carga de un reporte X2 actual("U1X").
-         *@throws PrinterException Error de  transacci?n.
-	 */
-    public ReportData getX2Report() throws PrinterException
-    {
-        try
+
+        /// <summary>
+        /// Sube la información acumulada de ventas actuales, 2do paquete.
+        /// <exception cref="PrinterException">Thrown cuando ocurre un error en la transacción con la impresora fiscal</exception>
+        /// </summary>
+        public ReportData.SecondPackageClass GetX02Report()
         {
 
-            int rep = this.SubirDataReport("U1X");
+            int rep = 0;
+            ReportData.SecondPackageClass Report;
+            rep = this.SubirDataReport("U0X01");
 
-            if (rep > 0)
+            if (rep > 0) // Se procesó al menos una línea
             {
-                this.ReportePC = new ReportData(this.sDataSubida);
-                Estado = " Status: 00  Error: 00";
+                string dataArray = null;
+                foreach (string contenido in this.dataLectorFisc)
+                {
+                    dataArray = contenido;
+                }
+
+                Report = new ReportData.SecondPackageClass(dataArray);
+
+
+                this.ReiniciarVariables();
             }
             else
             {
-                this.ReportePC = null;
-                Estado = "Sin repuesta";
-                throw new PrinterException(Estado, getPrinterStatus());
+                this.ReiniciarVariables();
+                throw new PrinterException(Estado);
             }
 
-            return ReportePC;
+            return Report;
+
 
         }
-        catch (NullPointerException ex)
-        {
-            Estado = ex.getMessage();
-            this.ReportePC = null;
-            throw new PrinterException(Estado, getPrinterStatus());
-        }
 
-    }
-     /**
-	 *Retorna un objeto  de tipo AcumuladosX  con todas la informaci?n para la carga de un reporte X4 actual (U0X4).
-         *@throws PrinterException Error de  transaccion.
-	 */
-    public AcumuladosX getX4Report() throws PrinterException
-    {
-        try
+
+        /// <summary>
+        /// Sube la información acumulada de ventas actuales, 3er paquete.
+        /// <exception cref="PrinterException">Thrown cuando ocurre un error en la transacción con la impresora fiscal</exception>
+        /// </summary>
+        public ReportData.ThirdPackageClass GetX03Report()
         {
 
-            int rep = this.SubirDataReport("U0X4");
+            int rep = 0;
+            ReportData.ThirdPackageClass Report;
+            rep = this.SubirDataReport("U0X02");
 
-            if (rep > 0)
+            if (rep > 0) // Se procesó al menos una línea
             {
-                this.ReporteAcumX = new AcumuladosX(this.sDataSubida);
-                Estado = " Status: 00  Error: 00";
+                string dataArray = null;
+                foreach (string contenido in this.dataLectorFisc)
+                {
+                    dataArray = contenido;
+                }
+
+                Report = new ReportData.ThirdPackageClass(dataArray);
+
+
+                this.ReiniciarVariables();
             }
             else
             {
-                this.ReporteAcumX  = null;
-                Estado = "Sin repuesta";
-                throw new PrinterException(Estado, getPrinterStatus());
+                this.ReiniciarVariables();
+                throw new PrinterException(Estado);
             }
 
-            return ReporteAcumX;
+            return Report;
+
 
         }
-        catch (NullPointerException ex)
-        {
-            Estado = ex.getMessage();
-            this.ReporteAcumX  = null;
-            throw new PrinterException(Estado, getPrinterStatus());
-        }
 
-    }
-     /**
-	 *Retorna un objeto  de tipo AcumuladosX  con todas la informaci?n para la carga de un reporte X5 actual (U0X5).
-         *@throws PrinterException Error de  transaccion.
-	 */
-    public AcumuladosX getX5Report() throws PrinterException
-    {
-        try
+
+        /// <summary>
+        /// Sube la información acumulada de ventas actuales, 4to paquete.
+        /// <exception cref="PrinterException">Thrown cuando ocurre un error en la transacción con la impresora fiscal</exception>
+        /// </summary>
+        public ReportData.FourthPackageClass GetX04Report()
         {
 
-            int rep = this.SubirDataReport("U0X5");
+            int rep = 0;
+            ReportData.FourthPackageClass Report;
+            rep = this.SubirDataReport("U0X03");
 
-            if (rep > 0)
+            if (rep > 0) // Se procesó al menos una línea
             {
-                this.ReporteAcumX = new AcumuladosX(this.sDataSubida);
-                Estado = " Status: 00  Error: 00";
+                string dataArray = null;
+                foreach (string contenido in this.dataLectorFisc)
+                {
+                    dataArray = contenido;
+                }
+
+                Report = new ReportData.FourthPackageClass(dataArray);
+
+
+                this.ReiniciarVariables();
             }
             else
             {
-                this.ReporteAcumX  = null;
-                Estado = "Sin repuesta";
-                throw new PrinterException(Estado, getPrinterStatus());
+                this.ReiniciarVariables();
+                throw new PrinterException(Estado);
             }
 
-            return ReporteAcumX;
+            return Report;
+
 
         }
-        catch (NullPointerException ex)
-        {
-            Estado = ex.getMessage();
-            this.ReporteAcumX  = null;
-            throw new PrinterException(Estado, getPrinterStatus());
-        }
 
-    }
-     /**
-	 *Retorna un objeto  de tipo AcumuladosX  con todas la informaci?n para la carga de un reporte X7 actual (U0X7).
-         *@throws PrinterException Error de  transaccion.
-	 */
-    public AcumuladosX getX7Report() throws PrinterException
-    {
-        try
+
+        /// <summary>
+        /// Sube la información acumulada de ventas actuales, 5to paquete.
+        /// <exception cref="PrinterException">Thrown cuando ocurre un error en la transacción con la impresora fiscal</exception>
+        /// </summary>
+        public ReportData.FifthPackageClass GetX05Report()
         {
 
-            int rep = this.SubirDataReport("U0X7");
+            int rep = 0;
+            ReportData.FifthPackageClass Report;
+            rep = this.SubirDataReport("U0X04");
 
-            if (rep > 0)
+            if (rep > 0) // Se procesó al menos una línea
             {
-                this.ReporteAcumX = new AcumuladosX(this.sDataSubida);
-                Estado = " Status: 00  Error: 00";
+                string dataArray = null;
+                foreach (string contenido in this.dataLectorFisc)
+                {
+                    dataArray = contenido;
+                }
+
+                Report = new ReportData.FifthPackageClass(dataArray);
+
+
+                this.ReiniciarVariables();
             }
             else
             {
-                this.ReporteAcumX  = null;
-                Estado = "Sin repuesta";
-                throw new PrinterException(Estado, getPrinterStatus());
+                this.ReiniciarVariables();
+                throw new PrinterException(Estado);
             }
 
-            return ReporteAcumX;
+            return Report;
+
 
         }
-        catch (NullPointerException ex)
-        {
-            Estado = ex.getMessage();
-            this.ReporteAcumX  = null;
-            throw new PrinterException(Estado, getPrinterStatus());
-        }
 
-    }
-        /**
-	 *Retorna un objeto  de tipo ReportData  con todas la informaci?n del ?ltimo reporte Z reaizado ("U0Z").
-         *@throws PrinterException Error de  transacci?n.
-	 */
-        public ReportData getZReport() throws PrinterException
-    {
-        try
+
+        /// <summary>
+        /// Sube la información acumulada de ventas actuales, 6to paquete.
+        /// <exception cref="PrinterException">Thrown cuando ocurre un error en la transacción con la impresora fiscal</exception>
+        /// </summary>
+        public ReportData.SixthPackageClass GetX06Report()
         {
 
-            int rep = this.SubirDataReport("U0Z");
-            if (rep > 0)
+            int rep = 0;
+            ReportData.SixthPackageClass Report;
+            rep = this.SubirDataReport("U0X05");
+
+            if (rep > 0) // Se procesó al menos una línea
             {
-                this.ReportePC = new ReportData(this.sDataSubida);
-                Estado = " Status: 00  Error: 00";
+                string dataArray = null;
+                foreach (string contenido in this.dataLectorFisc)
+                {
+                    dataArray = contenido;
+                }
+
+                Report = new ReportData.SixthPackageClass(dataArray);
+
+
+                this.ReiniciarVariables();
             }
             else
             {
-                this.ReportePC = null;
-                Estado = "Sin repuesta";
-                throw new PrinterException(Estado, getPrinterStatus());
+                this.ReiniciarVariables();
+                throw new PrinterException(Estado);
             }
 
-            return ReportePC;
+            return Report;
+
 
         }
-        catch (NullPointerException ex)
-        {
-            this.ReportePC = null;
-            Estado = ex.getMessage();
-            throw new PrinterException(Estado, getPrinterStatus());
-        }
 
-    }
-        /**
-	 *Retorna un objeto  de tipo ReportData  con todas la informaci?n del ?ltimo reporte Z2 reaizado ("U1Z").
-         *@throws PrinterException Error de  transacci?n.
-	 */
-        public ReportData getZ2Report() throws PrinterException
-    {
-        try
+
+        /// <summary>
+        /// Sube la información acumulada de ventas actuales, 7mo paquete.
+        /// <exception cref="PrinterException">Thrown cuando ocurre un error en la transacción con la impresora fiscal</exception>
+        /// </summary>
+        public ReportData.SeventhPackageClass GetX07Report()
         {
 
-            int rep = this.SubirDataReport("U1Z");
-            if (rep > 0)
+            int rep = 0;
+            ReportData.SeventhPackageClass Report;
+            rep = this.SubirDataReport("U0X06");
+
+            if (rep > 0) // Se procesó al menos una línea
             {
-                this.ReportePC = new ReportData(this.sDataSubida);
-                Estado = " Status: 00  Error: 00";
+                string dataArray = null;
+                foreach (string contenido in this.dataLectorFisc)
+                {
+                    dataArray = contenido;
+                }
+
+                Report = new ReportData.SeventhPackageClass(dataArray);
+
+
+                this.ReiniciarVariables();
             }
             else
             {
-                this.ReportePC = null;
-                Estado = "Sin repuesta";
-                throw new PrinterException(Estado, getPrinterStatus());
+                this.ReiniciarVariables();
+                throw new PrinterException(Estado);
             }
 
-            return ReportePC;
+            return Report;
+
 
         }
-        catch (NullPointerException ex)
+
+
+        /// <summary>
+        /// Sube la información acumulada de ventas actuales, 8vo paquete.
+        /// <exception cref="PrinterException">Thrown cuando ocurre un error en la transacción con la impresora fiscal</exception>
+        /// </summary>
+        public ReportData.EightPackageClass GetX08Report()
         {
-            this.ReportePC = null;
-            Estado = ex.getMessage();
-            throw new PrinterException(Estado, getPrinterStatus());
+
+            int rep = 0;
+            ReportData.EightPackageClass Report;
+            rep = this.SubirDataReport("U0X07");
+
+            if (rep > 0) // Se procesó al menos una línea
+            {
+                string dataArray = null;
+                foreach (string contenido in this.dataLectorFisc)
+                {
+                    dataArray = contenido;
+                }
+
+                Report = new ReportData.EightPackageClass(dataArray);
+
+
+                this.ReiniciarVariables();
+            }
+            else
+            {
+                this.ReiniciarVariables();
+                throw new PrinterException(Estado);
+            }
+
+            return Report;
+
+
         }
 
-    }
-       /**
-	*Retorna un arreglo de objetos  ReportData Z con todos sus atributos por rango de n??ï¿½meros
-	*@param StartReportNumber N??ï¿½mero del  Z inicial a subir
-        *@param EndReportNumber N??ï¿½mero del  Z final a subir
-        *@throws PrinterException Error de  transacci??ï¿½n.
-        */
-        public ReportData[] getZReport(int StarttReportNumber, int EndReportNumber ) throws PrinterException
-        {  
-          String IntervaloNi =  String.valueOf(StarttReportNumber);
-          while(IntervaloNi.length()<6)
-          {
-              IntervaloNi = "0" + IntervaloNi;
-          }
-          String IntervaloNf =  String.valueOf(EndReportNumber);
-          while(IntervaloNf.length()<6)
-          {
-              IntervaloNf = "0" + IntervaloNf;
-          }
-		  
-          try {
-		  
-           int rep =  this.SubirDataReport("U3A" + IntervaloNi + IntervaloNf);
-		   
-           if (rep > 0)
-           { int  m=0;
-           
-            this.ReporteArrayPC = new ReportData[this.dataLectorFisc.size()];
-            /*
-             for(Object contenido : this.dataLectorFisc)
-              {
-                 this.ReporteArrayPC[m] = new ReportData((String)contenido);
-                 ++m;
-              }
-              */
-            for (int i = 0; i < this.dataLectorFisc.size(); i++) {  
-                                  Object contenido = this.dataLectorFisc.get(i);  
-                                  this.ReporteArrayPC[m] = new ReportData((String)contenido);
-                 ++m;
-                                }  
-            
-            Estado = " Status: 00  Error: 00";
-           }
-           else
-           {
-               this.ReporteArrayPC =  null;
-               Estado = "Sin repuesta";
-               
-                if (StarttReportNumber > EndReportNumber)
-              this.Estado = "The original number can not be greater than the final number";
-               
-               throw new PrinterException(Estado, getPrinterStatus());
-           }
-           
-            return ReporteArrayPC;
-			
-			}catch (NullPointerException ex) {
-            this.ReporteArrayPC = null;
-            Estado = ex.getMessage();
-                throw new PrinterException(Estado, getPrinterStatus());
-        }
-		
-        }
-         /**
-	  *Retorna un arreglo de objetos de ReportData Z con todos sus atributos por rango de fechas
-          *@param StartDate Fecha inicial del  Z a subir
-          *@param EndDate Fecha final del  Z a subir
-          *@throws PrinterException Error de  transacci??ï¿½n.
-          */
-        public ReportData[] getZReport(Date StarttDate, Date EndDate)throws PrinterException
-        {  
-            Calendar Cale = Calendar.getInstance();
-            Calendar Cale2 = Calendar.getInstance();
-           Cale.setTime(StarttDate);       
-           
-           int y =   Cale.get(Calendar.YEAR);
-           int m = Cale.get(Calendar.MONTH);
-           int d = Cale.get(Calendar.DAY_OF_MONTH);
-           
-           Cale2.setTime(EndDate); 
-           
-           int y2 =   Cale2.get(Calendar.YEAR);
-           int m2 = Cale2.get(Calendar.MONTH);
-           int d2 = Cale2.get(Calendar.DAY_OF_MONTH);
-         
-          String Day = String.valueOf(d);
-       while(Day.length()<2)
-    {
-        Day = "0" + Day;
-    }
-      String Mess = String.valueOf(m+1);
-       while(Mess.length()<2)
-    {
-       Mess = "0" + Mess;
-    }
-       String Ano = String.valueOf(y).substring(2,4);
-        String Day2 = String.valueOf(d2);
-       while(Day2.length()<2)
-    {
-        Day2 = "0" + Day2;
-    }
-      String Mess2 = String.valueOf(m2+1);
-       while(Mess2.length()<2)
-    {
-       Mess2 = "0" + Mess2;
-    }
-       String Ano2 = String.valueOf(y2).substring(2,4);
-       
-        String IntervaloFi =  Day + Mess + Ano;
-        String IntervaloFf =  Day2 + Mess2 + Ano2;
         
-		try
-		{
-		
-		int rep =  this.SubirDataReport("U2A" + IntervaloFi + IntervaloFf);
-		
-            if (rep>0)
-           {  
-               int  h=0;
-           
-            this.ReporteArrayPC = new ReportData[this.dataLectorFisc.size()];
-            /*
-             for(Object contenido : this.dataLectorFisc)
-              {
-                 this.ReporteArrayPC[h] = new ReportData((String)contenido);
-                 ++h;
-              }
-              */
-              for (int i = 0; i < this.dataLectorFisc.size(); i++) {  
-                                  Object contenido = this.dataLectorFisc.get(i);  
-                                 this.ReporteArrayPC[h] = new ReportData((String)contenido);
-                 ++h;
-                                }  
-             
-                Estado = " Status: 00  Error: 00";
+        /// <summary>
+        /// Sube la información acumulada de ventas actuales, 9no paquete.
+        /// <exception cref="PrinterException">Thrown cuando ocurre un error en la transacción con la impresora fiscal</exception>
+        /// </summary>
+        public ReportData.NinthPackageClass GetX09Report()
+        {
+
+            int rep = 0;
+            ReportData.NinthPackageClass Report;
+            rep = this.SubirDataReport("U0X08");
+
+            if (rep > 0) // Se procesó al menos una línea
+            {
+                string dataArray = null;
+                foreach (string contenido in this.dataLectorFisc)
+                {
+                    dataArray = contenido;
+                }
+
+                Report = new ReportData.NinthPackageClass(dataArray);
+
+
+                this.ReiniciarVariables();
             }
-           else
-           {
-             this.ReporteArrayPC = null;
-             Estado = "Sin repuesta";
-             
-              if (Integer.parseInt(Ano + Mess + Day )>Integer.parseInt(Ano2 + Mess2 + Day2))
-            		   this.Estado = "The date can not be larger than the final date";
-             
-             throw new PrinterException(Estado, getPrinterStatus());
-           }
-         
-            return ReporteArrayPC;
-			
-			}catch (NullPointerException ex) {
-            this.ReporteArrayPC = null;
-            Estado = ex.getMessage();
-                throw new PrinterException(Estado, getPrinterStatus());
+            else
+            {
+                this.ReiniciarVariables();
+                throw new PrinterException(Estado);
+            }
+
+            return Report;
+
+
         }
-		
+
+        
+        /// <summary>
+        /// Sube la información acumulada de ventas actuales, 10mo paquete.
+        /// <exception cref="PrinterException">Thrown cuando ocurre un error en la transacción con la impresora fiscal</exception>
+        /// </summary>
+        public ReportData.TenthPackageClass GetX10Report()
+        {
+
+            int rep = 0;
+            ReportData.TenthPackageClass Report;
+            rep = this.SubirDataReport("U0X09");
+
+            if (rep > 0) // Se procesó al menos una línea
+            {
+                string dataArray = null;
+                foreach (string contenido in this.dataLectorFisc)
+                {
+                    dataArray = contenido;
+                }
+
+                Report = new ReportData.TenthPackageClass(dataArray);
+
+
+                this.ReiniciarVariables();
+            }
+            else
+            {
+                this.ReiniciarVariables();
+                throw new PrinterException(Estado);
+            }
+
+            return Report;
+
+
         }
+
+        
+        /// <summary>
+        /// Sube la información acumulada de ventas actuales, undécimo paquete.
+        /// <exception cref="PrinterException">Thrown cuando ocurre un error en la transacción con la impresora fiscal</exception>
+        /// </summary>
+        public ReportData.EleventhPackageClass GetX11Report()
+        {
+
+            int rep = 0;
+            ReportData.EleventhPackageClass Report;
+            rep = this.SubirDataReport("U0X10");
+
+            if (rep > 0) // Se procesó al menos una línea
+            {
+                string dataArray = null;
+                foreach (string contenido in this.dataLectorFisc)
+                {
+                    dataArray = contenido;
+                }
+
+                Report = new ReportData.EleventhPackageClass(dataArray);
+
+
+                this.ReiniciarVariables();
+            }
+            else
+            {
+                this.ReiniciarVariables();
+                throw new PrinterException(Estado);
+            }
+
+            return Report;
+
+
+        }
+
+        #endregion
+
+        #region SubReportes Z
+
+        /// <summary>
+        /// Sube la información acumulada de ventas actuales, 1er paquete.
+        /// <exception cref="PrinterException">Thrown cuando ocurre un error en la transacción con la impresora fiscal</exception>
+        /// </summary>
+        public ReportData.FirstPackageClass GetZ01Report()
+        {
+
+            int rep = 0;
+            ReportData.FirstPackageClass Report;
+            rep = this.SubirDataReport("U0Z00");
+
+            if (rep > 0) // Se procesó al menos una línea
+            {
+                string dataArray = null;
+                foreach (string contenido in this.dataLectorFisc)
+                {
+                    dataArray = contenido;
+                }
+
+                Report = new ReportData.FirstPackageClass(dataArray);
+
+
+                this.ReiniciarVariables();
+            }
+            else
+            {
+                this.ReiniciarVariables();
+                throw new PrinterException(Estado);
+            }
+
+            return Report;
+
+
+        }
+
+
+        /// <summary>
+        /// Sube la información acumulada de ventas actuales, 2do paquete.
+        /// <exception cref="PrinterException">Thrown cuando ocurre un error en la transacción con la impresora fiscal</exception>
+        /// </summary>
+        public ReportData.SecondPackageClass GetZ02Report()
+        {
+
+            int rep = 0;
+            ReportData.SecondPackageClass Report;
+            rep = this.SubirDataReport("U0Z01");
+
+            if (rep > 0) // Se procesó al menos una línea
+            {
+                string dataArray = null;
+                foreach (string contenido in this.dataLectorFisc)
+                {
+                    dataArray = contenido;
+                }
+
+                Report = new ReportData.SecondPackageClass(dataArray);
+
+
+                this.ReiniciarVariables();
+            }
+            else
+            {
+                this.ReiniciarVariables();
+                throw new PrinterException(Estado);
+            }
+
+            return Report;
+
+
+        }
+
+
+        /// <summary>
+        /// Sube la información acumulada de ventas actuales, 3er paquete.
+        /// <exception cref="PrinterException">Thrown cuando ocurre un error en la transacción con la impresora fiscal</exception>
+        /// </summary>
+        public ReportData.ThirdPackageClass GetZ03Report()
+        {
+
+            int rep = 0;
+            ReportData.ThirdPackageClass Report;
+            rep = this.SubirDataReport("U0Z02");
+
+            if (rep > 0) // Se procesó al menos una línea
+            {
+                string dataArray = null;
+                foreach (string contenido in this.dataLectorFisc)
+                {
+                    dataArray = contenido;
+                }
+
+                Report = new ReportData.ThirdPackageClass(dataArray);
+
+
+                this.ReiniciarVariables();
+            }
+            else
+            {
+                this.ReiniciarVariables();
+                throw new PrinterException(Estado);
+            }
+
+            return Report;
+
+
+        }
+
+
+        /// <summary>
+        /// Sube la información acumulada de ventas actuales, 4to paquete.
+        /// <exception cref="PrinterException">Thrown cuando ocurre un error en la transacción con la impresora fiscal</exception>
+        /// </summary>
+        public ReportData.FourthPackageClass GetZ04Report()
+        {
+
+            int rep = 0;
+            ReportData.FourthPackageClass Report;
+            rep = this.SubirDataReport("U0Z03");
+
+            if (rep > 0) // Se procesó al menos una línea
+            {
+                string dataArray = null;
+                foreach (string contenido in this.dataLectorFisc)
+                {
+                    dataArray = contenido;
+                }
+
+                Report = new ReportData.FourthPackageClass(dataArray);
+
+
+                this.ReiniciarVariables();
+            }
+            else
+            {
+                this.ReiniciarVariables();
+                throw new PrinterException(Estado);
+            }
+
+            return Report;
+
+
+        }
+
+
+        /// <summary>
+        /// Sube la información acumulada de ventas actuales, 5to paquete.
+        /// <exception cref="PrinterException">Thrown cuando ocurre un error en la transacción con la impresora fiscal</exception>
+        /// </summary>
+        public ReportData.FifthPackageClass GetZ05Report()
+        {
+
+            int rep = 0;
+            ReportData.FifthPackageClass Report;
+            rep = this.SubirDataReport("U0Z04");
+
+            if (rep > 0) // Se procesó al menos una línea
+            {
+                string dataArray = null;
+                foreach (string contenido in this.dataLectorFisc)
+                {
+                    dataArray = contenido;
+                }
+
+                Report = new ReportData.FifthPackageClass(dataArray);
+
+
+                this.ReiniciarVariables();
+            }
+            else
+            {
+                this.ReiniciarVariables();
+                throw new PrinterException(Estado);
+            }
+
+            return Report;
+
+
+        }
+
+
+        /// <summary>
+        /// Sube la información acumulada de ventas actuales, 6to paquete.
+        /// <exception cref="PrinterException">Thrown cuando ocurre un error en la transacción con la impresora fiscal</exception>
+        /// </summary>
+        public ReportData.SixthPackageClass GetZ06Report()
+        {
+
+            int rep = 0;
+            ReportData.SixthPackageClass Report;
+            rep = this.SubirDataReport("U0Z05");
+
+            if (rep > 0) // Se procesó al menos una línea
+            {
+                string dataArray = null;
+                foreach (string contenido in this.dataLectorFisc)
+                {
+                    dataArray = contenido;
+                }
+
+                Report = new ReportData.SixthPackageClass(dataArray);
+
+
+                this.ReiniciarVariables();
+            }
+            else
+            {
+                this.ReiniciarVariables();
+                throw new PrinterException(Estado);
+            }
+
+            return Report;
+
+
+        }
+
+
+        /// <summary>
+        /// Sube la información acumulada de ventas actuales, 7mo paquete.
+        /// <exception cref="PrinterException">Thrown cuando ocurre un error en la transacción con la impresora fiscal</exception>
+        /// </summary>
+        public ReportData.SeventhPackageClass GetZ07Report()
+        {
+
+            int rep = 0;
+            ReportData.SeventhPackageClass Report;
+            rep = this.SubirDataReport("U0Z06");
+
+            if (rep > 0) // Se procesó al menos una línea
+            {
+                string dataArray = null;
+                foreach (string contenido in this.dataLectorFisc)
+                {
+                    dataArray = contenido;
+                }
+
+                Report = new ReportData.SeventhPackageClass(dataArray);
+
+
+                this.ReiniciarVariables();
+            }
+            else
+            {
+                this.ReiniciarVariables();
+                throw new PrinterException(Estado);
+            }
+
+            return Report;
+
+
+        }
+
+
+        /// <summary>
+        /// Sube la información acumulada de ventas actuales, 8vo paquete.
+        /// <exception cref="PrinterException">Thrown cuando ocurre un error en la transacción con la impresora fiscal</exception>
+        /// </summary>
+        public ReportData.EightPackageClass GetZ08Report()
+        {
+
+            int rep = 0;
+            ReportData.EightPackageClass Report;
+            rep = this.SubirDataReport("U0Z07");
+
+            if (rep > 0) // Se procesó al menos una línea
+            {
+                string dataArray = null;
+                foreach (string contenido in this.dataLectorFisc)
+                {
+                    dataArray = contenido;
+                }
+
+                Report = new ReportData.EightPackageClass(dataArray);
+
+
+                this.ReiniciarVariables();
+            }
+            else
+            {
+                this.ReiniciarVariables();
+                throw new PrinterException(Estado);
+            }
+
+            return Report;
+
+
+        }
+
+        
+        /// <summary>
+        /// Sube la información acumulada de ventas actuales, 9no paquete.
+        /// <exception cref="PrinterException">Thrown cuando ocurre un error en la transacción con la impresora fiscal</exception>
+        /// </summary>
+        public ReportData.NinthPackageClass GetZ09Report()
+        {
+
+            int rep = 0;
+            ReportData.NinthPackageClass Report;
+            rep = this.SubirDataReport("U0Z08");
+
+            if (rep > 0) // Se procesó al menos una línea
+            {
+                string dataArray = null;
+                foreach (string contenido in this.dataLectorFisc)
+                {
+                    dataArray = contenido;
+                }
+
+                Report = new ReportData.NinthPackageClass(dataArray);
+
+
+                this.ReiniciarVariables();
+            }
+            else
+            {
+                this.ReiniciarVariables();
+                throw new PrinterException(Estado);
+            }
+
+            return Report;
+
+
+        }
+
+        
+        /// <summary>
+        /// Sube la información acumulada de ventas actuales, 10mo paquete.
+        /// <exception cref="PrinterException">Thrown cuando ocurre un error en la transacción con la impresora fiscal</exception>
+        /// </summary>
+        public ReportData.TenthPackageClass GetZ10Report()
+        {
+
+            int rep = 0;
+            ReportData.TenthPackageClass Report;
+            rep = this.SubirDataReport("U0Z09");
+
+            if (rep > 0) // Se procesó al menos una línea
+            {
+                string dataArray = null;
+                foreach (string contenido in this.dataLectorFisc)
+                {
+                    dataArray = contenido;
+                }
+
+                Report = new ReportData.TenthPackageClass(dataArray);
+
+
+                this.ReiniciarVariables();
+            }
+            else
+            {
+                this.ReiniciarVariables();
+                throw new PrinterException(Estado);
+            }
+
+            return Report;
+
+
+        }
+
+        
+        /// <summary>
+        /// Sube la información acumulada de ventas actuales, undécimo paquete.
+        /// <exception cref="PrinterException">Thrown cuando ocurre un error en la transacción con la impresora fiscal</exception>
+        /// </summary>
+        public ReportData.EleventhPackageClass GetZ11Report()
+        {
+
+            int rep = 0;
+            ReportData.EleventhPackageClass Report;
+            rep = this.SubirDataReport("U0Z10");
+
+            if (rep > 0) // Se procesó al menos una línea
+            {
+                string dataArray = null;
+                foreach (string contenido in this.dataLectorFisc)
+                {
+                    dataArray = contenido;
+                }
+
+                Report = new ReportData.EleventhPackageClass(dataArray);
+
+
+                this.ReiniciarVariables();
+            }
+            else
+            {
+                this.ReiniciarVariables();
+                throw new PrinterException(Estado);
+            }
+
+            return Report;
+
+
+        }
+
+        #endregion
+
+      */
         /**
    	  *Imprime Reporte de Lectura de Memoria Fiscal por rango de fechas
              *@param StartDate Fecha inicial del  Z a imprimir

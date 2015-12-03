@@ -154,8 +154,8 @@ public class ReportData {
 
                              this.lastInvoiceDate = cal.getTime();
 
-                             this.numberOfLastCreditNote = Integer.parseInt(arrayParameter[6]);
-                             this.numberOfLastDebitNote = Integer.parseInt(arrayParameter[7]);
+                             this.numberOfLastCreditNote = Integer.parseInt(arrayParameter[7]);
+                             this.numberOfLastDebitNote = Integer.parseInt(arrayParameter[6]);
                              this.numberOfLastNonFiscal = Integer.parseInt(arrayParameter[8]);
 
                              this.freeSalesTax = this.doValueDecimal(arrayParameter[9]);
