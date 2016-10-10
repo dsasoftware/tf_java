@@ -198,31 +198,50 @@ public void serialEvent(SerialPortEvent e)
                switch (PortReceiveStatus)
                {
                     case Espera:  
-                         Thread.sleep(1000);
+                         Thread.sleep(3);
                            tempBuffer = puertoSerie.readBytes();
+                            rcvdByte = tempBuffer[0];
                            _auxBytesRecibidos = tempBuffer.length;
-                           PortReceiveStatus = Listo;
                            puertoSerie.purgePort(SerialPort.PURGE_RXCLEAR);
-                      /*  if (rcvdByte == (byte)STX) // STX
+                       if (rcvdByte == (byte)STX) // STX
                         {   
-                           // PortReceiveStatus = _SerialPortReceiveStatus.Recibiendo;
                              PortReceiveStatus = Recibiendo;
-                            _auxBytesRecibidos++;
-                            Thread.sleep(1); // Tiempo suficiente para recibir 6 caracteres
+                            Thread.sleep(2); // Tiempo suficiente para recibir 6 caracteres
                         }
                         else  if ((rcvdByte == (byte)ACK) || (rcvdByte == (byte)NAK) || (rcvdByte == (byte)ENQ) || (rcvdByte == (byte)EOT))
                         {	// ACK NAK ENQ EOT 	                          
                             PortReceiveStatus = Listo;
+                        }else
+                        {
+                           PortReceiveStatus = Espera;
                         }
-                           */
+                           
                         
                         break;
                     
                     case Recibiendo:                       
 
                         // Recibe los bytes que est�n por leerse desde el buffer de entrada
-                        //_auxBytesRecibidos += entrada.read(tempBuffer, _auxBytesRecibidos, entrada.available());
-                        _auxBytesRecibidos += puertoSerie.readBytes().length;
+                        byte[] bytesIntermediate = puertoSerie.readBytes();
+                        int lengthActual = tempBuffer.length + bytesIntermediate.length;
+                        byte[] bytesTotal = new byte[lengthActual];
+                        
+                        int y = 0, y2 = 0;                     
+                        while(y < lengthActual)
+                        {
+                            if(y < tempBuffer.length)
+                            { bytesTotal[y] = tempBuffer[y]; }
+                            else
+                            { 
+                                bytesTotal[y] = bytesIntermediate[y2];
+                                ++y2;
+                            }
+                            
+                            ++y;
+                        }
+                        _auxBytesRecibidos = lengthActual;
+                        tempBuffer = bytesTotal;
+                        
                         if (tempBuffer[_auxBytesRecibidos - 1] == (byte)EOT) //EOT, este es un caso especial, por el problema detectado en el firmware de las impresoras
                         {
                             if (_auxBytesRecibidos >= 3) // Para evitar errores de acceso fuera de l�mites
@@ -240,6 +259,10 @@ public void serialEvent(SerialPortEvent e)
                         {
                             //PortReceiveStatus = _SerialPortReceiveStatus.Listo;
                              PortReceiveStatus = Listo;
+                        }
+                        else if (tempBuffer[_auxBytesRecibidos - 1] == (byte)LRC)
+                        {
+                             PortReceiveStatus = inLRC;
                         }
                         else
                         { 
@@ -302,7 +325,7 @@ private int getAnswer()
     {
        try {
             //System.out.println("Vencido tiempo? = " + timeExpired);
-                 Thread.sleep(10);
+                 Thread.sleep(3);
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }
