@@ -36,6 +36,7 @@ public abstract class TfhkaRaiz implements SerialPortEventListener{
     protected byte[] bResp;
     protected byte[] tempBuffer;
     protected byte[] _dataBuffer;
+    protected byte[] _dataBufferWrite;
     protected byte[] _emptyBuffer = new byte[20]; //Debe estar vac�o, por eso su nombre "_emptyBuffer"
     protected static SerialPort puertoSerie;
     //protected static OutputStream salida;
@@ -206,7 +207,10 @@ public void serialEvent(SerialPortEvent e)
                        if (rcvdByte == (byte)STX) // STX
                         {   
                              PortReceiveStatus = Recibiendo;
+                             if(_dataBufferWrite[0] == (byte)ENQ)
                             Thread.sleep(2); // Tiempo suficiente para recibir 6 caracteres
+                             else
+                            Thread.sleep(10); // Mas Tiempo suficiente para recibir mas de 6 caracteres   
                         }
                         else  if ((rcvdByte == (byte)ACK) || (rcvdByte == (byte)NAK) || (rcvdByte == (byte)ENQ) || (rcvdByte == (byte)EOT))
                         {	// ACK NAK ENQ EOT 	                          
@@ -220,7 +224,7 @@ public void serialEvent(SerialPortEvent e)
                         break;
                     
                     case Recibiendo:                       
-
+                         Thread.sleep(3); 
                         // Recibe los bytes que est�n por leerse desde el buffer de entrada
                         byte[] bytesIntermediate = puertoSerie.readBytes();
                         int lengthActual = tempBuffer.length + bytesIntermediate.length;
@@ -267,15 +271,31 @@ public void serialEvent(SerialPortEvent e)
                         else
                         { 
                             Thread.sleep(10); // 10ms -> Tiempo suficiente para recibir aprox 30 caracteres
+                            PortReceiveStatus = Recibiendo;
                         }
                         break;
                         
                      case inLRC:
-                          rcvdByte = puertoSerie.readBytes()[0];
-                        tempBuffer[_auxBytesRecibidos] = rcvdByte;
-                        _auxBytesRecibidos++;
+                           rcvdByte = puertoSerie.readBytes()[0];
+                           ++_auxBytesRecibidos;
+                            bytesTotal = new byte[_auxBytesRecibidos];
+                            //Actualizo el buffer de bytes recibidos y le agreo el LRC al final
+                            y = 0;
+                            while(y < _auxBytesRecibidos)
+                            {
+                                if(y < tempBuffer.length)
+                                {
+                                    bytesTotal[y] = tempBuffer[y];
+                                }else
+                                {  
+                                     bytesTotal[y] = rcvdByte;
+                                }
+                                ++y;
+                            }
+                            
+                          tempBuffer= bytesTotal;                    
                         //PortReceiveStatus.valor++; // listo
-                        PortReceiveStatus++; // listo
+                          PortReceiveStatus = Listo;
                         break;
                          
                      default:
@@ -401,7 +421,7 @@ protected  int SerialPortWriteAndRead(char[] cTrama, boolean bEsperarCTS) throws
                 }
             }
         }
-
+        _dataBufferWrite = vectorbyte;
         puertoSerie.writeBytes(vectorbyte);
       //  salida.write(vectorbyte, 0, cTrama.length);   // Escribimos el comando a la impresora (Aqu� ya tienen STX, CMD, ETX y LRC)
  
