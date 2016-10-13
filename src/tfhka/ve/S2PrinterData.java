@@ -41,7 +41,7 @@ public class S2PrinterData {
                             this.setSubTotalBases(tfhka.Util.doValueDecimal(arrayParameter[0].substring(2)));
                             this.setSubTotalTax(tfhka.Util.doValueDecimal(arrayParameter[1]));
                             this.setDataDummy(arrayParameter[2]);
-                            this.setQuantityArticles(Integer.parseInt(arrayParameter[3]));
+                            this.setQuantityArticles(Integer.parseInt(arrayParameter[3])/1000);
                             this.setAmountPayable(tfhka.Util.doValueDecimal(arrayParameter[4]));
                             this.setNumberPaymentsMade(Integer.parseInt(arrayParameter[5]));
                             this.setTypeDocument(Integer.parseInt(arrayParameter[6]));
