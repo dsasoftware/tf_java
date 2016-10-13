@@ -26,4 +26,20 @@ public class Util {
 
             return valor;
         }
+    
+      public static double doValueDecimalThree(String tramaString)
+        {
+            //////////////////////////////
+            int size = tramaString.length();
+            int dif = size - 3;
+
+            double valor = Double.parseDouble(tramaString.substring(0, dif));
+            // para evitar errores con numeros negativos...
+            if (valor < 0)
+                valor -= Double.parseDouble(tramaString.substring(dif)) / 1000;
+            else
+                valor += Double.parseDouble(tramaString.substring(dif)) / 1000;
+
+            return valor;
+        }
 }

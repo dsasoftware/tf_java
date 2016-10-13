@@ -22,7 +22,7 @@ public class S2PrinterData {
         private double amountToPay;
         private int numberPaymentsMade;
         private int typeDocument;
-        private int quantityArticles;
+        private double quantityArticles;
       
         //endregion
 
@@ -73,11 +73,11 @@ public class S2PrinterData {
 		// / <summary>
 		// / Retorna la cantidad de articulos en transaccion
 		// / </summary>
-		public int getQuantityArticles() {
+		public double getQuantityArticles() {
 			return this.quantityArticles;
 		}
 	
-		private void setQuantityArticles(int value) {
+		private void setQuantityArticles(double value) {
 			this.quantityArticles = value;
 		}
 	
@@ -119,11 +119,11 @@ public class S2PrinterData {
 					try {
                         String[] arrayParameter = trama.split(String.valueOf((char)0X0A));
 						if (arrayParameter.length > 1) {
-                            this.setSubTotalMax(this.doValueDecimal(arrayParameter[0].substring(2)));
-                            this.setSubTotalTax(this.doValueDecimal(arrayParameter[1]));
+                            this.setSubTotalMax(tfhka.Util.doValueDecimal(arrayParameter[0].substring(2)));
+                            this.setSubTotalTax(tfhka.Util.doValueDecimal(arrayParameter[1]));
                             this.setDataDummy(arrayParameter[2]);
-                            this.setQuantityArticles(Integer.parseInt(arrayParameter[3])/1000);
-                            this.setAmountToPay(this.doValueDecimal(arrayParameter[4]));
+                            this.setQuantityArticles(tfhka.Util.doValueDecimalThree(arrayParameter[3]));
+                            this.setAmountToPay(tfhka.Util.doValueDecimal(arrayParameter[4]));
                             this.setNumberPaymentsMade(Integer.parseInt(arrayParameter[5]));
                             this.setTypeDocument(Integer.parseInt(arrayParameter[6]));
 						}
@@ -135,25 +135,6 @@ public class S2PrinterData {
                 }
             }
         }
-
-        //endregion
-
-        //region Metodos Privados
-
-		private double doValueDecimal(String tramaString) {
-			// ////////////////////////////
-			int size = tramaString.length();
-			int dif = size - 2;
-	
-			double valor = Double.parseDouble(tramaString.substring(0, dif));
-			// para evitar errores con numeros negativos...
-			if (valor < 0)
-				valor -= Double.parseDouble(tramaString.substring(dif)) / 100;
-			else
-				valor += Double.parseDouble(tramaString.substring(dif)) / 100;
-	
-			return valor;
-		}
 
         //endregion
 }

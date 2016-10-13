@@ -48,7 +48,7 @@ public class S1PrinterData {
 	                        if (arrayParameter.length >= 12) // cuando menos
 	                        {
 	                            this.setCashierNumber(Integer.parseInt(arrayParameter[0].substring(2)));
-	                            this.setTotalDailySales(Double.parseDouble(arrayParameter[1]));
+	                            this.setTotalDailySales(tfhka.Util.doValueDecimal(arrayParameter[1]));
 	                            this.setLastInvoiceNumber(Integer.parseInt(arrayParameter[2]));
 	                            this.setQuantityOfInvoicesToday(Integer.parseInt(arrayParameter[3]));
 	                            this.setNumberNonFiscalDocuments(Integer.parseInt(arrayParameter[4]));
@@ -92,7 +92,7 @@ public class S1PrinterData {
 	                        if (arrayParameter.length >= 16) // cuando menos para la DT
 	                        {
 	                            this.setCashierNumber(Integer.parseInt(arrayParameter[0].substring(2)));
-	                            this.setTotalDailySales(Double.parseDouble(arrayParameter[1]));
+	                            this.setTotalDailySales(tfhka.Util.doValueDecimal(arrayParameter[1]));
 	                            this.setLastInvoiceNumber(Integer.parseInt(arrayParameter[2]));
 	                            this.setQuantityOfInvoicesToday(Integer.parseInt(arrayParameter[3]));
 	                            this.setLastDebitNoteNumber(Integer.parseInt(arrayParameter[4]));

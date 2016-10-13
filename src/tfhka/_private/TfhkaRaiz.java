@@ -208,9 +208,19 @@ public void serialEvent(SerialPortEvent e)
                         {   
                              PortReceiveStatus = Recibiendo;
                              if(_dataBufferWrite[0] == (byte)ENQ)
-                            Thread.sleep(2); // Tiempo suficiente para recibir 6 caracteres
-                             else
-                            Thread.sleep(10); // Mas Tiempo suficiente para recibir mas de 6 caracteres   
+                             Thread.sleep(2); // Tiempo suficiente para recibir 6 caracteres
+                             else 
+                             {
+                                 if(_dataBufferWrite.length > 3)
+                                 {
+                                     if (_dataBufferWrite[1] == 0x53 && _dataBufferWrite[2] == 0x38) 
+                                         Thread.sleep(1000); //Solo para los comandos de extracción S8 que requieren un timeout de 1 seg para completarse con seguridad
+                                     else
+                                         Thread.sleep(10); // Mas Tiempo suficiente para recibir mas de 6 caracteres   
+                                 }
+                                 
+                             }
+                             
                         }
                         else  if ((rcvdByte == (byte)ACK) || (rcvdByte == (byte)NAK) || (rcvdByte == (byte)ENQ) || (rcvdByte == (byte)EOT))
                         {	// ACK NAK ENQ EOT 	                          

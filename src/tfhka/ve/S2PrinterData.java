@@ -20,14 +20,14 @@ public class S2PrinterData {
     private double amountPayable;
     private int typeDocument;
     private int numberPaymentsMade;
-    private int quantityArticles;
+    private double quantityArticles;
     private int condition;
     /** Creates a new instance of S2PrinterData
      *@param trama Cadena de caracteres ASCII que contiene datos del S2 de la impresora fiscal subidos al PC
      */
     
     public S2PrinterData(String trama) 
-    {
+    { 
        if (trama != null)
             {
                 try
@@ -41,7 +41,7 @@ public class S2PrinterData {
                             this.setSubTotalBases(tfhka.Util.doValueDecimal(arrayParameter[0].substring(2)));
                             this.setSubTotalTax(tfhka.Util.doValueDecimal(arrayParameter[1]));
                             this.setDataDummy(arrayParameter[2]);
-                            this.setQuantityArticles(Integer.parseInt(arrayParameter[3])/1000);
+                            this.setQuantityArticles(tfhka.Util.doValueDecimalThree(arrayParameter[3]));
                             this.setAmountPayable(tfhka.Util.doValueDecimal(arrayParameter[4]));
                             this.setNumberPaymentsMade(Integer.parseInt(arrayParameter[5]));
                             this.setTypeDocument(Integer.parseInt(arrayParameter[6]));
@@ -106,7 +106,7 @@ public class S2PrinterData {
         return this.typeDocument;
     }
     /* Retorna la cantidad de articulos en transaccion */
-    public int getQuantityArticles()
+    public double getQuantityArticles()
     {
         return this.quantityArticles;
     }
@@ -115,7 +115,7 @@ public class S2PrinterData {
         this.subTotalBases = subTotalBases;
     }
     
-    private void setQuantityArticles(int value)
+    private void setQuantityArticles(double value)
      {
        this.quantityArticles = value;
      }

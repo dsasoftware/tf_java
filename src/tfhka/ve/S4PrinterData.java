@@ -35,8 +35,7 @@ public class S4PrinterData {
 							String cadena = arrayParameter[ite];
 
 							if (ite == 0) {
-								valor = this
-										.doValueDecimal(cadena.substring(2));
+								valor = this.doValueDecimal(cadena.substring(2));
 							} else {
 								valor = this.doValueDecimal(cadena);
 							}
