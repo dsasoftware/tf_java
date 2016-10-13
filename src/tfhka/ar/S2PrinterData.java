@@ -37,10 +37,10 @@ public class S2PrinterData {
                         String[] arrayParameter = trama.split(String.valueOf((char)0X0A));
                         if (arrayParameter.length > 1)
                         {
-                            this.setExemptSalesSubtotal(Double.parseDouble(arrayParameter[0].substring(13)));//13
-                            this.setTaxesSubtotal(Double.parseDouble(arrayParameter[1]));//13
+                            this.setExemptSalesSubtotal(tfhka.Util.doValueDecimal(arrayParameter[0].substring(13)));//13
+                            this.setTaxesSubtotal(tfhka.Util.doValueDecimal(arrayParameter[1]));//13
                             this.setDataDummy(arrayParameter[2]);//13
-                            this.setQuantityOfItems(Double.parseDouble(arrayParameter[3]));//6
+                            this.setQuantityOfItems(tfhka.Util.doValueDecimal(arrayParameter[3]));//6
                             this.setAmountPayable(Integer.parseInt(arrayParameter[4]));//13
                             this.setQuantityOfPayments(Integer.parseInt(arrayParameter[5]));//4
                             this.setTypeOfDocument(Integer.parseInt(arrayParameter[6]));//1
@@ -51,10 +51,10 @@ public class S2PrinterData {
                         String[] arrayParameter = trama.split(String.valueOf((char)0X0A));//63 chars
                         if (arrayParameter.length > 1)
                         {
-                            this.setExemptSalesSubtotal(Double.parseDouble(arrayParameter[0]));//13
-                            this.setTaxesSubtotal(Double.parseDouble(arrayParameter[1]));//13
+                            this.setExemptSalesSubtotal(tfhka.Util.doValueDecimal(arrayParameter[0]));//13
+                            this.setTaxesSubtotal(tfhka.Util.doValueDecimal(arrayParameter[1]));//13
                             this.setDataDummy(arrayParameter[2]);//13
-                            this.setQuantityOfItems(Double.parseDouble(arrayParameter[3]));//6
+                            this.setQuantityOfItems(tfhka.Util.doValueDecimal(arrayParameter[3]));//6
                             this.setAmountPayable(Integer.parseInt(arrayParameter[4]));//13
                             this.setQuantityOfPayments(Integer.parseInt(arrayParameter[5]));//4
                             this.setTypeOfDocument(Integer.parseInt(arrayParameter[6]));//1

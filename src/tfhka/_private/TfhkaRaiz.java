@@ -270,7 +270,7 @@ public void serialEvent(SerialPortEvent e)
                         }
                         else
                         { 
-                            Thread.sleep(10); // 10ms -> Tiempo suficiente para recibir aprox 30 caracteres
+                            Thread.sleep(200); // 10ms -> Tiempo suficiente para recibir aprox 30 caracteres
                             PortReceiveStatus = Recibiendo;
                         }
                         break;
@@ -1000,25 +1000,5 @@ private class StopWatch {
         return elapsed;
     }
 }
-//METODO PARA SOLICITAR EL MODELO Y EL PAIS
-/**Objeto de tipo SVPrinterData que carga informaci??�n cuando se solicita el modelo y el pais de la maquina por el metodo getModel() y getCountry()*/
-
-	public SVPrinterData getSVPrinterData() throws PrinterException
-	{
-		SVPrinterData Status;
-		int rep = 0;
-		rep = this.SubirDataStatus("SV");
-		if (rep > 0) // Se procesó al menos una línea
-		{
-			Status = new SVPrinterData(this.sDataSubida);
-			this.ReiniciarVariables();
-		}
-		else
-		{
-                        Status = null;
-                        Estado = "Sin Repuesta";
-		      throw new PrinterException(Estado, null);			
-		}
-		return Status;
-	}   
+  
 }

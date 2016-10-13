@@ -19,12 +19,17 @@ public class SVPrinterData
 		KUBE  = "Kube",
 		HSP7000  = "HSP-7000",
 		HKA112  = "HKA-112",
-		OKI_ML1120  = "ML-1125",
+		OKI_ML1120  = "OKI-ML-1120",
+                PP9 = "PP9",
+                HKA_80 = "HKA-80",
+                Pantum_3100DL = "Pantum-3100DL",
 		Unknown  = "Unknown";
         
          private static final String VE = "Venezuela",
 		DO = "Republica Dominicana",
 		CW = "Curazao",
+                PA = "Panama",
+                AR = "Argentina",
 		UN = "Unknown";
 	
 	//Nota: Los Datos correspondientes a la versión y al País vienen en la trama?
@@ -33,20 +38,11 @@ public class SVPrinterData
 		return Model;
 	}
 
-	public void setModel(String model)
-	{
-		Model = model;
-	}
-
 	public String getCountry()
 	{
 		return Country;
 	}
 
-	public void setCountry(String country)
-	{
-		Country = country;
-	}
 
 	public SVPrinterData(String trama)
 	{
@@ -91,7 +87,16 @@ public class SVPrinterData
 								
 							  else if (arrayParamater[1].equals("Z4A")){ //OKI ML1120
 								 Model = OKI_ML1120;
-								 }								 
+								 }	
+                                                           else if (arrayParamater[1].equals("ZZH")){ //PP9
+								 Model = PP9;
+								 }
+                                                           else if (arrayParamater[1].equals("Z7C")){ //HKA-80
+								 Model = HKA_80;
+								 }
+                                                           else if (arrayParamater[1].equals("ZYA")){ //Pantum-3100DL
+								 Model = Pantum_3100DL;
+								 }
                                                           else{
 								Model = Unknown;
 								}
@@ -109,6 +114,14 @@ public class SVPrinterData
 							 }						 
 						 else if (arrayParamater[2].equals("CW")){//Curazao
 							 Country = CW;
+							 }
+                                                 
+                                                  else if (arrayParamater[2].equals("PA")){//Panama
+							 Country = PA;
+							 }
+                                                  
+                                                   else if (arrayParamater[2].equals("AR")){//Argentina
+							 Country = AR;
 							 }
                                                  else{
 							Country = UN;
