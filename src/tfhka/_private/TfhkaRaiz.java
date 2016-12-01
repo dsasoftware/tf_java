@@ -208,7 +208,11 @@ public void serialEvent(SerialPortEvent e)
                         {   
                              PortReceiveStatus = Recibiendo;
                              if(_dataBufferWrite[0] == (byte)ENQ)
-                             Thread.sleep(2); // Tiempo suficiente para recibir 6 caracteres
+                             { 
+                                 Thread.sleep(2); // Tiempo suficiente para recibir 6 caracteres
+                                if(_auxBytesRecibidos == 5)
+                                     PortReceiveStatus = Listo;
+                             }
                              else 
                              {
                                  if(_dataBufferWrite.length > 3)
@@ -216,7 +220,13 @@ public void serialEvent(SerialPortEvent e)
                                      if (_dataBufferWrite[1] == 0x53 && _dataBufferWrite[2] == 0x38) 
                                          Thread.sleep(1000); //Solo para los comandos de extracción S8 que requieren un timeout de 1 seg para completarse con seguridad
                                      else
-                                         Thread.sleep(10); // Mas Tiempo suficiente para recibir mas de 6 caracteres   
+                                         Thread.sleep(10); // Mas Tiempo suficiente para recibir mas de 6 caracteres 
+                                     
+                                     if (tempBuffer[_auxBytesRecibidos - 2] == (byte)ETX)
+                                     {
+                                         PortReceiveStatus = Listo;
+                                     }
+                                     
                                  }
                                  
                              }

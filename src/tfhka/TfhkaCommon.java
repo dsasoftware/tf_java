@@ -238,7 +238,7 @@ public class TfhkaCommon extends TfhkaRaiz{
 
         _SerialPortReceiveTimeout = 2;
         try
-        {
+        {  
             bytesRecibidos = SerialPortWriteAndRead(new char[] { ENQ }, false);
 
             if (bytesRecibidos < 0)
