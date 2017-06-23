@@ -480,30 +480,25 @@ public boolean SendCmd(String sCMD) throws PrinterException
 	 *@param Cmd Comando o trama 
 	 *@param file Ruta o Nombre del archivo.txt o .dat 
          */
-	public boolean UploadReportCmd(String Cmd, String file)
-    {
+    public boolean UploadReportCmd(String Cmd, String file) {
 
         String lineno = "";
         int interv = 0;
 
-        try
-        {
+        try {
             FileWriter fw = new FileWriter(file);
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter salidaf = new PrintWriter(bw);
 
- 
             interv = this.SubirDataReport(Cmd);
 
-   
             /*
              for(Object contenido : this.dataLectorFisc)
              {
              lineno += (String)contenido + "\r\n";
              }
              */
-            for (int i = 0; i < this.dataLectorFisc.size(); i++)
-            {
+            for (int i = 0; i < this.dataLectorFisc.size(); i++) {
                 Object contenido = this.dataLectorFisc.get(i);
                 lineno += (String) contenido + "\r\n";
             }
@@ -511,29 +506,21 @@ public boolean SendCmd(String sCMD) throws PrinterException
             salidaf.println(lineno);
             salidaf.close();
 
-            if (interv != 0)
-            {
+            if (interv != 0) {
                 Estado = " Status: 00  Error: 00";
                 this.ReiniciarVariables();
                 return true;
-            }
-            else
-            {
+            } else {
                 Estado = "Sin repuesta";
                 this.ReiniciarVariables();
                 return false;
             }
 
-
-        }
-        catch (java.io.IOException ioex)
-        {
+        } catch (java.io.IOException ioex) {
             Estado = ioex.getMessage();
             this.ReiniciarVariables();
             return false;
-        }
-        catch (NullPointerException e2)
-        {
+        } catch (NullPointerException e2) {
             Estado = e2.getMessage();
             this.ReiniciarVariables();
             return false;
