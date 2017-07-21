@@ -30,7 +30,7 @@ public class S3PrinterData {
           this.setTypeTax1(Integer.parseInt(trama.substring(2,3)));
           double valor = Double.parseDouble(trama.substring(3,5)) + Double.parseDouble(trama.substring(5,7))/100;
           this.setTax1(valor);
-          this.setTypeTax2(Integer.parseInt(trama.substring(7,8)));
+          this.setTypeTax2(Integer.parseInt(trama.substring(8,9)));//7-8
           valor = Double.parseDouble(trama.substring(8,10)) + Double.parseDouble(trama.substring(10,12))/100;
           this.setTax2(valor);
           this.setTypeTax3(Integer.parseInt(trama.substring(12,13)));
@@ -38,8 +38,8 @@ public class S3PrinterData {
           this.setTax3(valor);
           
           this.allSystemFlags = new int[20];
-          int a = 17;
-          int b = 19;
+          int a = 21;
+          int b = 23;
           int ite = 0;
 			while (ite < 20) {
 				this.allSystemFlags[ite] = Integer.parseInt(trama.substring(

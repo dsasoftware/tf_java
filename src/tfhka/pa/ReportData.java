@@ -30,45 +30,45 @@ public class ReportData {
 				this.setNumberOfLastZReport(Integer.parseInt(trama.substring(0,
 						4)));
 				GregorianCalendar cal = new GregorianCalendar();
-				cal.set(Integer.parseInt(trama.substring(4, 6)) + 2000,
-						Integer.parseInt(trama.substring(6, 8)) - 1,
-						Integer.parseInt(trama.substring(8, 10)),
-						Integer.parseInt(trama.substring(10, 12)),
-						Integer.parseInt(trama.substring(12, 14)));
+				cal.set(Integer.parseInt(trama.substring(5, 7)) + 2000,
+						Integer.parseInt(trama.substring(7, 9)) - 1,
+						Integer.parseInt(trama.substring(9, 11)),
+						Integer.parseInt(trama.substring(12, 14)),
+						Integer.parseInt(trama.substring(14, 16)));
 				this.setZReportDate(cal.getTime());
 
 				this.setNumberOfLastInvoice(Integer.parseInt(trama.substring(
 						84, 92)));
-				cal.set(Integer.parseInt(trama.substring(92, 94)) + 2000,
-						Integer.parseInt(trama.substring(94, 96)) - 1,
-						Integer.parseInt(trama.substring(96, 98)),
-						Integer.parseInt(trama.substring(98, 100)),
-						Integer.parseInt(trama.substring(100, 102)));
+				cal.set(Integer.parseInt(trama.substring(103, 105)) + 2000,
+						Integer.parseInt(trama.substring(105, 107)) - 1,
+						Integer.parseInt(trama.substring(107, 109)),
+						Integer.parseInt(trama.substring(110, 112)),
+						Integer.parseInt(trama.substring(112, 114)));
 				this.setLastInvoiceDate(cal.getTime());
      
        
          // Innovice
-                    double valor = Double.parseDouble(trama.substring(14, 22)) + Double.parseDouble(trama.substring(22, 24)) / 100;
+                    double valor = Double.parseDouble(trama.substring(17, 25)) + Double.parseDouble(trama.substring(25, 27)) / 100;
                     this.freeSalesTax = valor;                  
-                    valor = Double.parseDouble(trama.substring(24, 32)) + Double.parseDouble(trama.substring(32, 34)) / 100;
+                    valor = Double.parseDouble(trama.substring(28, 34)) + Double.parseDouble(trama.substring(34, 36)) / 100;
                     this.generalRate1Tax = valor;                  
-                    valor = Double.parseDouble(trama.substring(34, 42)) + Double.parseDouble(trama.substring(42, 44)) / 100;
+                    valor = Double.parseDouble(trama.substring(38, 46)) + Double.parseDouble(trama.substring(46, 48)) / 100;
                     this.reducedRate2Tax = valor;                
-                    valor = Double.parseDouble(trama.substring(44, 52)) + Double.parseDouble(trama.substring(52, 54)) / 100;
+                    valor = Double.parseDouble(trama.substring(50, 58)) + Double.parseDouble(trama.substring(58, 60)) / 100;
                     this.additionalRate3Tax = valor;
                    //Total Venta
-                    valor = Double.parseDouble(trama.substring(54, 62)) + Double.parseDouble(trama.substring(62, 64)) / 100;
+                    valor = Double.parseDouble(trama.substring(62, 70)) + Double.parseDouble(trama.substring(70, 72)) / 100;
                     this.totalVenta = valor;                
                     // Total Devolucion
-                    valor = Double.parseDouble(trama.substring(64, 72)) + Double.parseDouble(trama.substring(72, 74)) / 100;
+                    valor = Double.parseDouble(trama.substring(74, 82)) + Double.parseDouble(trama.substring(82, 84)) / 100;
                     this.totalVentaDevolution = valor;                  
                    //Total Nota Debito
-                    valor = Double.parseDouble(trama.substring(74, 82)) + Double.parseDouble(trama.substring(82, 84)) / 100;
+                    valor = Double.parseDouble(trama.substring(86, 94)) + Double.parseDouble(trama.substring(94, 96)) / 100;
                     this.totalVentaDebitNote = valor;
                 
-                    this.numberOfLastCreditNote = Integer.parseInt(trama.substring(102, 110));
-                    this.numberOfLastDebitNote = Integer.parseInt(trama.substring(110, 118));
-                    this.numberOfLastDNF = Integer.parseInt(trama.substring(118, 126));
+                    this.numberOfLastCreditNote = Integer.parseInt(trama.substring(116, 123));
+                    this.numberOfLastDebitNote = Integer.parseInt(trama.substring(125, 132));
+                    this.numberOfLastDNF = Integer.parseInt(trama.substring(133, 141));
           }
         }
     }

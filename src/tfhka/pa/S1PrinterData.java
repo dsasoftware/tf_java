@@ -45,31 +45,31 @@ private Date currentPrinterDateTime;
             double valor =  Double.parseDouble(trama.substring(4,19)) +  Double.parseDouble(trama.substring(19,21))/100;
             this.setTotalDailySales(valor);
             //Factura
-            this.setLastInvoiceNumber(Integer.parseInt(trama.substring(21,29)));  
-            this.setQuantityOfInvoicesToday(Integer.parseInt(trama.substring(29,34)));
+            this.setLastInvoiceNumber(Integer.parseInt(trama.substring(23,31)));//21-29
+            this.setQuantityOfInvoicesToday(Integer.parseInt(trama.substring(33,37)));
             //Nota Credito
-             this.setLastCNNumber(Integer.parseInt(trama.substring(34, 42)));
-             this.setQuantityOfCNsToday(Integer.parseInt(trama.substring(42, 47)));
+             this.setLastCNNumber(Integer.parseInt(trama.substring(39, 46)));//34-42
+             this.setQuantityOfCNsToday(Integer.parseInt(trama.substring(48, 52)));//42-47
              // Nota Debito 
-             this.setLastDebitNoteNumber(Integer.parseInt(trama.substring(47, 55)));
-             this.setQuantityOfDebitNotesToday(Integer.parseInt(trama.substring(55, 60)));
+             this.setLastDebitNoteNumber(Integer.parseInt(trama.substring(54, 61)));//47-55
+             this.setQuantityOfDebitNotesToday(Integer.parseInt(trama.substring(63, 67)));//55-60
             //DNF
-            this.setNumberNonFiscalDocuments(Integer.parseInt(trama.substring(60,68)));  
-            this.setQuantityNonFiscalDocuments(Integer.parseInt(trama.substring(68,73)));  
+            this.setNumberNonFiscalDocuments(Integer.parseInt(trama.substring(69,76)));//60-68  
+            this.setQuantityNonFiscalDocuments(Integer.parseInt(trama.substring(78,82)));//68-73  
             
-            this.setDailyClosureCounter(Integer.parseInt(trama.substring(73,77)));  
-            this.setAuditReportsCounter(Integer.parseInt(trama.substring(77,81)));  
-            this.setRIF(trama.substring(81,101));
-            this.setDV(trama.substring(101, 103));
-            this.setRegisteredMachineNumber(trama.substring(103,116));   
+            this.setDailyClosureCounter(Integer.parseInt(trama.substring(83,87)));//73-77  
+            this.setAuditReportsCounter(Integer.parseInt(trama.substring(88,92)));//77-81  
+            this.setRIF(trama.substring(94,113));//81-101
+            this.setDV(trama.substring(114, 116));//101-103
+            this.setRegisteredMachineNumber(trama.substring(117,120));//103-116   
             
-            String hr = trama.substring(116,118);
-            String mn = trama.substring(118,120);
-            String sg = trama.substring(120,122);
+            String hr = trama.substring(131,133);//116-118
+            String mn = trama.substring(134,136);//118-120
+            String sg = trama.substring(136,137);//120-122
             
-            String dd = trama.substring(122,124);
-            String mm = trama.substring(124,126);
-            String aa = trama.substring(126,128);
+            String dd = trama.substring(138,140);//122-124
+            String mm = trama.substring(140,142);//124-126
+            String aa = trama.substring(142,144);//126-128
             
          GregorianCalendar cal = new GregorianCalendar(); 
          cal.set(Integer.parseInt(aa)+2000,Integer.parseInt(mm)-1,Integer.parseInt(dd),Integer.parseInt(hr),Integer.parseInt(mn),Integer.parseInt(sg));

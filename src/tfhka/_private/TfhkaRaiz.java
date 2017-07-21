@@ -333,7 +333,7 @@ public abstract class TfhkaRaiz implements SerialPortEventListener {
         int LocalBytesRecibidos;
         boolean timeExpired = false;
         StopWatch cronometro = new StopWatch();
-
+        
         cronometro.start();
 
         // Espera mientras los datos est�n listos o se acabe el tiempo
@@ -344,7 +344,8 @@ public abstract class TfhkaRaiz implements SerialPortEventListener {
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             }
-            if (cronometro.getElapsedTime() > _SerialPortReceiveTimeout * 100000) {//1000
+            
+            if (cronometro.getElapsedTime() > _SerialPortReceiveTimeout * 1000) {//1000
                 timeExpired = true; // Se venci� el  tiempo
             }
 
