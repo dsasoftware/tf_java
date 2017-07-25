@@ -31,10 +31,10 @@ public class S3PrinterData {
           double valor = Double.parseDouble(trama.substring(3,5)) + Double.parseDouble(trama.substring(5,7))/100;
           this.setTax1(valor);
           this.setTypeTax2(Integer.parseInt(trama.substring(8,9)));//7-8
-          valor = Double.parseDouble(trama.substring(8,10)) + Double.parseDouble(trama.substring(10,12))/100;
+          valor = Double.parseDouble(trama.substring(9,11)) + Double.parseDouble(trama.substring(11,13))/100;
           this.setTax2(valor);
-          this.setTypeTax3(Integer.parseInt(trama.substring(12,13)));
-          valor = Double.parseDouble(trama.substring(13,15)) + Double.parseDouble(trama.substring(15,17))/100;
+          this.setTypeTax3(Integer.parseInt(trama.substring(14,15)));
+          valor = Double.parseDouble(trama.substring(15,17)) + Double.parseDouble(trama.substring(17,19))/100;
           this.setTax3(valor);
           
           this.allSystemFlags = new int[20];
